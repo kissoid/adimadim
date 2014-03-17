@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <p:outputPanel id="signIn_panel" >
+            <p:messages globalOnly="false" />
+            <h:panelGrid id="signIn_panelGrid" columns="2" cellpadding="5">  
+                <h:outputLabel value="" /> 
+                <h:outputLabel value="Lütfen kullanıcı bilgilerinizi giriniz" /> 
+                <h:outputLabel for="signIn_email" value="E-mail:" />  
+                <p:inputText id="signIn_email" value="#{accountBean.account.email}" size="35" style="height: 25px; font-size: 16px;" required="true" requiredMessage="Kullanıcı adınızı giriniz" />
+                <h:outputLabel for="signIn_password" value="Şifre:" />  
+                <p:password id="signIn_password" value="#{accountBean.account.password}" style="height: 25px;font-size: 16px;" size="35" required="true" requiredMessage="Şifrenizi giriniz" />               
+            </h:panelGrid>  
+        </p:outputPanel>
+    </ui:fragment>
+</html>
+

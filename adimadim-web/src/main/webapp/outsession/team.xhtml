@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <p:menubar style="margin-bottom: 5px;">
+                        <p:menuitem id="teamMembers" value="Takım Üyeleri" actionListener="#{raceBean.retriveTeamScoreByRaceIdAndTeamId}" update=":mainForm:teamScoreTable" /> 
+                    </p:menubar> 
+                    <p:dataTable id="teamTable" var="team" value="#{raceBean.teamList}" widgetVar="teamTableWidget" emptyMessage="Takım bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceBean.selectedTeam}" rowKey="#{team.teamPK.teamId}" style="margin-bottom: 20px;">  
+                        <f:facet name="header">  
+                            <h:outputText value="Takım Listesi"/>  
+                        </f:facet>  
+
+                        <p:column selectionMode="single" style="width:20px;" />  
+                        <p:column id="teamNoColumn" filterBy="#{team.teamPK.teamId}" sortBy="#{team.teamPK.teamId}" headerText="Takım No" filterStyle="width:75px;" width="75" filterMatchMode="exact">  
+                            <h:outputText value="#{team.teamPK.teamId}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="tamNameColumn" filterStyle="width:450px;" filterBy="#{team.teamName}" sortBy="#{team.teamName}"  headerText="Takım Adı" width="450" filterMatchMode="contains">  
+                            <h:outputText value="#{team.teamName}" />  
+                        </p:column>  
+                    </p:dataTable>  
+                    
+                    <p:dataTable id="teamScoreTable" var="score" value="#{raceBean.teamScoreList}" widgetVar="teamScoreTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
+                        <f:facet name="header">  
+                            <p:outputPanel> 
+                                <div align="right">
+                                    <h:outputText value="Tüm alanlarda ara : "/>  
+                                    <p:inputText id="globalFilter" onkeyup="teamScoreTableWidget.filter()" style="width:150px;" />  
+                                </div>
+                            </p:outputPanel>  
+                        </f:facet>  
+
+                        <p:column id="racerTeamIdColumn" filterBy="#{score.teamId}" sortBy="#{score.teamId}" headerText="Takım No" width="50" filterStyle="width:50px;" filterMatchMode="exact">  
+                            <h:outputText value="#{score.teamId}" style="float: right;"/>  
+                        </p:column>  
+                        
+                        <p:column id="racerChestNumberColumn" filterBy="#{score.chestNumber.chestNumber}" sortBy="#{score.chestNumber.chestNumber}" headerText="Göğüs No" width="75" filterStyle="width:75px;" filterMatchMode="exact">  
+                            <h:outputText value="#{score.chestNumber.chestNumber}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" sortBy="#{score.account.name}"  headerText="Ad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.name}" />  
+                        </p:column>  
+
+                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" sortBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.surname}" />  
+                        </p:column>  
+
+                        <p:column id="racerDurationColumn" sortBy="#{score.duration}" headerText="Süre" filterMatchMode="exact">  
+                            <h:outputText value="#{score.duration}" >  
+                                <f:convertDateTime pattern="hh:mm:ss" />
+                            </h:outputText>
+                        </p:column>    
+                    </p:dataTable>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment rendered="#{mainPageBean.activeFragment eq 'racerEvolutionGraphic' ? true: false }">
+        <div style="margin-bottom: 30px;">
+            <h:outputText value="Yarışçı Gelişim Grafiği" style="color:#336699; font-weight: bold;font-size: 16px;" />
+            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 5px;"/>
+            <div style="width: 650px;">
+                <p:dataTable id="racerTable" var="racer" value="#{racerEvolutionGraphicBean.racerList}" style="margin-bottom: 50px;" selectionMode="single" widgetVar="racerTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{racerEvolutionGraphicBean.selectedRacer}" rowKey="#{racer.accountId}">  
+                    <f:facet name="header">  
+                        <h:outputText value="Yarışçılar"/>  
+                    </f:facet>  
+                    <p:ajax event="rowSelect" listener="#{racerEvolutionGraphicBean.retrieveRacerStatistics}" onstart="racerEvolutionTableBlock.show();" oncomplete="racerEvolutionTableBlock.hide();" update=":mainForm:racerEvolutionScoreTable, :mainForm:racerEvlutionGraphic" />
+                    <p:column id="racerIdColumn" filterStyle="width:50px;" filterBy="#{racer.accountId}" sortBy="#{racer.accountId}" headerText="Üye No" width="50" filterMatchMode="exact">  
+                        <h:outputText value="#{racer.accountId}" style="float: right;"/>  
+                    </p:column>  
+
+                    <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{racer.name}" sortBy="#{racer.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                        <h:outputText value="#{racer.name}" />  
+                    </p:column>  
+
+                    <p:column id="racerSurnameColumn" filterStyle="width:110px;" filterBy="#{racer.surname}" sortBy="#{racer.surname}" headerText="Soyad" width="110" filterMatchMode="contains">  
+                        <h:outputText value="#{racer.surname}" />  
+                    </p:column>  
+
+                    <p:column id="racerEmailColumn" filterStyle="width:120px;" filterBy="#{racer.email}" sortBy="#{racer.email}" headerText="E-mail" width="120" filterMatchMode="contains">  
+                        <h:outputText value="#{racer.email}" />  
+                    </p:column> 
+
+                    <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{racer.gender eq 'E' ? 'Erkek' : 'Kadın'}" sortBy="#{racer.gender eq 'E' ? 'Erkek' : 'Kadın'}" headerText="Cinsiyet" width="50" filterMatchMode="startsWith">  
+                        <h:outputText value="#{racer.gender eq 'E' ? 'Erkek' : 'Kadın'}" />  
+                    </p:column> 
+                </p:dataTable>  
+
+                <p:blockUI id="racerEvolutionTableBlock" block="raceScoreTable" widgetVar="racerEvolutionTableBlock" />
+
+                <p:dataTable id="racerEvolutionScoreTable" var="score" value="#{racerEvolutionGraphicBean.racerScoreList}" style="margin-bottom: 50px;" widgetVar="racerEvolutionScoreTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
+                    <f:facet name="header">  
+                        <h:outputText value="Yarışçı Sonuçları"/>  
+                    </f:facet>  
+
+                    <p:column id="racerEvlutionIdColumn" sortBy="#{score.race.raceId}" headerText="Yarış No" width="50" >  
+                        <h:outputText value="#{score.race.raceId}" style="float: right;"/>  
+                    </p:column>  
+
+                    <p:column id="racerEvlutionDateColumn" headerText="Tarih" sortBy="#{score.race.raceDate}" width="75" filterMatchMode="exact">  
+                        <h:outputText value="#{score.race.raceDate}" >  
+                            <f:convertDateTime pattern="dd.MM.yyyy" />
+                        </h:outputText>
+                    </p:column> 
+
+                    <p:column id="racerEvlutionChestNumberColumn" sortBy="#{score.chestNumber.chestNumber}" width="50" headerText="Göğüs No" >  
+                        <h:outputText value="#{score.chestNumber.chestNumber}" style="float: right;"/>  
+                    </p:column>  
+
+                    <p:column id="racerEvlutionNameColumn" sortBy="#{score.account.name}" headerText="Ad" width="140" >  
+                        <h:outputText value="#{score.account.name}" />  
+                    </p:column>  
+
+                    <p:column id="racerEvlutionSurnameColumn" sortBy="#{score.account.surname}" headerText="Soyad" width="110" >  
+                        <h:outputText value="#{score.account.surname}" />  
+                    </p:column>  
+
+                    <p:column id="racerEvlutionDurationColumn" sortBy="#{score.duration}" width="50" headerText="Süre">  
+                        <h:outputText value="#{score.duration}">
+                            <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                        </h:outputText>
+                    </p:column>    
+                </p:dataTable>  
+                <br/>
+                <h:panelGrid id="racerEvlutionGraphic" columns="1">  
+                    <p:lineChart value="#{racerEvolutionGraphicBean.linearModel}" seriesColors="336699" legendPosition="e" animate="true"  
+                                 title="Yarışçı Gelişim Grafiği" xaxisAngle="45" xaxisLabel="Tarih" yaxisLabel="Dakika" minY="0" maxY="70" style="width:600px;" />  
+                </h:panelGrid> 
+            </div>
+        </div>
+    </ui:fragment>
+</html>

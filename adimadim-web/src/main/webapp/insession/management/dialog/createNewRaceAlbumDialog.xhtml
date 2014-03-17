@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment rendered="#{managementMainPageBean.activeFragment eq 'raceAlbumManager' ? true: false}">
+        <h:form id="createNewAlbumDialogForm">  
+            <p:dialog id="createNewAlbumDialog" height="150" width="400" modal="true" header="Yeni Albüm Oluştur" widgetVar="createNewAlbumDialogWidget" > 
+                <p:ajax event="close" listener="#{raceAlbumManagerBean.retrieveAllRaceAlbums}" update=":mainForm:raceAlbumTable"/>
+                <div>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Albüm adı" for="albumName" />
+                        <p:inputText id="albumName" value="#{raceAlbumManagerBean.newRaceAlbum.albumName}" size="35" />
+                        <p:outputLabel value="Albüm tarihi" for="albumDate" />
+                        <p:calendar id="albumDate" value="#{raceAlbumManagerBean.newRaceAlbum.albumDate}" showOn="button" pattern="dd.MM.yyyy" />
+                        <p:outputLabel value="" />
+                        <p:commandButton value="Oluştur" actionListener="#{raceAlbumManagerBean.createNewAlbum}" update=":headerForm:growlMessage,albumName,albumDate"/>  
+                    </p:panelGrid>
+                </div>
+            </p:dialog>
+        </h:form>
+    </ui:fragment>
+</html>
+

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment rendered="#{mainPageBean.activeFragment eq 'raceAlbums' ? true: false }">
+        <div style="margin-bottom: 30px;">
+            <h:outputText value="Fotoğraf Albümleri" style="color:#336699; font-weight: bold;font-size: 16px;" />
+            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 5px;"/>
+            <div style="width: 700px;">
+                <p:messages globalOnly="true" autoUpdate="true" />
+                <p:dataTable id="raceAlbumListTable" var="raceAlbum" value="#{raceAlbumManagerBean.raceAlbumList}" widgetVar="raceAlbumListTableWidget" emptyMessage="Albüm bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceAlbumManagerBean.selectedAlbum}" rowKey="#{raceAlbum.albumId}" selectionMode="single" style="margin-bottom: 50px;">  
+                    <p:ajax event="rowSelect" listener="#{raceAlbumManagerBean.retrieveSelectedRaceAlbumPictures}" update=":mainForm:albumPictureList"  />
+                    <f:facet name="header">  
+                        <h:outputText value="Yarış Albüm Listesi"/>   
+                    </f:facet>  
+                    <p:column id="raceNameColumn" sortBy="#{raceAlbum.albumName}" headerText="Albüm Adı" width="500" >  
+                        <h:outputText value="#{raceAlbum.albumName}" />  
+                    </p:column>
+
+                    <p:column id="raceDateColumn" sortBy="#{raceAlbum.albumDate}" width="50" headerText="Oluşturma Tarihi" >  
+                        <h:outputText value="#{raceAlbum.albumDate}" >  
+                            <f:convertDateTime pattern="dd.MM.yyyy" locale="tr_TR" type="date" dateStyle="short" timeZone="Turkey" />
+                        </h:outputText>
+                    </p:column>        
+                </p:dataTable> 
+
+                <p:scrollPanel id="albumPictureList" style="text-align:center;width:100%;max-height:450px" mode="native">
+                    <p:lightBox styleClass="imagebox">
+                        <ui:repeat value="#{raceAlbumManagerBean.raceAlbumPictureList}" var="picture">
+                            <h:outputLink value="/static/picture/common_album/big/#{picture.pictureName}"> 
+                                <p:graphicImage value="/static/picture/common_album/small/#{picture.pictureName}" style="margin:10px;"/> 
+                            </h:outputLink>
+                        </ui:repeat>
+                    </p:lightBox>
+                </p:scrollPanel>
+            </div>
+        </div>
+    </ui:fragment>
+</html>
+

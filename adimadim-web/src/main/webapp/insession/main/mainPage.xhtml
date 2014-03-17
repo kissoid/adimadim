@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/mainPage.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <div style="position: relative;">
+                        <div class="shadowed-box" style="width: 100%;background-color: #FFFFFF;">
+                            <table>
+                                <tr>
+                                    <td width="220" style="vertical-align: top;padding: 20px 0px 20px 20px;">
+                                        <p:panel header="Genel" style="width: 200px; margin-bottom: 10px;">
+                                            <p:menu style="width:100%;border: none;">  
+                                                <p:menuitem value="Duyurular" actionListener="#{mainPageBean.changeActiveFragment('announcements')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'" /> 
+                                                <p:menuitem value="Tartışma" actionListener="#{mainPageBean.changeActiveFragment('discussion')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'" /> 
+                                                <p:menuitem value="Yarış Sonuçları" actionListener="#{mainPageBean.changeActiveFragment('racesAndScores')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'" /> 
+                                                <p:menuitem value="Fotoğraflar" actionListener="#{mainPageBean.changeActiveFragment('raceAlbums')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'"/>  
+                                            </p:menu> 
+                                        </p:panel>
+                                        <p:panel header="İstatistikler" style="width: 200px;margin-bottom: 10px;">
+                                            <p:menu id="statisticsMenu" style="width: 100%;border: none;">  
+                                                <p:menuitem value="En Çok Katılanlar" actionListener="#{mainPageBean.changeActiveFragment('mostRunning')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'" />  
+                                                <p:menuitem value="En Çok Gelişenler" actionListener="#{mainPageBean.changeActiveFragment('bestEvolution')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'" />  
+                                                <p:menuitem value="Yarışçı Gelişim Grafiği" actionListener="#{mainPageBean.changeActiveFragment('racerEvolutionGraphic')}" oncomplete="window.location.href='/insession/main/mainPage.jsf'" />  
+                                            </p:menu> 
+                                        </p:panel>
+                                        <p:panel header="Dosyalar" style="width: 200px;margin-bottom: 10px;">
+                                            <p:menu id="fileMenu" style="width: 100%;border: none;">  
+                                                <p:menuitem value="Göğüs No İndir" onclick="window.location.href='/ChestNumberServlet'" />  
+                                            </p:menu> 
+                                        </p:panel>
+                                        <p:panel rendered="#{accountBean.managerUser}" header="Yönetim" style="width: 200px;">
+                                            <p:menu id="managementMenu" style="width: 100%;border: none;">  
+                                                <p:menuitem value="Yönetim Paneli" oncomplete="window.location.href='/insession/management/managementMainPage.jsf'" />  
+                                            </p:menu> 
+                                        </p:panel>
+                                    </td>
+                                    <td style="vertical-align: top;padding: 20px 10px 30px 0px;">
+                                        <ui:include src="/insession/main/fragment/announcements.xhtml" />
+                                        <ui:include src="/insession/main/fragment/racesAndScores.xhtml" />
+                                        <ui:include src="/insession/main/fragment/bestEvolution.xhtml" />
+                                        <ui:include src="/insession/main/fragment/mostRunning.xhtml" />
+                                        <ui:include src="/insession/main/fragment/racerEvolutionGraphic.xhtml" />
+                                        <ui:include src="/insession/main/fragment/raceAlbums.xhtml" />
+                                        <ui:include src="/insession/main/fragment/discussion.xhtml" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

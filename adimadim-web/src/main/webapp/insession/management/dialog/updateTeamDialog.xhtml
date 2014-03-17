@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment rendered="#{managementMainPageBean.activeFragment eq 'teamManager' ? true: false}">
+        <h:form id="updateTeamDialogForm">  
+            <p:dialog id="updateTeamDialog" header="Takımı Güncelle" closeOnEscape="true" modal="true" widgetVar="updateTeamDialog" width="500" height="150">  
+                <p:messages autoUpdate="true" />
+                <p:panelGrid id="updateTeam_teamPanel" columns="3" style="vertical-align: text-top;">
+                    <p:outputLabel value="Takım Adı : " for="updateTeam_teamName" />
+                    <p:inputText id="updateTeam_teamName" value="#{raceBean.selectedTeam.teamName}" style="width: 300px;" required="true" requiredMessage="Lütfen takım ismini boş geçmeyiniz." />
+                    <p:message for="updateTeam_teamName" display="icon" />
+                </p:panelGrid>
+                <p:commandButton value="Güncelle" id="updateRace_updateTeamButton" actionListener="#{raceBean.updateTeam}" style="position: absolute;right: 50px;bottom: 50px;" update=":mainForm:teamTable,:updateTeamDialogForm:updateTeam_teamPanel,:headerForm:growlMessage"/>
+            </p:dialog>
+        </h:form>
+    </ui:fragment>
+</html>
+

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:fragment>
+        <div style="height: 350px;">
+            <p:wizard  nextLabel="Liste Olarak Göster" backLabel="Grafik Olarak Göster" widgetVar="charityRaceListWizard" style="width:600px;">  
+                <p:tab title="Grafik Olarak" titleStyle="display:none;"> 
+                    <p:lineChart value="#{racerBean.linearModel}" seriesColors="336699" legendPosition="e" animate="true"  
+                                 title="Bağış Grafiği" xaxisAngle="45" xaxisLabel="Tarih" yaxisLabel="Dakika" minY="0" maxY="70" style="width:600px;" />  
+                </p:tab>
+                <p:tab title="Liste Olarak" titleStyle="display:none;">
+
+                </p:tab>
+            </p:wizard>
+        </div>
+    </ui:fragment>
+</html>
+

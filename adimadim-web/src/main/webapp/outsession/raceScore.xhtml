@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core" >
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" widgetVar="raceScoreTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" style="margin-top: 20px;">  
+                        <f:facet name="header">  
+                            <h:outputText value="#{raceBean.selectedRace.raceName} sonuçları"/>  
+                        </f:facet>  
+
+                        <p:column id="racerChestNumberColumn" filterBy="#{score.chestNumber.chestNumber}" sortBy="#{score.chestNumber.chestNumber}" headerText="Göğüs No" filterStyle="width:75px;" width="75" filterMatchMode="exact">  
+                            <h:outputText value="#{score.chestNumber.chestNumber}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="racerNameColumn" filterStyle="width:300px;" filterBy="#{score.account.name}" sortBy="#{score.account.name}"  headerText="Ad" width="200" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.name}" />  
+                        </p:column>  
+
+                        <p:column id="racerSurnameColumn" filterStyle="width:300px;" filterBy="#{score.account.surname}" sortBy="#{score.account.surname}" headerText="Soyad" width="155" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.surname}" />  
+                        </p:column>  
+
+                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender eq 'E' ? 'Erkek' : 'Kadın'}" sortBy="#{score.account.gender eq 'E' ? 'Erkek' : 'Kadın'}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.gender eq 'E' ? 'Erkek' : 'Kadın'}" />  
+                        </p:column>  
+                        
+                        <p:column id="racerDurationColumn" sortBy="#{score.duration}" headerText="Süre" filterMatchMode="exact">  
+                            <h:outputText value="#{score.duration}">
+                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                            </h:outputText>
+                        </p:column>    
+                    </p:dataTable>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

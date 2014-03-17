@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment>
+        <p:dialog id="profileImageTakenDialog" height="300" width="800" header="Profile Resmi Yükle" widgetVar="profileImageTakenDialogWidget"> 
+            <h:panelGrid columns="3">  
+                <p:photoCam widgetVar="pc" listener="#{profileImageUploadBean.oncapture}" update="takenPhoto"/>  
+                <p:commandButton type="button" value="Resim Çek" onclick="pc.capture();"/>  
+                <h:graphicImage id="takenPhoto" value="#{profileImageUploadBean.imageUrl}" /> 
+            </h:panelGrid> 
+            <f:facet name="footer">  
+                <p:commandButton value="Devam Et" onclick="window.location.href='/insession/profile/imageCropPage.jsf'" style="float: right;"/>
+            </f:facet>  
+        </p:dialog>
+    </ui:fragment>
+</html>
+

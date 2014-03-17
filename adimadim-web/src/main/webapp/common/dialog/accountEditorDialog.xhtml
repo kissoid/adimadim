@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <h:form id="accountEditorForm">  
+            <p:dialog id="accountEditorDialog" width="450" height="240" modal="true" header="Hesap Bilgileri" closeOnEscape="true" widgetVar="accountEditorDialog">  
+                <div style="margin-top: 20px;">
+                    <ui:include src="/common/fragment/accountEditor.xhtml" />
+                    <p:commandButton value="Kaydet" id="accountEditorSaveButton" actionListener="#{accountBean.updateAccount}" update=":accountEditorForm:accountEditor_panel,:headerForm" style="position: absolute;bottom:10px;right:33px;" />  
+                </div>
+            </p:dialog>
+        </h:form> 
+    </ui:fragment>
+</html>
+

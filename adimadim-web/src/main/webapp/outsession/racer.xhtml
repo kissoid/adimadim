@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <p:toolbar style="margin-bottom: 5px;margin-top: 20px;">
+                        <p:toolbarGroup align="left">
+                            <p:commandButton value="İstatistikleri Göster" actionListener="#{racerBean.retrieveRacerStatistics}" />  
+                        </p:toolbarGroup>
+                    </p:toolbar> 
+
+                    <p:dataTable id="racerTable" var="racer" value="#{racerBean.racerList}" widgetVar="racerTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{racerBean.selectedRacer}" rowKey="#{racer.accountId}">  
+                        <f:facet name="header">  
+                            <h:outputText value="Yarışçılar"/>  
+                        </f:facet>  
+
+                        <p:column selectionMode="single" style="width:20px;" />  
+
+                        <p:column id="racerIdColumn" filterStyle="width:50px;" filterBy="#{racer.accountId}" sortBy="#{racer.accountId}" headerText="Üye No" width="50" filterMatchMode="exact">  
+                            <h:outputText value="#{racer.accountId}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{racer.name}" sortBy="#{racer.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{racer.name}" />  
+                        </p:column>  
+
+                        <p:column id="racerSurnameColumn" filterStyle="width:130px;" filterBy="#{racer.surname}" sortBy="#{racer.surname}" headerText="Soyad" width="130" filterMatchMode="contains">  
+                            <h:outputText value="#{racer.surname}" />  
+                        </p:column>  
+
+                        <p:column id="racerEmailColumn" filterStyle="width:120px;" filterBy="#{racer.email}" sortBy="#{racer.email}" headerText="E-mail" width="120" filterMatchMode="contains">  
+                            <h:outputText value="#{racer.email}" />  
+                        </p:column> 
+
+                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{racer.gender eq 'E' ? 'Erkek' : 'Kadın'}" sortBy="#{racer.gender eq 'E' ? 'Erkek' : 'Kadın'}" headerText="Cinsiyet" width="50" filterMatchMode="startsWith">  
+                            <h:outputText value="#{racer.gender eq 'E' ? 'Erkek' : 'Kadın'}" />  
+                        </p:column> 
+                    </p:dataTable>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

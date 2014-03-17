@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <h:form id="orderStateForm">  
+            <p:dialog id="orderStateDialog" showHeader="false" modal="true" closeOnEscape="true" widgetVar="orderStateDialog" width="720" height="450">  
+                <p:commandLink style="position:absolute;left:690px;" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[0], true);orderStateDialog.hide();"><h:graphicImage value="/resource/image/close.png" /></p:commandLink>
+                <p:wizard showNavBar="false" nextLabel="Devam Et" backLabel="Geri Dön" widgetVar="orderStateWizard" style="width:600px;">  
+                    <p:tab title="Siparişler" titleStyle="display:none;" >
+                        <div  style="position: absolute;top:20px;left:20px;font-size: 14px;font-weight: bold;">Sipariş Listesi</div>
+                        <div style="position: absolute;top:40px;left:20px;width: 680px;">
+                            <p:dataTable id="orderStateTable" var="orderMaster"  emptyMessage="Sipariş bulunamadı" value="#{orderStateBean.orderList}" rows="11" paginatorPosition="bottom" paginator="true">  
+                                <p:column  headerText="Sipariş No" id="orderId" style="width: 60px;text-align: left">#{orderMaster.orderId}</p:column>  
+                                <p:column headerText="Sipariş Tarihi" id="orderDate" style="width: 140px;text-align: left"><h:outputText value="#{orderMaster.createDate}" ><f:convertDateTime pattern="dd.MM.yyyy HH:mm" /></h:outputText></p:column>  
+                                <p:column headerText="Sipariş Durumu" id="orderState" style="width: 200px;text-align: left"><h:outputText value="#{orderMaster.orderState.name}" ><f:convertDateTime pattern="dd.MM.yyyy HH:mm" /></h:outputText></p:column>  
+                                <p:column headerText="Kargo Takip No" id="cargoCode" style="width: 100px;text-align: left"><h:outputText value="#{orderMaster.cargoCode}" /></p:column>  
+                                <p:column headerText="Detaylar" id="orderDetail" style="width: 40px;text-align: center">
+                                    <p:commandLink actionListener="#{orderStateBean.selectOrder(orderMaster.orderId)}" oncomplete="orderStateWizard.next();" >
+                                        <h:graphicImage value="/resource/image/search.png" />
+                                    </p:commandLink>
+                                </p:column>  
+                                <p:column headerText="İade" id="orderReturn" style="width: 40px;text-align: center">
+                                    <p:commandLink id="returnOrder" disabled="#{orderMaster.orderState.stateId!=2}" actionListener="#{orderStateBean.selectOrder(orderMaster.orderId)}" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[2], true);" >
+                                        <h:graphicImage value="/resource/image/return.png" />
+                                    </p:commandLink>
+                                    <p:tooltip for="returnOrder" value="Siparişi iade et" showEffect="clip" hideEffect="explode" />
+                                </p:column>
+                                <p:column headerText="İptal" id="orderCancel" style="width: 40px;text-align: center">
+                                    <p:commandLink id="cancelOrder" disabled="#{orderMaster.orderState.stateId!=1}" onclick="if(!confirm('Sipari\u015fi iptal etmek istedi\u011finize emin misiniz?')){return false;}" actionListener="#{orderStateBean.cancelOrder(orderMaster.orderId)}" update="orderStateTable" >
+                                        <h:graphicImage value="/resource/image/delete.png" />
+                                    </p:commandLink>
+                                    <p:tooltip for="cancelOrder" value="Siparişi iptal et" showEffect="clip" hideEffect="explode" />
+                                </p:column> 
+                            </p:dataTable>  
+                        </div>
+                    </p:tab>
+                    <p:tab title="Sipariş Detayı" titleStyle="display:none;">
+                        <div  style="position: absolute;top:20px;left:20px;font-size: 14px;font-weight: bold;">Sipariş Detayları</div>
+                        <div style="position: absolute;top:40px;left:20px;width: 600px;">
+                            <p:dataTable id="orderStateDetailTable" var="orderDetail" emptyMessage="Sipariş detayı bulunamadı" value="#{orderStateBean.selectedOrder.orderDetailList}" rows="11" paginatorPosition="bottom" paginator="true" >  
+                                <p:column headerText="Ürün No" style="width: 50px;text-align: left">#{orderDetail.productId}</p:column>  
+                                <p:column headerText="Ürün Adı" style="width: 150px;text-align: left"><h:outputText value="#{orderDetail.product.productName}" ><f:convertDateTime pattern="dd.MM.yyyy HH:mm" /></h:outputText></p:column>  
+                                <p:column headerText="İade no" style="width: 30px;text-align: right">#{orderDetail.returnId}</p:column>  
+                                <p:column headerText="Miktar" style="width: 60px;text-align: right"><h:outputText value="#{orderDetail.quantity} #{orderDetail.product.unit}" ><f:convertNumber maxFractionDigits="2" minFractionDigits="2" groupingUsed="false" /></h:outputText></p:column>  
+                                <p:column headerText="Tutar" style="width: 60px;text-align: right"><h:outputText value="#{orderDetail.totalPrice} #{orderDetail.product.currency}" ><f:convertNumber maxFractionDigits="2" minFractionDigits="2" groupingUsed="false" /></h:outputText></p:column>  
+                            </p:dataTable> 
+                        </div>
+                        <div style="position: absolute;top:420px;left:18px;">
+                            <p:commandButton value="&lt;&lt; Sipariş Listesine Geri Dön" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[0], true);" style="float: left" />
+                        </div>
+                    </p:tab>
+                    <p:tab title="İade edilecek ürünler" titleStyle="display:none;">
+                        <div  style="position: absolute;top:20px;left:20px;font-size: 14px;font-weight: bold;">İade edilecek sipariş satırlarını seçiniz</div>
+                        <div style="position: absolute;top:40px;left:20px;width: 600px;">
+                            <p:dataTable id="returnOrderDetailTable" var="detail" rowKey="#{detail.detailId}" value="#{orderStateBean.selectedOrder.orderDetailList}" selection="#{orderStateBean.returnDetailList}" rows="11" paginator="true" paginatorPosition="bottom">
+                                <p:column selectionMode="multiple" disabledSelection="#{detail.returnId!=null}" style="width:2%" />  
+                                <p:column headerText="Urun Kodu" style="width: 20px;text-align: left">#{detail.productId}</p:column>  
+                                <p:column headerText="Ürün Adı" style="width: 100px;text-align: left">#{detail.product.productName}</p:column>  
+                                <p:column headerText="İade no" style="width: 30px;text-align: right">#{detail.returnId}</p:column>  
+                                <p:column headerText="Miktar" style="width: 50px;text-align: left">#{detail.quantity} #{detail.product.unit}</p:column>  
+                                <p:column headerText="Fiyat" style="width: 50px;text-align: left">#{detail.totalPrice} #{detail.product.currency}</p:column>  
+                            </p:dataTable> 
+                        </div>
+                        <div style="position: absolute;top:420px;right:20px;">
+                            <p:commandButton value="Devam Et" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[3], true);" style="float: right;" />
+                            <p:commandButton value="Geri Dön" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[0], true);" style="float: right;" />
+                        </div>
+                    </p:tab>
+                    <p:tab title="Sipariş İade sebebi" titleStyle="display:none;">
+                        <div style="position: absolute;top:40px;left:20px;width: 600px;">
+                            <p:messages id="returnMessage" globalOnly="true" />
+                            <p:panelGrid columns="1">
+                                <p:inputTextarea id="cancellationMessage" value="#{orderStateBean.returnMessage}" rows="10" cols="90"></p:inputTextarea>
+                                <p:watermark for="cancellationMessage" value="Lütfen iade sebebinizi yazınız" />
+                            </p:panelGrid>
+                        </div>
+                        <div style="position: absolute;top:420px;right:20px;">
+                            <p:commandButton value="Siparişlere Geri Dön" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[0], true);" />
+                            <p:commandButton value="Geri Dön" oncomplete="orderStateWizard.loadStep(orderStateWizard.cfg.steps[2], true);" />
+                            <p:commandButton value="İade Et" actionListener="#{orderStateBean.returnOrderDetails}" update=":orderStateForm:returnOrderDetailTable,:headerForm,returnMessage" />
+                        </div>
+                    </p:tab>
+                </p:wizard>
+                <p:commandLink oncomplete="cargoFollowDialog.show();" style="position: absolute; bottom: 5px; right: 20px;">  
+                    <h:graphicImage value="/resource/image/kargom_nerede.png" />
+                </p:commandLink>
+                <p:dialog id="cargoFollowDialog"  widgetVar="cargoFollowDialog">
+                    <iframe frameborder="0" align="left"
+                            src="http://www1.ptt.gov.tr/tr/interaktif/kayitliposta_yeniweb.php"
+                            name="cargoFollow" id="cargoFollow" scrolling="auto" width="600"
+                            height="450" marginheight="5" marginwidth="10">
+                    </iframe>
+                </p:dialog>
+            </p:dialog>
+        </h:form>
+    </ui:fragment>
+</html>
+

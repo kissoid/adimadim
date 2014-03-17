@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment rendered="#{managementMainPageBean.activeFragment eq 'teamManager' ? true: false}">
+        <h:form id="createTeamDialogForm">  
+            <p:dialog id="createTeamDialog" header="Yeni takım oluştur" closeOnEscape="true" modal="true" widgetVar="createTeamDialog" width="500" height="150">  
+                <p:messages autoUpdate="true" />
+                <p:panelGrid id="createTeam_teamPanel" columns="3" style="vertical-align: text-top;">
+                    <p:outputLabel value="Takım Adı : " for="createTeam_teamName" />
+                    <p:inputText id="createTeam_teamName" value="#{raceBean.newTeam.teamName}" style="width: 300px;" required="true" requiredMessage="Lütfen yarış ismini boş geçmeyiniz." />
+                    <p:message for="createTeam_teamName" display="icon" />
+                </p:panelGrid>
+                <p:commandButton value="Oluştur" id="createTeam_createTeamButton" actionListener="#{raceBean.createTeam}" style="position: absolute;right: 50px;bottom: 50px;" update=":mainForm:teamTable,:createTeamDialogForm:createTeam_teamPanel,:headerForm:growlMessage"/>
+            </p:dialog>
+        </h:form>
+    </ui:fragment>
+</html>
+

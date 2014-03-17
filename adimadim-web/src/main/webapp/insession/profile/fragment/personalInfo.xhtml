@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment>
+        <table>
+            <tr style="height: 25px;">
+                <td class="coloredCell" width="100">
+                    <p:outputLabel value="Şehir"/>
+                </td>
+                <td width="250">
+                    <p:inplace editor="true" disabled="#{!profilePageBean.profileOwner}" emptyLabel="Lütfen şehrinizi yazınız" style="color:#707070; font-weight: bold;">
+                        <p:ajax event="save" listener="#{accountBean.saveReloadAccountAndProperties}" update=":headerForm:growlMessage" />
+                        <p:inputText value="#{accountBean.accountPropertyMap[4]}"/>
+                    </p:inplace>
+                </td>
+                <td class="coloredCell" width="100">
+                    <p:outputLabel value="Doğum Tarihi"/>
+                </td>
+                <td width="250">
+                    <p:inplace editor="true" disabled="#{!profilePageBean.profileOwner}" style="color:#707070; font-weight: bold;">
+                        <p:ajax event="save" listener="#{accountBean.saveReloadAccountAndProperties}" update=":headerForm:growlMessage" />
+                        <p:calendar value="#{accountBean.profileAccount.birthDate}" pattern="dd.MM.yyyy">
+                            <f:convertDateTime pattern="dd.MM.yyyy" locale="tr_TR" type="date" dateStyle="short" timeZone="Turkey" />
+                        </p:calendar>
+                    </p:inplace>
+                </td>
+            </tr>
+        </table>
+    </ui:fragment>
+</html>
+

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment rendered="#{mainPageBean.activeFragment eq 'mostRunning' ? true: false}">
+        <div style="margin-bottom: 30px;">
+            <h:outputText value="En Çok Gelişenler" style="color:#336699; font-weight: bold;font-size: 16px;" />
+            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 5px;"/>
+            <div style="width: 650px;">
+                <p:messages autoUpdate="true" globalOnly="true" />                  
+                <p:toolbar style="margin-bottom: 5px;margin-top: 20px;">
+                    <p:toolbarGroup align="left">
+                        <p:outputLabel value=" Başlangıç Tarihi " for="mostRunningStartDate" />
+                        <p:calendar id="mostRunningStartDate" value="#{mostRunningBean.startDate}" locale="tr" showOn="button" />
+                        <p:separator />
+                        <p:outputLabel value=" Bitiş Tarihi " for="mostRunningEndDate" />
+                        <p:calendar id="mostRunningEndDate" value="#{mostRunningBean.endDate}" locale="tr" showOn="button"  />
+                        <p:commandButton value="Sorgula" id="mostRunningQueryButton" actionListener="#{mostRunningBean.retrieveMostRunningList}" update=":mainForm:mostRunningTable" />
+                    </p:toolbarGroup>
+                </p:toolbar> 
+                <p:dataTable id="mostRunningTable" var="most" value="#{mostRunningBean.mostRunningList}" widgetVar="mostRunningTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" >  
+                    <f:facet name="header">  
+                        <h:outputText value="En çok Koşanlar"/>  
+                    </f:facet>  
+
+                    <p:column id="racerIdColumn" filterStyle="width:50px;" filterBy="#{most.accountId}" sortBy="#{most.accountId}"  headerText="No" width="50" filterMatchMode="exact">  
+                        <h:outputText style="float: right;" value="#{most.accountId}" />  
+                    </p:column>  
+
+                    <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{most.name}" sortBy="#{most.name}"  headerText="Ad" width="150" filterMatchMode="contains">  
+                        <h:outputText value="#{most.name}" />  
+                    </p:column>  
+
+                    <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{most.surname}" sortBy="#{most.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                        <h:outputText value="#{most.surname}" />  
+                    </p:column>  
+
+                    <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{most.gender eq 'E' ? 'Erkek' : 'Kadın'}" sortBy="#{most.gender eq 'E' ? 'Erkek' : 'Kadın'}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                        <h:outputText value="#{most.gender eq 'E' ? 'Erkek' : 'Kadın'}" />  
+                    </p:column>  
+
+                    <p:column id="raceCountColumn" filterBy="#{most.raceCount}" filterStyle="width:50px;" width="50" sortBy="#{most.raceCount}" headerText="Yarış Sayısı"  filterMatchMode="exact">  
+                        <h:outputText value="#{most.raceCount}" style="float: right;"/>  
+                    </p:column>   
+                </p:dataTable>  
+            </div>
+        </div>
+    </ui:fragment>
+</html>
+

@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <div align="center" style="position: relative;padding-top: 20px;">
+
+                        <div class="shadowed-box" style="width: 600px; padding: 20px;background-color: #FFFFFF;">
+                            <p:messages autoUpdate="true" />
+                            <table style="margin: 0 auto;">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h:outputText value="Adım Adım Koşu Kayıt Formu" style="float: left;" class="standartFontColor boldFont" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>                                
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Ad : " class="standartFontColor" />
+                                    </td>
+                                    <td>
+                                        <p:inputText id="accountName" value="#{registerBean.account.name}" required="true" requiredMessage="Lütfen ad alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountName" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Soyad : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountSurname" value="#{registerBean.account.surname}" required="true" requiredMessage="Lütfen soyad alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountSurname" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Cinsiyet : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:selectOneMenu id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız.">  
+                                            <f:selectItem itemLabel="Seçiniz" itemValue="" />
+                                            <f:selectItem itemLabel="Kadın" itemValue="K" />  
+                                            <f:selectItem itemLabel="Erkek" itemValue="E" /> 
+                                        </p:selectOneMenu> 
+                                    </td>
+                                    <td>
+                                        <p:message for="accountGender" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Doğum Tarihi : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputMask id="accountBirthDate" value="#{registerBean.account.tempBirthDate}" mask="99.99.9999"> 
+                                            <p:ajax event="blur" update="accountParentName" oncomplete="document.getElementById('mainForm:accountParentName').focus();"/> 
+                                        </p:inputMask>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountBirthDate" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Veli İsmi : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountParentName" value="#{registerBean.accountProperties['1']}" disabled="#{registerBean.olderThanEighteen?'true':'false'}" required="#{registerBean.olderThanEighteen?'false':'true'}" requiredMessage="Lütfen velinizin adını giriniz."/>
+                                    </td>
+                                    <td>
+                                        <p:watermark for="accountParentName" value="18 yaşından küçükler için." />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="E-mail : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}"  required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountEmail" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="E-mail (Tekrar) : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountReEmail" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Şifre : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:password id="accountPassword" value="#{registerBean.account.password}" required="true" requiredMessage="Lütfen şifre alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountPassword" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Şifre (Tekrar) : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:password id="accountRePassword" value="#{registerBean.account.rePassword}" required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountRePassword" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Telefon : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountPhoneCode" value="#{registerBean.account.phoneCode}" size="3" style="margin-right: 3px;" maxlength="3"  required="true" requiredMessage="Lütfen telefon kodu alanını boş bırakmayınız."/>
+                                        <p:inputText id="accountPhoneNumber" value="#{registerBean.account.phoneNumber}" size="9" maxlength="7" required="true" requiredMessage="Lütfen telefon numarası alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountPhoneCode" display="icon" />
+                                        <p:message for="accountPhoneNumber" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Adımadım Üyesiyim : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:selectOneMenu value="#{registerBean.account.adimadim}" required="true" requiredMessage="Lütfen adımadım üyesi olup olmadığınızı belirtin.">  
+                                            <f:selectItem itemLabel="Seçiniz" itemValue="" />
+                                            <f:selectItem itemLabel="Evet" itemValue="E" />  
+                                            <f:selectItem itemLabel="Hayır" itemValue="H" /> 
+                                        </p:selectOneMenu> 
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3">
+                                        <h:outputText class="boldFont standartFontColor" value="Acil durumda aranacak kişi bilgisi" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="İsim : " class="standartFontColor" />
+                                    </td>
+                                    <td>
+                                        <p:inputText id="emergencyName" value="#{registerBean.accountProperties['2']}"  required="true" requiredMessage="Lütfen acil durum için ad alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="emergencyName" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="Telefon : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="emergencyPhoneNumber" value="#{registerBean.accountProperties['3']}" size="20" maxlength="15" required="true" requiredMessage="Lütfen acil durum telefon numarası alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="emergencyPhoneNumber" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:outputText value="Risk Kabul Beyannamesi" class="standartFontColor" />
+                                        <br/>
+                                        <p:inputTextarea rows="5" style="width:100%;" autoResize="false" readonly="true" value="            BELGRAD ORMANI YÜRÜYÜŞ VE KOŞU PARKURU ADIM ADIM OLUŞUMU 6 KİLOMETRE KOŞUSU RİSK KABUL BEYANNAMESİ 1. Yarışma parkuru, Belgrad Ormanı yürüyüş ve koşu parkuru olarak ayrılmış toprak yolda düzenlenmiştir. Katılımcı olarak, doğa sporlarında risklerin tamamen yok edilemeyeceğini, güvenliğinin maksimum olabilmesi için yarışma organizasyonunun aktardığı ve duyurduğu kurallara tamamen uymam gerektiğini kabul ediyorum. 2. Yarış halka açık alanlarda yapılacağı için katılımcı olarak İl Çevre ve Orman Müdürlüğü’nün
+                                                         Belgrad Ormanı yürüyüş ve koşu parkuru için belirlediği kurallara ve genel toplum kurallarına uymakla yükümlü olduğumu kabul ediyorum. 3. Organizasyon kuralları dışında davranmak, parkur dışı araziye girmek, yarış sırasında 3. şahısların veya kurumların can ve mal güvenliğine zarar vermek yasaklanmıştır ve tamamen benim sorumluluğumdadır, kurallara uymamam halinde yarış organizasyon komitesi ve sponsorlar sorumlu olamaz. Yarış organizasyonunda, parkur içinde veya yakınında herhangi bir sağlık hizmeti,
+                                                         sağlık kuruluşu, doktor, ambulans, hastane bulunmadığını biliyorum. 4. 6 Kilometre Belgrad Ormanı yürüyüş ve koşu parkuru koşuları, arazi koşullarında yapılan fiziksel aktivitelerdir. Doktor tarafından fiziksel aktivite kısıtlaması getirilmiş kişilerin doktorlarına danışması önerilir. Aerobik efor harcamasında sakınca olan, sürekli gözetim altında olması gereken, sara rahatsızlığı olan kişilerin katılması kendi sağlıkları açısından sakıncalıdır. 3 aydan az hamile olan kadınların kontrollü ilerlemek
+                                                         şartı ile katılması mümkündür. 3 aydan fazla hamile olan kadınların katılması sakıncalıdır. Bu yarışa katılmam için tıbbi bakımdan hiçbir engelim, rahatsızlığım (kalp, solunum yetmezliği, astım, kas eklem rahatsızlıkları vs.) olmadığını, bu koşu için fiziki olarak yeterli olduğumu beyan ederim. 5. İmzaladığım bu belge ile ben, kendi adıma ve varislerim, yöneticilerim, şahsi ve hukuki temsilcilerim adına; 6 Kilometre Belgrad Ormanı yürüyüş ve koşu parkuru koşusu sırasında, yarış öncesi ve sonrası
+                                                         aktiviteler esnasında başıma gelebilecek herhangi bir sakatlık, kayıp veya hasar durumunda organizatörlerin, organizasyonda görevli kişilerin, sponsorların, organizasyon temsilcilerinin sorumlu tutulmayacağını, her türlü sorumluluğun şahsıma ait olduğunu; Yarışma Katılım Koşulları’nı okuyup kabul ettiğimi; bu yarışa katılmam için tıbbi bakımdan hiçbir engelim olmadığını, bu koşu için fiziki olarak yeterli olduğumu, Kabul ve Beyan ederim." />
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:outputText value="Legal Waiver and Release Form" class="standartFontColor" />
+                                        <br/>
+                                        <p:inputTextarea rows="5" style="width:100%" autoResize="false" readonly="true" value="            Adım Adım Belgrad Forest 6k Fun Run Legal Waiver and Release Form I am fully aware of and appreciate that training for and running or speed walking may result in accidents or serious injury. I am voluntarily participating in the Adım Adım Belgrad Forest 6k Fun Run with complete knowledge of the associated risks, and I agree to accept responsibility for all risks of injury. By signing this Waiver and Release, I declare that I am medically able and capable of participating in a 6k run or speed walk.
+                                                         I agree to independently consult my physician in the event of any injuries or medical questions arising from or related to my participation in the Adım Adım Belgrad Forest 6k Fun Run. I also acknowledge that Adım Adım does not provide any medical assistance or first aid help in case of injury or illness and that I assume full and sole responsibility for my own medical expenses and that I am responsible for any and all medical expenses on my behalf. I have carefully read this Waiver and Release and
+                                                         fully understand its contents. If I am under 18 years of age at the time of registration, my parents or legal guardians have fully read, understand, and consented to the terms of this Waiver and Release and by signature below authorize my participation. By signing this waiver, I have indicated that I have read, understand and agree to the conditions and commitment of the Waiver and Release above." />
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <p:selectBooleanCheckbox value="#{registerBean.riskAccepted}" />
+                                        <h:outputText value=" Risk Kabul Beyannamesini okuduğumu ve kabul ettiğimi beyan ederim." class="boldFont standartFontColor" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 20px;">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <p:commandLink id="createAccountButton" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" style="float: right;"><h:graphicImage id="createAccountButtonImage" value="/resource/image/register.png" /></p:commandLink>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <div>
+            <p:commandLink value="Yönetim" rendered="#{accountBean.userManager}" onclick="window.location.href='/management/index.html';" style="font-size:13px;font-weight: bold;" />
+            <h:outputText value=" | " rendered="#{accountBean.userManager}" />
+            <p:commandLink id="userMenu" value="#{accountBean.account.name} #{accountBean.account.surname}  &#9660;"  style="font-size:13px;font-weight: bold;" />
+            <p:menu overlay="true" trigger="userMenu" style="font-size:13px " my="left top" at="left bottom">  
+                <p:menuitem value="Hesap Bilgileri" oncomplete="accountEditorDialog.show();" />  
+                <p:menuitem value="Şifre Değiştir"  oncomplete="passwordEditorDialog.show();" />
+                <p:menuitem value="Oturumu Kapat"  />   
+            </p:menu> 
+            <h:outputText value=" | " rendered="#{accountBean.userSignedIn}" />
+            <p:commandLink value="Üye Girişi" rendered="#{!accountBean.userSignedIn}" oncomplete="signInDialog.show();" update=":signInForm" style="font-size:13px;font-weight: bold;" />
+            <h:outputText value=" | " rendered="#{!accountBean.userSignedIn}" />
+            <p:commandLink value="Yeni Üye" rendered="#{!accountBean.userSignedIn}" oncomplete="signUpDialog.show();" update=":signUpForm" style="font-size:13px;font-weight: bold;" />
+            <h:outputText value=" | " rendered="#{!accountBean.userSignedIn}" />
+            <p:commandLink value="Sipariş Durumu" rendered="#{accountBean.userSignedIn}" actionListener="#{orderStateBean.retrieveUserOrderList}" oncomplete="orderStateDialog.show();" update=":orderStateForm" style="font-size:13px;font-weight: bold;" />
+            <h:outputText value=" | " rendered="#{accountBean.userSignedIn}"/>
+            <p:commandLink value="İletişim" onclick="window.location.href='/contactUs.jsf'" style="font-size:13px;font-weight: bold;" />
+            <h:outputText value=" | " />
+            <p:commandLink value="Hakkımızda" onclick="window.location.href='/aboutUs.jsf'" style="font-size:13px;font-weight: bold;" />
+        </div>
+    </ui:fragment>
+</html>
+

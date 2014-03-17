@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment rendered="#{managementMainPageBean.activeFragment eq 'raceManager' ? true: false}">
+        <p:toolbar style="margin-bottom: 5px;">
+            <p:toolbarGroup align="left">
+                <p:commandButton value="Yeni yarış" oncomplete="createRaceDialog.show();" />  
+                <p:commandButton value="Yarışı düzelt" oncomplete="updateRaceDialog.show();" update=":updateRaceDialogForm:updateRace_raceName,:updateRaceDialogForm:updateRace_raceDate" />  
+                <p:commandButton value="Yarışı sil" id="race_deleteRace" actionListener="#{raceBean.deleteRace}" update=":mainForm:raceTable" />  
+            </p:toolbarGroup>
+        </p:toolbar> 
+        <p:dataTable id="raceTable" var="race" value="#{raceBean.raceList}" widgetVar="raceTableWidget" emptyMessage="Yarış bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceBean.selectedRace}" rowKey="#{race.raceId}">  
+            <f:facet name="header">  
+                <h:outputText value="Yarış Listesi"/>  
+            </f:facet>  
+            <p:column selectionMode="single" style="width:20px;" />  
+
+            <p:column id="raceIdColumn" filterBy="#{race.raceId}" sortBy="#{race.raceId}" headerText="Yarış No" width="50" filterStyle="width:50px;" filterMatchMode="exact">  
+                <h:outputText value="#{race.raceId}" style="float: right;"/>  
+            </p:column>  
+
+            <p:column id="raceNameColumn" filterStyle="width:440px;" filterBy="#{race.raceName}" sortBy="#{race.raceName}" headerText="Yarış Adı" width="440" filterMatchMode="contains">  
+                <h:outputText value="#{race.raceName}" />  
+            </p:column>  
+
+            <p:column id="raceDateColumn" sortBy="#{race.raceDate}" headerText="Yarış Tarihi" >  
+                <h:outputText value="#{race.raceDate}" >  
+                    <f:convertDateTime pattern="dd.MM.yyyy" />
+                </h:outputText>
+            </p:column>    
+        </p:dataTable>  
+    </ui:fragment>
+</html>
+

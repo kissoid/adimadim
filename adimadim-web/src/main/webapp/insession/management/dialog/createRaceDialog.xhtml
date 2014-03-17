@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment rendered="#{managementMainPageBean.activeFragment eq 'raceManager' ? true: false}">
+        <h:form id="createRaceDialogForm">  
+            <p:dialog id="createRaceDialog" header="Yeni yarış oluştur" closeOnEscape="true" modal="true" widgetVar="createRaceDialog" width="500" height="200">  
+                <p:messages autoUpdate="true" />
+                <p:panelGrid id="createRace_racePanel" columns="3" style="vertical-align: text-top;">
+                    <p:outputLabel value="Yarış Adı : " for="createRace_raceName" />
+                    <p:inputText id="createRace_raceName" value="#{raceBean.newRace.raceName}" style="width: 300px;" required="true" requiredMessage="Lütfen yarış ismini boş geçmeyiniz." />
+                    <p:message for="createRace_raceName" display="icon" />
+                    <p:outputLabel value="Yarış Tarihi : " for="createRace_raceDate" />
+                    <p:calendar locale="tr" showOn="button" value="#{raceBean.newRace.raceDate}" id="createRace_raceDate" required="true" requiredMessage="Lütfen yarış tarihini seçiniz."/> 
+                    <p:message for="createRace_raceDate" display="icon" />
+                </p:panelGrid>
+                <p:commandButton value="Oluştur" id="createRace_createRaceButton" actionListener="#{raceBean.createRace}" style="position: absolute;right: 50px;bottom: 50px;" update=":mainForm:raceTable,:createRaceDialogForm:createRace_racePanel,:headerForm:growlMessage"/>
+            </p:dialog>
+        </h:form>
+    </ui:fragment>
+</html>
+

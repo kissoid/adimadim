@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+
+        <h:form id="commentListForm">  
+            <p:dialog id="commentListDialog" header="Yorumlar" modal="true" closeOnEscape="true" widgetVar="commentListDialog" width="750" height="390" >  
+                <p:dataGrid columns="1" id="commentListTable" style="width:700px;" var="comment" emptyMessage="Yorum yok" value="#{basketBean.selectedProduct.productCommentList}" rows="4" paginatorPosition="bottom" paginator="true" >  
+                    <p:panelGrid columns="1">
+                        <h:outputText value="#{comment.comment}" />
+                        <h:outputText value="#{comment.name}" style="font-weight: bold" />
+                    </p:panelGrid>
+                </p:dataGrid> 
+            </p:dialog>
+        </h:form>
+    </ui:fragment>
+</html>
+

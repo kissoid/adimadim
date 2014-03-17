@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Adım Adım Koşu</title>
+            </f:facet>
+            <link rel="SHORTCUT ICON" href="/resource/image/favicon.png"/>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="keywords" content="" />
+            <meta name="description" content=""  />
+            <link href="/resource/css/common.css" type="text/css" rel="stylesheet" /> 
+            <script type='text/javascript' src='/resource/js/primefaces_locale_tr.js'></script>
+            <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+            <ui:insert name="head"></ui:insert>
+            <script type="text/javascript">  
+                function handleLoginRequest(xhr, status, args) { 
+                    if(args.loggedIn) { 
+                        signInDialog.hide();       
+                        signUpDialog.hide();
+                    }  
+                } 
+            </script> 
+        </h:head>
+
+        <h:body>
+            <h:form>
+                <p:poll interval="60" listener="#{keepSessionBean.keepSession}"  /> 
+            </h:form>
+            <div id="header">
+                <h:form id="headerForm">
+                    <p:growl id="growlMessage" showDetail="false" globalOnly="true" sticky="false"/> 
+                    <div style="width:950px;margin:0 auto;padding-top: 5px;">
+                        <img src="/resource/image/adimadimkosu_logo.png" style="float:left"/>
+                        <ui:include src="/template/fragment/headerMenu.xhtml" />
+                    </div>
+                </h:form>
+            </div>
+            <div id="main">
+
+                <div>
+                    <ui:insert name="content"/>
+                </div>
+
+                <ui:include src="/common/dialog/signInDialog.xhtml" />
+                <ui:include src="/common/dialog/accountEditorDialog.xhtml" />
+                <ui:include src="/common/dialog/passwordEditorDialog.xhtml" />
+
+                <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:5px;bottom:5px">  
+                    <f:facet name="start">  
+                        <p:graphicImage value="/resource/image/ajax-loader.gif" />  
+                    </f:facet>  
+
+                    <f:facet name="complete">  
+                        <h:outputText value="" />  
+                    </f:facet>  
+                </p:ajaxStatus> 
+
+                <!-- Place this tag after the last +1 button tag. -->
+                <script type="text/javascript">
+                    window.___gcfg = {lang: 'tr'};
+
+                    (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+                <script>
+                        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+                </script>
+            </div>
+
+        </h:body>
+    </f:view>
+</html>

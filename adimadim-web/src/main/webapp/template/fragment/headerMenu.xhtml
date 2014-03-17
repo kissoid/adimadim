@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <div class="nav" style="float:right; padding-top: 30px;">
+            <ul>
+                <li style="display: #{accountBean.userSignedIn?'none':'inline'};"><div class="menuitem"><a href="/" title="" style="color:white;">Giriş Sayfası</a></div></li>
+                <li style="display: #{!accountBean.userSignedIn?'none':'inline'};"><div class="menuitem"><a href="/insession/main/mainPage.jsf" title="" style="color:white;">Ana Sayfa</a></div></li>
+                <li style="display: #{!accountBean.userSignedIn?'none':'inline'};"><div class="menuitem"><p:commandLink actionListener="#{accountBean.changeProfileAccount(accountBean.account)}" oncomplete="window.location.href='/insession/profile/profilePage.jsf'" title="" style="color: white;font-size:11px;font-family:Tahoma;"><h:outputText value="#{accountBean.profileAccount.name} #{accountBean.profileAccount.surname}" /></p:commandLink></div></li>
+                <li style="display: #{accountBean.userSignedIn?'none':'inline'};"><div class="menuitem"><a href="#" id="signIn" title="Giriş Yap" onclick="signInDialog.show();" style="color:white;">Giriş Yap</a></div></li>
+                <li style="display: #{accountBean.userSignedIn?'none':'inline'};"><div class="menuitem"><a href="/outsession/register/register.jsf" id="register" title="Üye Ol" style="color:white;">Kayıt Ol</a></div></li>
+                <li style="display: #{!accountBean.userSignedIn?'none':'inline'};"><div class="menuitem"><p:commandLink id="accountSettings" title="" style="color: white;font-size:11px;font-family:Tahoma;">Hesap Ayarları</p:commandLink></div></li>
+            </ul>
+        </div>
+        <p:menu id="accountSettingsMenu" overlay="true" trigger="accountSettings" style="font-size:13px " my="left top" at="left bottom">  
+            <p:menuitem value="Hesap Bilgileri" oncomplete="accountEditorDialog.show();" />  
+            <p:menuitem value="Şifre Değiştir"  oncomplete="passwordEditorDialog.show();" />  
+            <p:menuitem value="Oturumu Kapat" actionListener="#{accountBean.startSignOutOperation}"  />   
+        </p:menu> 
+    </ui:fragment>
+</html>
+

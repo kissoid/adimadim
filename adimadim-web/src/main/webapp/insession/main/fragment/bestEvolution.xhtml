@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:fragment rendered="#{mainPageBean.activeFragment eq 'bestEvolution' ? true: false }">
+        <div style="margin-bottom: 30px;">
+            <h:outputText value="En Çok Gelişenler" style="color:#336699; font-weight: bold;font-size: 16px;" />
+            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 5px;"/>
+            <div style="width: 650px;">
+                <p:messages autoUpdate="true" globalOnly="true" />
+                <p:toolbar style="margin-bottom: 5px;margin-top: 20px;">
+                    <p:toolbarGroup align="left">
+                        <p:outputLabel value=" Başlangıç Tarihi " for="bestEvolutionStartDate" />
+                        <p:calendar id="bestEvolutionStartDate" value="#{bestEvolutionBean.startDate}" locale="tr" showOn="button"/>
+                        <p:separator /> 
+                        <p:outputLabel value=" Bitiş Tarihi " for="bestEvolutionEndDate" />
+                        <p:calendar id="bestEvolutionEndDate" value="#{bestEvolutionBean.endDate}" locale="tr" showOn="button" style="width: 50px;" />
+                        <p:commandButton value="Sorgula" id="bestEvolutionQueryButton" actionListener="#{bestEvolutionBean.retrieveBestEvolutionList}" update=":mainForm:bestEvolutionTable" />           
+                    </p:toolbarGroup>
+                </p:toolbar> 
+                <p:dataTable id="bestEvolutionTable" var="evo" value="#{bestEvolutionBean.bestEvolutionList}" widgetVar="bestEvolutionTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" rowKey="#{evo.accountId}">  
+                    <f:facet name="header">  
+                        <h:outputText value="En İyi Gelişim Listesi"/>  
+                    </f:facet>  
+                    <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{evo.name}" sortBy="#{evo.name}"  headerText="Ad" width="150" filterMatchMode="contains">  
+                        <h:outputText value="#{evo.name}" />  
+                    </p:column>  
+
+                    <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{evo.surname}" sortBy="#{evo.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                        <h:outputText value="#{evo.surname}" />  
+                    </p:column>  
+
+                    <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{evo.gender eq 'E' ? 'Erkek' : 'Kadın'}" sortBy="#{evo.gender eq 'E' ? 'Erkek' : 'Kadın'}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                        <h:outputText value="#{evo.gender eq 'E' ? 'Erkek' : 'Kadın'}" />  
+                    </p:column> 
+
+                    <p:column id="racerSignColumn" headerText="" width="15"  sortBy="#{evo.sign}">  
+                        <h:graphicImage style="text-align: center" value="/resource/image/#{evo.sign eq 1 ? 'up_arrow.png' : (evo.sign eq -1 ? 'down_arrow.png' : 'empty.png')}"/>
+                    </p:column> 
+
+                    <p:column id="evolutionColumn" width="40" sortBy="#{evo.evolution}" headerText="Gelişim" >  
+                        <h:outputText value="#{evo.evolution}" style="float: right;"/>  
+                    </p:column>   
+                </p:dataTable>  
+                
+            </div>
+        </div>
+    </ui:fragment>
+</html>
+

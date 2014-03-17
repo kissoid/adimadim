@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core" >
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
+            </ui:define>
+            <ui:define name="content">
+               <h:form id="mainForm">
+                   <p:dataTable id="raceScoreTable" var="score" value="#{racerBean.racerScoreList}"  widgetVar="raceSoreTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
+                        <f:facet name="header">  
+                            <h:outputText value="Yarışçı istatistikleri"/>  
+                        </f:facet>  
+
+                       <p:column id="raceIdColumn" filterBy="#{score.race.raceId}" sortBy="#{score.race.raceId}" headerText="Yarış No" filterStyle="width:50px;" width="50" filterMatchMode="exact">  
+                            <h:outputText value="#{score.race.raceId}" style="float: right;"/>  
+                        </p:column>  
+                       
+                       <p:column id="raceDateColumn" headerText="Tarih" sortBy="#{score.race.raceDate}" width="75" filterMatchMode="exact">  
+                           <h:outputText value="#{score.race.raceDate}" >  
+                                <f:convertDateTime pattern="dd.MM.yyyy" />
+                            </h:outputText>
+                        </p:column> 
+                       
+                       <p:column id="racerChestNumberColumn" filterBy="#{score.chestNumber.chestNumber}" sortBy="#{score.chestNumber.chestNumber}" filterStyle="width:50px;" width="50" headerText="Göğüs No"  filterMatchMode="exact">  
+                            <h:outputText value="#{score.chestNumber.chestNumber}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" sortBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.name}" />  
+                        </p:column>  
+
+                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" sortBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.surname}" />  
+                        </p:column>  
+
+                       <p:column id="racerDurationColumn" sortBy="#{score.duration}" width="50" headerText="Süre"  filterMatchMode="exact">  
+                            <h:outputText value="#{score.duration}">
+                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                            </h:outputText>
+                        </p:column>    
+                    </p:dataTable>  
+                   <br/>
+                    <h:panelGrid columns="1">  
+                        <p:lineChart value="#{racerBean.linearModel}" seriesColors="336699" legendPosition="e" animate="true"  
+                                     title="Yarışçı Gelişim Grafiği" xaxisAngle="45" xaxisLabel="Tarih" yaxisLabel="Dakika" minY="0" maxY="70" style="width:600px;" />  
+                    </h:panelGrid> 
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

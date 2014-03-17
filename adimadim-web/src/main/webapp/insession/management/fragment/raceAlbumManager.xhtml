@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment rendered="#{managementMainPageBean.activeFragment eq 'raceAlbumManager' ? true: false}">
+        <p:toolbar>  
+            <p:toolbarGroup align="left">  
+                <p:commandButton type="button" value="Yeni Albüm Oluştur" onclick="createNewAlbumDialogWidget.show();" />  
+                <p:separator />  
+            </p:toolbarGroup>  
+        </p:toolbar> 
+        <p:dataTable id="raceAlbumTable" var="raceAlbum" value="#{raceAlbumManagerBean.raceAlbumList}" widgetVar="raceAlbumTableWidget" emptyMessage="Albüm bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceAlbumManagerBean.selectedAlbum}" rowKey="#{raceAlbum.albumId}" selectionMode="single" style="margin-bottom: 50px;">  
+            <p:ajax event="rowSelect" listener="#{raceAlbumManagerBean.retrieveSelectedRaceAlbumPictures}" update=":mainForm:albumImageList"  />
+            <f:facet name="header">  
+                <h:outputText value="Yarış Albüm Listesi"/>   
+            </f:facet>  
+
+            <p:column id="raceAlbumNameColumn" sortBy="#{raceAlbum.albumName}" headerText="Albüm Adı" width="315">  
+                <h:outputText value="#{raceAlbum.albumName}" />  
+            </p:column>
+
+            <p:column id="raceAlbumDateColumn" sortBy="#{raceAlbum.albumDate}" width="50" headerText="Oluşturma Tarihi" >  
+                <h:outputText value="#{raceAlbum.albumDate}" >  
+                    <f:convertDateTime pattern="dd.MM.yyyy" locale="tr_TR" type="date" dateStyle="short" timeZone="Turkey" />
+                </h:outputText>
+            </p:column>    
+            <p:column id="raceAlbumUploadColumn" width="50">  
+                <p:commandButton value="Resim yükle" onclick="racePictureUploadDialogWidget.show();" actionListener="#{raceAlbumManagerBean.setSelectedAlbum(raceAlbum)}"/>  
+            </p:column>    
+            <p:column id="raceAlbumDeleteColumn" width="50">  
+                <p:commandButton value="Albümü Sil" actionListener="#{raceAlbumManagerBean.deleteAlbum(raceAlbum)}" update="raceAlbumTable,:headerForm:growlMessage"/>  
+            </p:column>
+        </p:dataTable> 
+
+        <p:dataGrid id="albumImageList" var="picture" value="#{raceAlbumManagerBean.raceAlbumPictureList}" emptyMessage="Albümde resim bulunamadı" columns="3" rows="15" paginator="true" >  
+
+            <h:panelGrid columns="1" style="width:100%; height: 100%;text-align: center;">  
+                <p:graphicImage value="/static/picture/common_album/small/#{picture.pictureName}"/>   
+                <p:commandButton actionListener="#{raceAlbumManagerBean.deletePicture(picture)}" update="albumImageList,:headerForm:growlMessage" value="Sil" />  
+            </h:panelGrid>  
+        </p:dataGrid>
+    </ui:fragment>
+</html>
+

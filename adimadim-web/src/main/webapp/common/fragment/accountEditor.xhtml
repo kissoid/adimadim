@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <p:panel id="accountEditor_panel" style="border:none;"> 
+            <p:messages globalOnly="true" />
+            <h:panelGrid id="accountEditor_panelGrid" columns="2" cellpadding="2">  
+                <h:outputLabel value=" " />  
+                <h:outputLabel value=" " /> 
+                <h:outputLabel for="accountEditor_email" value="E-mail *" />  
+                <p:inputText id="accountEditor_email" value="#{accountBean.account.email}" style="height: 25px; font-size: 16px;" size="35" required="true" requiredMessage="Kullanıcı adınızı giriniz" validatorMessage="Kullanıcı adı en az 3 karakter olmalıdır" >
+                    <f:validateLength minimum="3" /> 
+                </p:inputText>
+
+                <h:outputLabel for="accountEditor_name" value="Ad *" />  
+                <p:inputText id="accountEditor_name" value="#{accountBean.account.name}" style="height: 25px; font-size: 16px;" size="35" required="true" requiredMessage="Adınızı giriniz" />
+                <h:outputLabel for="accountEditor_surname" value="Soyad *" />  
+                <p:inputText id="accountEditor_surname" value="#{accountBean.account.surname}" style="height: 25px; font-size: 16px;" size="35" required="true" requiredMessage="Soyadınızı giriniz" />  
+            </h:panelGrid>  
+        </p:panel>
+    </ui:fragment>
+</html>
+

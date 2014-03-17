@@ -1,0 +1,10 @@
+.ui-paginator {
+    background: transparent !important;
+    float: right;
+    border:none;
+}
+
+.ui-datagrid-content {
+   border: none;
+   padding-top: 10px;
+} 

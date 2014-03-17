@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:fragment>
+        <h:form id="signInForm">  
+            <p:dialog id="signInDialog" header="Giriş yap" modal="true" width="400" closeOnEscape="true" widgetVar="signInDialog">  
+                <ui:include src="/common/fragment/signIn.xhtml" />
+                <f:facet name="footer">  
+                    <p:commandLink id="signInButton" update=":headerForm,:mainForm,signIn_panel" actionListener="#{accountBean.startSignInOperation}" style="float: right;">  
+                        <h:graphicImage value="/resource/image/giris_yap.png" />
+                    </p:commandLink>
+                </f:facet>  
+            </p:dialog>
+        </h:form> 
+    </ui:fragment>
+</html>
+

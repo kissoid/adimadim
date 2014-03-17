@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
+                <script>
+                    var onEditImageButton = false; 
+                    function editImageButtonShow(){
+                        document.getElementById("mainForm:editProfileImageButton").style.display = "inline";
+                    }
+                    function editImageButtonHide(){
+                        if(onEditImageButton == false){
+                            document.getElementById("mainForm:editProfileImageButton").style.display = "none";
+                        }
+                    }
+                    function mouseOverEditImageButton(){
+                        onEditImageButton = true;
+                    }
+                    function mouseOutEditImageButton(){
+                        onEditImageButton = false;
+                    }
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <div style="position: relative;padding-top: 110px;">
+
+                        <div class="shadowed-box" style="width: 100%;background-color: #FFFFFF;">
+                            <table>
+                                <tr>
+                                    <td width="250" style="vertical-align: top;padding: 90px 0px 0px 30px;">
+                                        <p:menu style="width: 170px; padding-left: 5px; padding-right: 5px;">  
+                                            <p:menuitem value="Mesaj Yaz" />  
+                                            <p:menuitem value="Fotoğraflar"/>  
+                                            <p:menuitem value="Arkadaşlar"/> 
+                                        </p:menu> 
+                                    </td>
+                                    <td style="padding-right: 10px;padding-bottom: 30px;">
+
+                                        <div style="margin-top: 30px; ">
+                                            <h:outputText value="Genel Bilgiler" style="color:#336699; font-weight: bold;font-size: 16px;" />
+                                            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
+                                            <ui:include src="/insession/profile/fragment/generalInfo.xhtml" />
+                                        </div>
+                                        <div style="margin-top: 50px;">
+                                            <h:outputText value="Kişisel Bilgiler" style="color:#336699; font-weight: bold;font-size: 16px;" />
+                                            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
+                                            <ui:include src="/insession/profile/fragment/personalInfo.xhtml" />
+                                        </div>
+                                        <div style="margin-top: 50px;">
+                                            <h:outputText value="Adım Adım Koşu Performansı" style="color:#336699; font-weight: bold;font-size: 16px;" />
+                                            <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
+                                            <ui:include src="/insession/profile/fragment/adimadimRaceList.xhtml" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <h:graphicImage id="profileImage" onmouseover="editImageButtonShow();" onmouseout="setTimeout('editImageButtonHide()',1000);" value="/static/picture/profile/image/#{accountBean.profileAccount.picture}" style="z-index: 2; position:absolute; top: 0px; left: 30px;background-color: #FFFFFF; padding: 10px; width: 170px; height: 170px;" />
+                        <p:commandButton id="editProfileImageButton" onmouseover="mouseOverEditImageButton();" onmouseout="mouseOutEditImageButton()" value="Profil Resmini Düzenle" style="z-index: 3; position:absolute; top: 150px; left: 48px;display:none;" />
+                        <div style="position: absolute; left: 250px; top:70px;">
+                            <p:inplace editor="true" disabled="#{!profilePageBean.profileOwner}" emptyLabel="Adınız..." style="font-size: 32px;color:#707070;">
+                                <p:ajax event="save" listener="#{accountBean.saveReloadAccountAndProperties}" update=":headerForm:growlMessage" />
+                                <p:inputText value="#{accountBean.profileAccount.name}" size="8" />
+                            </p:inplace>
+                            <h:outputText value=" " />
+                            <p:inplace editor="true" disabled="#{!profilePageBean.profileOwner}" emptyLabel="Soyadınız..." style="font-size: 32px;color:#707070;">
+                                <p:ajax event="save" listener="#{accountBean.saveReloadAccountAndProperties}" update=":headerForm:growlMessage" />
+                                <p:inputText value="#{accountBean.profileAccount.surname}" size="8"/>
+                            </p:inplace>
+                            <h:outputText value=" | "  style="font-size: 32px;color:#707070;"/>
+                            <p:inplace editor="true" disabled="#{!profilePageBean.profileOwner}" emptyLabel="(Koşucu, Triatlet,? vs.)" style="font-size: 32px;color:#707070;">
+                                <p:ajax event="save" listener="#{accountBean.saveReloadAccountAndProperties}" update=":headerForm:growlMessage" />
+                                <h:inputText value="#{accountBean.accountPropertyMap[6]}" size="6"/>
+                            </p:inplace>
+                        </div>
+                    </div>
+                    <p:menu overlay="true" trigger="editProfileImageButton" my="bottom bottom" at="top top">
+                        <p:menuitem value="Yükle" onclick="profileImageUploadDialogWidget.show();" />  
+                        <p:menuitem value="Fotoğraf Çek" onclick="profileImageTakenDialogWidget.show();" /> 
+                    </p:menu>
+                    <ui:include src="/insession/profile/fragment/profileImageUpload.xhtml" />
+                    <ui:include src="/insession/profile/fragment/profileImageTakeFromCam.xhtml" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

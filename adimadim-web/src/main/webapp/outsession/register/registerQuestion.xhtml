@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script');
+                        ga.type = 'text/javascript';
+                        ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0];
+                        s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <div align="center" style="position: relative;padding-top: 20px;">
+
+                        <div class="shadowed-box" style="width: 600px; padding: 20px;background-color: #FFFFFF;">
+                            <p:messages autoUpdate="true" />
+                            <table>
+                                <tr>
+                                    <td colspan="2">Daha önce adımadım koşu göğüs numarası aldınız mı?</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p:commandButton value="Evet" action="register"/>
+                                    </td>
+                                    <td>
+                                        <p:commandButton value="Hayır" action="/outsession/temp/register"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

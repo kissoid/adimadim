@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">  
+                <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <div style="width:600px;margin: 0 auto;">
+                    <p:messages autoUpdate="true" />
+                    <h:form id="mainForm">
+                        <p:dataTable id="accountTable" var="account" value="#{accountSelectBean.racerList}" widgetVar="accountTableWidget" emptyMessage="Yarışçı bulunamadı" rowKey="#{account.accountId}" >  
+                            <f:facet name="header">  
+                                <h:outputText value="Yarışçılar"/>  
+                            </f:facet>  
+
+                            <p:column id="accountIdColumn" filterStyle="width:50px;" filterBy="#{account.accountId}" sortBy="#{account.accountId}" headerText="Üye No" width="50" filterMatchMode="exact">  
+                                <h:outputText value="#{account.accountId}" style="float: right;"/>  
+                            </p:column>  
+
+                            <p:column id="accountNameColumn" filterStyle="width:150px;" filterBy="#{account.name}" sortBy="#{account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                                <h:outputText value="#{account.name}" />  
+                            </p:column>  
+
+                            <p:column id="accountSurnameColumn" filterStyle="width:130px;" filterBy="#{account.surname}" sortBy="#{account.surname}" headerText="Soyad" width="130" filterMatchMode="contains">  
+                                <h:outputText value="#{account.surname}" />  
+                            </p:column>  
+
+                            <p:column id="accountGenderColumn" headerText="Cinsiyet" width="50" >  
+                                <h:outputText value="#{account.gender}" />  
+                            </p:column> 
+
+                            <p:column id="accountEditColumn" width="50">  
+                                <p:commandButton value="Düzenle" actionListener="#{accountSelectBean.updateAccount(account)}"  />
+                            </p:column> 
+                        </p:dataTable>  
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

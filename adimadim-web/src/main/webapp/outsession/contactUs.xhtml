@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/headerMenuTemplate.xhtml">
+            <ui:define name="head">
+                <link href="/resource/css/order.css" type="text/css" rel="stylesheet" />  
+                <script type="text/javascript">
+
+                    var _gaq = _gaq || [];
+                    _gaq.push(['_setAccount', 'UA-38768976-1']);
+                    _gaq.push(['_trackPageview']);
+
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+
+                </script>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="mainForm">
+                    <div style="position:relative; text-align: center;margin-top: 30px;height: 380px;">
+                        <p:messages autoUpdate="true" />
+                        <p:outputPanel id="contactUs_panel"> 
+                            <h:panelGrid style="text-align: right;" id="contactUs_panelGrid" columns="1" cellpadding="2">  
+                                <p:inputText id="contactUs_title" value="#{contactUsBean.contactMessage.title}" style="height: 25px; font-size: 12px; width: 500px;" size="35" required="true" requiredMessage="Lütfen konu alanını boş bırakmayınız." validatorMessage="Başlık alanına en fazla 100 karakter girebilirsiniz." >
+                                    <f:validateLength maximum="100" /> 
+                                </p:inputText>
+                                <p:watermark for="contactUs_title" value="Konu" /> 
+                                <p:inputTextarea id="contactUs_subject" value="#{contactUsBean.contactMessage.message}" style="width:500px;" maxlength="1000" counterTemplate="{0} harf kaldı." counter="counter" cols="87" rows="10" required="true" requiredMessage="Lütfen içerik alanını boş bırakmayınız" />
+                                <h:outputText id="counter" />
+                                <p:watermark for="contactUs_subject" value="İçerik" /> 
+                                <p:inputText id="contactUs_contactInfo" value="#{contactUsBean.contactMessage.contactInfo}" style="height: 25px; font-size: 12px; width: 500px;" size="35" required="true" requiredMessage="Lütfen telefon ya da email adresinizi giriniz" validatorMessage="Başlık alanına en fazla 100 karakter girebilirsiniz." >
+                                    <f:validateLength maximum="50" /> 
+                                </p:inputText>
+                                <p:watermark for="contactUs_contactInfo" value="Telefon numaranız veya email adresiniz" /> 
+                                <p:commandButton id="contactUsButton" update="contactUs_panel,:headerForm" actionListener="#{contactUsBean.saveMessage}" value="Mesajı Gönder" />  
+                            </h:panelGrid>  
+                        </p:outputPanel> 
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
