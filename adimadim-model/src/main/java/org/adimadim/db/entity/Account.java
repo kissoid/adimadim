@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package org.adimadim.db.entity;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -24,18 +26,17 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Adem
  */
 @Entity
-@Table(name="account", catalog = "adimadim", schema = "")
+@Table(catalog = "adimadim", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
-    @NamedQuery(name = "Account.findAllByIdOrder", query = "SELECT a FROM Account a ORDER BY a.accountId"),
-    @NamedQuery(name = "Account.findAllHasNoPasswordByIdOrder", query = "SELECT a FROM Account a where a.password is NULL ORDER BY a.accountId"),
     @NamedQuery(name = "Account.findByAccountId", query = "SELECT a FROM Account a WHERE a.accountId = :accountId"),
     @NamedQuery(name = "Account.findByName", query = "SELECT a FROM Account a WHERE a.name = :name"),
     @NamedQuery(name = "Account.findBySurname", query = "SELECT a FROM Account a WHERE a.surname = :surname"),
@@ -45,9 +46,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Account.findByBirthDate", query = "SELECT a FROM Account a WHERE a.birthDate = :birthDate"),
     @NamedQuery(name = "Account.findByActive", query = "SELECT a FROM Account a WHERE a.active = :active"),
     @NamedQuery(name = "Account.findByCreateDate", query = "SELECT a FROM Account a WHERE a.createDate = :createDate"),
-    @NamedQuery(name = "Account.findBySecretKey", query = "SELECT a FROM Account a WHERE a.secretKey = :secretKey")
-})
+    @NamedQuery(name = "Account.findByManager", query = "SELECT a FROM Account a WHERE a.manager = :manager"),
+    @NamedQuery(name = "Account.findByAdimadim", query = "SELECT a FROM Account a WHERE a.adimadim = :adimadim"),
+    @NamedQuery(name = "Account.findByAdimadimRun", query = "SELECT a FROM Account a WHERE a.adimadimRun = :adimadimRun"),
+    @NamedQuery(name = "Account.findByPhoneCode", query = "SELECT a FROM Account a WHERE a.phoneCode = :phoneCode"),
+    @NamedQuery(name = "Account.findByPhoneNumber", query = "SELECT a FROM Account a WHERE a.phoneNumber = :phoneNumber"),
+    @NamedQuery(name = "Account.findByPicture", query = "SELECT a FROM Account a WHERE a.picture = :picture"),
+    @NamedQuery(name = "Account.findByChestNumber", query = "SELECT a FROM Account a WHERE a.chestNumber = :chestNumber"),
+    @NamedQuery(name = "Account.findBySecretKey", query = "SELECT a FROM Account a WHERE a.secretKey = :secretKey")})
 public class Account implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -65,16 +73,14 @@ public class Account implements Serializable {
     @Column(nullable = false, length = 25)
     private String surname;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 50)
-    @Column(length = 50)
+    @Size(max = 30)
+    @Column(length = 30)
     private String email;
     @Transient
     private String reEmail;
     @Size(max = 25)
     @Column(length = 25)
     private String password;
-    @Transient
-    private String rePassword;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -94,6 +100,11 @@ public class Account implements Serializable {
     private String active;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "create_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 1)
     @Column(nullable = false, length = 1)
     private String manager;
@@ -105,39 +116,31 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name="adimadim_run", nullable = false, length = 1)
+    @Column(name = "adimadim_run", nullable = false, length = 1)
     private String adimadimRun;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "create_date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
     @Size(max = 10)
     @Column(name = "phone_code", length = 10)
     private String phoneCode;
     @Size(max = 10)
     @Column(name = "phone_number", length = 10)
     private String phoneNumber;
-    @Basic(optional = false)
     @Size(max = 30)
-    @Column(name = "picture", length = 30)
+    @Column(length = 30)
     private String picture;
-    @Column(name = "chest_number", nullable = false)
+    @Column(name = "chest_number")
     private Integer chestNumber;
     @Size(max = 10)
     @Column(name = "secret_key", length = 10)
     private String secretKey;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    @Transient
+    private String rePassword;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private List<RaceScore> raceScoreList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-    private List<TeamMember> teamMemberList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-    private List<AccountProperty> accountPropertyList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
     private List<AccountAlbum> accountAlbumList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
-    private List<Donation> donationList;
-    
+    private List<AccountProperty> accountPropertyList;
+
     public Account() {
     }
 
@@ -145,33 +148,36 @@ public class Account implements Serializable {
         this.accountId = accountId;
     }
 
-    @PrePersist
-    private void prePersistMethod(){
-        prePersistAndPreUpdateMethod();
+    public Account(Integer accountId, String name, String surname, String gender, Date birthDate, String active, Date createDate, String manager, String adimadim, String adimadimRun) {
+        this.accountId = accountId;
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.active = active;
+        this.createDate = createDate;
+        this.manager = manager;
+        this.adimadim = adimadim;
+        this.adimadimRun = adimadimRun;
     }
 
+    @PrePersist
     @PreUpdate
-    private void preUpdateMethod(){
-        prePersistAndPreUpdateMethod();
-    }
-    
-    private void prePersistAndPreUpdateMethod(){
+    private void prePersistPreUpdateMethod() {
         setAdimadimRun("E");
         setActive("E");
         setManager("H");
         setCreateDate(new Date());
-        for(AccountProperty accountProperty: accountPropertyList){
+        for (AccountProperty accountProperty : accountPropertyList) {
             accountProperty.getAccountPropertyPK().setAccountId(accountId);
             accountProperty.setAccount(this);
         }
-        for(AccountAlbum accountAlbum: accountAlbumList){
+        for (AccountAlbum accountAlbum : accountAlbumList) {
             accountAlbum.setAccount(this);
         }
-        for(Donation donation: donationList){
-            donation.setAccount(this);
-        }
+
     }
-    
+
     public Integer getAccountId() {
         return accountId;
     }
@@ -204,28 +210,12 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public String getReEmail() {
-        return reEmail;
-    }
-
-    public void setReEmail(String reEmail) {
-        this.reEmail = reEmail;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRePassword() {
-        return rePassword;
-    }
-
-    public void setRePassword(String rePassword) {
-        this.rePassword = rePassword;
     }
 
     public String getGender() {
@@ -252,6 +242,14 @@ public class Account implements Serializable {
         this.active = active;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
     public String getManager() {
         return manager;
     }
@@ -275,38 +273,6 @@ public class Account implements Serializable {
     public void setAdimadimRun(String adimadimRun) {
         this.adimadimRun = adimadimRun;
     }
-    
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Integer getChestNumber() {
-        return chestNumber;
-    }
-
-    public void setChestNumber(Integer chestNumber) {
-        this.chestNumber = chestNumber;
-    }
-
-    public List<RaceScore> getRaceScoreList() {
-        return raceScoreList;
-    }
-
-    public void setRaceScoreList(List<RaceScore> raceScoreList) {
-        this.raceScoreList = raceScoreList;
-    }
-
-    public List<TeamMember> getTeamMemberList() {
-        return teamMemberList;
-    }
-
-    public void setTeamMemberList(List<TeamMember> teamMemberList) {
-        this.teamMemberList = teamMemberList;
-    }
 
     public String getPhoneCode() {
         return phoneCode;
@@ -324,12 +290,36 @@ public class Account implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<AccountProperty> getAccountPropertyList() {
-        return accountPropertyList;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setAccountPropertyList(List<AccountProperty> accountPropertyList) {
-        this.accountPropertyList = accountPropertyList;
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public Integer getChestNumber() {
+        return chestNumber;
+    }
+
+    public void setChestNumber(Integer chestNumber) {
+        this.chestNumber = chestNumber;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 
     public String getTempBirthDate() {
@@ -340,14 +330,24 @@ public class Account implements Serializable {
         this.tempBirthDate = tempBirthDate;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getReEmail() {
+        return reEmail;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setReEmail(String reEmail) {
+        this.reEmail = reEmail;
     }
 
+    @XmlTransient
+    public List<RaceScore> getRaceScoreList() {
+        return raceScoreList;
+    }
+
+    public void setRaceScoreList(List<RaceScore> raceScoreList) {
+        this.raceScoreList = raceScoreList;
+    }
+
+    @XmlTransient
     public List<AccountAlbum> getAccountAlbumList() {
         return accountAlbumList;
     }
@@ -356,22 +356,15 @@ public class Account implements Serializable {
         this.accountAlbumList = accountAlbumList;
     }
 
-    public List<Donation> getDonationList() {
-        return donationList;
+    @XmlTransient
+    public List<AccountProperty> getAccountPropertyList() {
+        return accountPropertyList;
     }
 
-    public void setDonationList(List<Donation> donationList) {
-        this.donationList = donationList;
+    public void setAccountPropertyList(List<AccountProperty> accountPropertyList) {
+        this.accountPropertyList = accountPropertyList;
     }
 
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -381,16 +374,20 @@ public class Account implements Serializable {
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Account)) {
             return false;
         }
         Account other = (Account) object;
-        return (this.accountId != null || other.accountId == null) && (this.accountId == null || this.accountId.equals(other.accountId));
+        if ((this.accountId == null && other.accountId != null) || (this.accountId != null && !this.accountId.equals(other.accountId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.Account[ accountId=" + accountId + " ]";
+        return "com.entity.Account[ accountId=" + accountId + " ]";
     }
-    
+
 }
