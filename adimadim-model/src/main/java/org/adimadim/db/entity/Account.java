@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -134,9 +133,9 @@ public class Account implements Serializable {
     private String secretKey;
     @Transient
     private String rePassword;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<RaceScore> raceScoreList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<AccountAlbum> accountAlbumList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<AccountProperty> accountPropertyList;

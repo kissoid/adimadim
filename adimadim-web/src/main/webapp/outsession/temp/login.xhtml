@@ -10,7 +10,7 @@
     </h:head>
     <h:body>
         <h:form id="signInForm">  
-            <p:panel id="signInDialog" header="Giriş yap">  
+            <p:panel id="signInDialog" header="Giriş yap" style="width:500px; margin: 0 auto;">  
                 <ui:include src="/common/fragment/signIn.xhtml" />
                 <f:facet name="footer">  
                     <p:commandLink id="signInButton" actionListener="#{accountBean.startSignInOperation}" style="float: right;">  
