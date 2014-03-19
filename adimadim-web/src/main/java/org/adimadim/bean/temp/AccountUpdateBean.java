@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import org.adimadim.bean.AccountBean;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
 import org.adimadim.db.entity.AccountPropertyPK;
@@ -47,6 +49,8 @@ public class AccountUpdateBean implements Serializable {
 
     @Inject
     private AccountService accountService;
+    @Inject
+    private AccountBean accountBean;
     private boolean riskAccepted = false;
     private Account account = new Account();
     private Map accountProperties = new HashMap();
@@ -56,13 +60,15 @@ public class AccountUpdateBean implements Serializable {
     public AccountUpdateBean() {
     }
 
-    @PostConstruct
-    private void init(){
+
+    public void readParamaters(){
         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        if(request.getParameter("account_id") != null){
+        if(request.getParameter("key") != null){
             try {
                 String secretKey = request.getParameter("key");
                 account = accountService.findAccountBySecretKey(secretKey);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                birthDate = sdf.format(account.getBirthDate());
             } catch (Exception ex) {
                 Logger.getLogger(AccountUpdateBean.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -100,8 +106,9 @@ public class AccountUpdateBean implements Serializable {
                 account.setChestNumber(accountService.getNextChestNumber());
             }
             accountService.updateAccount(account);
+            accountBean.setAccount(account);
             sendChestNumber(account);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/updateSuccess.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
@@ -115,8 +122,8 @@ public class AccountUpdateBean implements Serializable {
         Integer chestNumber = account.getChestNumber();
         String name = (account.getName() + " " +account.getSurname());
         String receiver = account.getEmail();
-        String subject = "AdımAdım Koşu Göğüs Numarası";
-        String content = "Göğüs numaranız PDF dosyası olarak ektedir.";
+        String subject = "AdimAdim Kosu Gogus Numarasi";
+        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
         String fileName = "GogusNo.pdf";
         String fileFormat = "application/pdf";
         ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);

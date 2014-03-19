@@ -39,7 +39,31 @@
                                 </tr>
                                 <tr style="height: 20px;">
                                     <td colspan="3"></td>
-                                </tr>                                
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="E-mail : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}"  required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" update=":mainForm" />
+                                        </p:inputText>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountEmail" display="icon" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100" class="coloredCell">
+                                        <h:outputText value="E-mail (Tekrar) : " class="standartFontColor" />
+                                    </td>
+                                    <td >
+                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
+                                    </td>
+                                    <td>
+                                        <p:message for="accountReEmail" display="icon" />
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td width="100" class="coloredCell">
                                         <h:outputText value="Ad : " class="standartFontColor" />
@@ -99,28 +123,6 @@
                                     </td>
                                     <td>
                                         <p:watermark for="accountParentName" value="18 yaşından küçükler için." />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" class="coloredCell">
-                                        <h:outputText value="E-mail : " class="standartFontColor" />
-                                    </td>
-                                    <td >
-                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}"  required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız."/>
-                                    </td>
-                                    <td>
-                                        <p:message for="accountEmail" display="icon" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" class="coloredCell">
-                                        <h:outputText value="E-mail (Tekrar) : " class="standartFontColor" />
-                                    </td>
-                                    <td >
-                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
-                                    </td>
-                                    <td>
-                                        <p:message for="accountReEmail" display="icon" />
                                     </td>
                                 </tr>
                                 <tr>

@@ -38,7 +38,13 @@ public class AccountService {
     public Account findAccountBySecretKey(String secretKey) throws Exception {
         Map params = new HashMap();
         params.put("secretKey", secretKey);
-        return accountFacade.findByNamedQuery("Account.findBySecretKey", params, LockModeType.OPTIMISTIC);
+        return accountFacade.findByNamedQuery("Account.findBySecretKey", params, null);
+    }
+    
+    public Account findAccountByEmail(String email) throws Exception {
+        Map params = new HashMap();
+        params.put("email", email);
+        return accountFacade.findByNamedQuery("Account.findByEmail", params, null);
     }
     
     public void saveAccount(Account account) throws Exception {

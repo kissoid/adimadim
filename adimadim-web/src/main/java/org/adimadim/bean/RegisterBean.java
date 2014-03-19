@@ -17,11 +17,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
+import org.adimadim.bean.temp.AccountUpdateBean;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountAlbum;
 import org.adimadim.db.entity.AccountProperty;
@@ -44,11 +49,15 @@ public class RegisterBean implements Serializable {
 
     @Inject
     private AccountService accountService;
+    @Inject
+    private AccountBean accountBean;
     private boolean riskAccepted = false;
     private Account account = new Account();
     private Map accountProperties = new HashMap();
     private boolean olderThanEighteen = true;
-    private List<AccountAlbum> accountAlbumList  = new ArrayList<AccountAlbum>();
+    private List<AccountAlbum> accountAlbumList  = new ArrayList<>();
+    @Inject
+    private AccountUpdateBean accountUpdateBean;
 
 
     public RegisterBean() {
@@ -59,6 +68,21 @@ public class RegisterBean implements Serializable {
         accountAlbumList.add(accountAlbum);
     }
 
+    public void checkEmail(AjaxBehaviorEvent event){
+        try {
+            if(account.getEmail().trim().equals("")){
+                return;
+            }
+            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
+            if(tempAccount != null/* && tempAccount.getPassword().trim().equals("")*/){
+                accountUpdateBean.setAccount(tempAccount);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(RegisterBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public boolean isOlderThanEighteen() {
         try {
             if (account.getTempBirthDate() == null) {
@@ -91,8 +115,10 @@ public class RegisterBean implements Serializable {
             account.setChestNumber(accountService.getNextChestNumber());
             accountService.signUp(account);
             registerCompleted = true;
+            accountBean.setAccount(account);
             sendChestNumber(account);
-            FacesMessageUtil.createFacesMessage(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCreatedMessage"), null, FacesMessage.SEVERITY_INFO);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
+            //FacesMessageUtil.createFacesMessage(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCreatedMessage"), null, FacesMessage.SEVERITY_INFO);
             /*accountBean.setAccount(account);
             accountBean.startSignInOperation();*/
         } catch (AccountException ex) {
@@ -111,8 +137,8 @@ public class RegisterBean implements Serializable {
         Integer chestNumber = account.getChestNumber();
         String name = (account.getName() + " " +account.getSurname());
         String receiver = account.getEmail();
-        String subject = "AdımAdım Koşu Göğüs Numarası";
-        String content = "Göğüs numaranız PDF dosyası olarak ektedir.";
+        String subject = "AdimAdim Kosu Gogus Numarasi";
+        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
         String fileName = "GogusNo.pdf";
         String fileFormat = "application/pdf";
         ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);

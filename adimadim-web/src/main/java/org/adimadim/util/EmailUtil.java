@@ -28,7 +28,7 @@ import javax.mail.util.ByteArrayDataSource;
  */
 public class EmailUtil {
 
-    public static final String SENDER_INFO = "adem <masengul@gmail.com>";
+    public static final String SENDER_INFO = "ADIMADIM KOSU <aakosu@adimadim.org>";
     
     public static void sendMail(String sender, String receiver, String subject, String content) throws NoSuchProviderException, MessagingException {
         Transport transport = null;
@@ -94,14 +94,14 @@ public class EmailUtil {
     private static Properties getMailSettings() {
         Properties props = new Properties();
         props.put("mail.transport.protocol", "smtp");
-        props.put("mail.host", "smtp.gmail.com");
-        props.put("mail.port", "465");
+        props.put("mail.host", "mail.sadecehosting.com");
+        props.put("mail.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "false");
-        props.put("mail.smtp.socketFactory.port", "465");
-        //props.put("mail.smtp.socketFactory.port", "587");
+        //props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.port", "587");
         props.put("mail.smtp.socketFactory.class", "javax.net.SocketFactory");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        //props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
         return props;
     }
@@ -110,7 +110,7 @@ public class EmailUtil {
         Authenticator authenticator = new Authenticator() {
             @Override
             public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("masengul@gmail.com", "9843035866");
+                return new PasswordAuthentication("aakosu@adimadim.org", "kosu!78");
             }
         };
         return authenticator;

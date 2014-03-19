@@ -7,28 +7,20 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
     </h:head>
-    <h:body>
+    <h:body >
         <ui:composition template="/template/headerMenuTemplate.xhtml">
             <ui:define name="head">  
                 <link href="/resource/css/index.css" type="text/css" rel="stylesheet" />  
-                <script type="text/javascript">
-                    var _gaq = _gaq || [];
-                    _gaq.push(['_setAccount', 'UA-38768976-1']);
-                    _gaq.push(['_trackPageview']);
-
-                    (function() {
-                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                    })();
-                </script>
             </ui:define>
             <ui:define name="content">
+                <f:metadata>
+                    <f:event type="preRenderView" listener="#{accountUpdateBean.readParamaters}" />
+                </f:metadata>
+                <p:messages autoUpdate="true" />
                 <h:form id="mainForm">
                     <div align="center" style="position: relative;padding-top: 20px;">
 
                         <div class="shadowed-box" style="width: 600px; padding: 20px;background-color: #FFFFFF;">
-                            <p:messages autoUpdate="true" />
                             <table style="margin: 0 auto;">
                                 <tr>
                                     <td></td>
@@ -251,6 +243,7 @@
                         </div>
                     </div>
                 </h:form>
+                <p:messages autoUpdate="true" />
             </ui:define>
         </ui:composition>
     </h:body>

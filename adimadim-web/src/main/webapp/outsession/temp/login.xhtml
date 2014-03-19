@@ -10,7 +10,8 @@
     </h:head>
     <h:body>
         <h:form id="signInForm">  
-            <p:panel id="signInDialog" header="Giriş yap" style="width:500px; margin: 0 auto;">  
+            <p:panel id="signInDialog" header="Göğüs numarası için lütfen giriş yapınız" style="width:500px; margin: 0 auto; height: 250px;">  
+                <p:messages autoUpdate="true" />
                 <ui:include src="/common/fragment/signIn.xhtml" />
                 <f:facet name="footer">  
                     <p:commandLink id="signInButton" actionListener="#{accountBean.startSignInOperation}" style="float: right;">  
