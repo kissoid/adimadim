@@ -40,8 +40,17 @@
                     <p:growl id="growlMessage" showDetail="false" globalOnly="true" sticky="false"/> 
                     <div style="width:950px;margin:0 auto;padding-top: 5px;">
                         <img src="/resource/image/adimadimkosu_logo.png" style="float:left"/>
+                        <div style="float: right;">
+                            <table>
+                                <tr>
+                                    <td><p:commandLink ajax="false" actionListener="#{accountBean.changeLanguage('tr','TR')}"><img src="/resource/image/flag/turkish_flag.png"/></p:commandLink></td>
+                                    <td><p:commandLink ajax="false" actionListener="#{accountBean.changeLanguage('en','US')}"><img src="/resource/image/flag/uk_flag.png"/></p:commandLink></td>
+                                </tr>
+                            </table>
+                        </div>
                         <!--ui:include src="/template/fragment/headerMenu.xhtml" /-->
                     </div>
+                    
                 </h:form>
             </div>
             <div id="main">

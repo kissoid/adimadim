@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -133,7 +134,7 @@ public class AccountBean implements Serializable{
     }
     
     private List<AccountProperty> propertyMapToList() {
-        List<AccountProperty> accountPropertyList = new ArrayList<AccountProperty>();
+        List<AccountProperty> accountPropertyList = new ArrayList<>();
         Iterator iterator = accountPropertyMap.entrySet().iterator();
         while (iterator.hasNext()) {
             AccountProperty accountProperty = new AccountProperty();
@@ -145,6 +146,10 @@ public class AccountBean implements Serializable{
             accountPropertyList.add(accountProperty);
         }
         return accountPropertyList;
+    }
+    
+    public void changeLanguage(String language, String country){
+        FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale(language, country));
     }
     
     public Account getAccount() {

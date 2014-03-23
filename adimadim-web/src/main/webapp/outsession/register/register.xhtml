@@ -81,7 +81,7 @@
                                     </td>
                                     <td >
                                         <p:selectOneMenu id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız.">  
-                                            <f:selectItem itemLabel="Seçiniz" itemValue="" />
+                                            <f:selectItem itemLabel="#{text['registerBean.pleaseSelect']}" itemValue="" />
                                             <f:selectItem itemLabel="#{text['registerBean.female']}" itemValue="K" />  
                                             <f:selectItem itemLabel="#{text['registerBean.male']}" itemValue="E" /> 
                                         </p:selectOneMenu> 
@@ -155,7 +155,7 @@
                                     </td>
                                     <td >
                                         <p:selectOneMenu value="#{registerBean.account.adimadim}" required="true" requiredMessage="Lütfen adımadım üyesi olup olmadığınızı belirtin.">  
-                                            <f:selectItem itemLabel="Seçiniz" itemValue="" />
+                                            <f:selectItem itemLabel="#{text['registerBean.pleaseSelect']}" itemValue="" />
                                             <f:selectItem itemLabel="#{text['registerBean.yes']}" itemValue="E" />  
                                             <f:selectItem itemLabel="#{text['registerBean.no']}" itemValue="H" /> 
                                         </p:selectOneMenu> 
