@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                <!-- 5-Nerede? -->
+
+                <div id="location" class="row page">
+                    <img src="/resource/image/location-icon.png" class="page-icon" />
+                    <div class="large-10 large-centered columns text-center">
+                        <h4 class="page-header c5-text ">Nerede?</h4>
+                        <div id="map"></div>
+                        <br/><br/>
+                        <p>Adım Adım Koşu her ayın ilk Cumartesi günü, Belgrad Ormanı Neşet Suyu Parkurunda.</p>
+                        <p>Adım Adım Koşu ile ilgili her türlü başvuru için: <a href="mailto:aakosu@adimadim.org" target="_top" class="c5-link">aakosu@adimadim.org</a></p>
+                        <p>Adım Adım Koşu tümüyle gönüllü bir organizasyondur. Anında geri dönüş yapamayabiliriz.</p>
+                        <p>Gönüllü ekibimize arada sırada veya düzenli olarak destek olmak isterseniz lütfen bize <a href="mailto:aakosu@adimadim.org" target="_top" class="c5-link">mail</a> atın.</p>
+                    </div>
+                    <hr class="end-bar c5-background" />
+
+                    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+                    <script type="text/javascript">
+                        function initialize() {
+                            var myLatlng = new google.maps.LatLng(41.187423, 28.968383);
+                            var mapOptions = {
+                                zoom: 11,
+                                center: myLatlng,
+                                mapTypeControl: false,
+                                panControl: true,
+                                scrollwheel: false,
+                                streetViewControl: false,
+                                zoomControl: true,
+                                zoomControlOptions: {
+                                    style: google.maps.ZoomControlStyle.SMALL
+                                }
+                            }
+                            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+                            var marker = new google.maps.Marker({
+                                position: myLatlng,
+                                map: map,
+                                title: 'Neşet Suyu, Belgrad Ormanı'
+                            });
+                        }
+                        google.maps.event.addDomListener(window, 'load', initialize);
+                    </script>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

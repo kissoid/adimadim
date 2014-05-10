@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                <!-- 2 - Göğüs Numarası Al -->
+
+                <div id="barcode" class="row page">
+                    <img src="/resource/image/barcode-icon.png" class="page-icon" />
+                    <div class="large-8 large-centered columns">
+                        <h4 class="page-header c2-text text-center">Göğüs Numaranı Al</h4>
+                        <div>
+                            <p class="c2-text text-center">Barkodlu göğüs numaranızı almak için lütfen kullanıcı bilgilerinizi giriniz.<br/>
+                                <em>Please fill in your login information to get your barcoded bib number.</em>
+                            </p>
+                        </div>
+                        <div class="custom-panel">
+                            <form>
+                                <label>E-posta &mdash; <em>E-mail</em>
+                                    <input type="text"/>
+                                </label>
+                                <label>Şifre &mdash; <em>Password</em>
+                                    <input type="text"/>
+                                </label>
+                                <p><a href="#" class="c2-link" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a></p>
+                                <br/>
+                                <button class="small">Gönder &mdash; <em>Submit</em></button>
+                            </form>    
+                        </div>
+                    </div>
+                    <hr class="end-bar c2-background" />
+                </div>
+
+                <div id="lost-password" class="reveal-modal small" data-reveal="">
+                    <h5 class="c2-text text-center">Tekrar Gönder &mdash; <em>Recover</em></h5><br/>
+                    <form style="margin-bottom:0;">
+                        <label>E-posta &mdash; <em>E-mail</em>
+                            <input type="text"/>
+                        </label>
+                        <br/>
+                        <button class="small" style="margin-bottom:0;">Gönder &mdash; <em>Submit</em></button>    
+                    </form>
+                    <a class="close-reveal-modal">&#215;</a>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
