@@ -6,7 +6,7 @@
     <h:head>
     </h:head>
     <h:body>
-        <ui:composition template="/template/template.xhtml">
+        <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
             <ui:define name="head">  
 
             </ui:define>
@@ -14,7 +14,7 @@
                 <!-- 4-Adım Adım -->
 
                 <div id="adim-adim" class="row page">
-                    <img src="/resource/image/aa-icon.png" class="page-icon" />
+                    <img src="${facesContext.externalContext.requestContextPath}/resource/image/aa-icon.png" class="page-icon" />
                         <div class="large-10 large-centered columns">
                             <h4 class="page-header c4-text text-center">Adım Adım Oluşumu</h4>
                             <p>

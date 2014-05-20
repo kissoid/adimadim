@@ -6,14 +6,14 @@
     <h:head>
     </h:head>
     <h:body>
-        <ui:composition template="/template/template.xhtml">
+        <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
             <ui:define name="head">  
 
             </ui:define>
             <ui:define name="content">
                 <!-- 6 - Kayıt Ol -->
                 <div id="join" class="row page">
-                    <img src="/resource/image/join-icon.png" class="page-icon" />
+                    <img src="${facesContext.externalContext.requestContextPath}/resource/image/join-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns">
 
                         <h4 class="page-header c6-text text-center">Adım Adım Koşu Yarışı Kayıt Formu</h4>

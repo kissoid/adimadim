@@ -6,14 +6,14 @@
     <h:head>
     </h:head>
     <h:body>
-        <ui:composition template="/template/template.xhtml">
+        <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
             <ui:define name="head">  
 
             </ui:define>
             <ui:define name="content">
                 <!-- 7 - Sorular -->
                 <div id="faq" class="row page">
-                    <img src="/resource/image/faq-icon.png" class="page-icon" />
+                    <img src="${facesContext.externalContext.requestContextPath}/resource/image/faq-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns">
                         <h4 class="page-header c7-text">Sıkça Sorulan Sorular</h4>
                         <dl class="accordion" data-accordion="">

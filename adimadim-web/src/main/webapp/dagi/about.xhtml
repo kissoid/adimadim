@@ -6,7 +6,7 @@
     <h:head>
     </h:head>
     <h:body>
-        <ui:composition template="/template/template.xhtml">
+        <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
             <ui:define name="head">  
 
             </ui:define>
@@ -14,7 +14,7 @@
                 <!-- 3-Nedir? -->
 
                 <div id="about" class="row page" >
-                    <img src="/resource/image/about-icon.png" class="page-icon" />
+                    <img src="${facesContext.externalContext.requestContextPath}/resource/image/about-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns">
                         <h4 class="page-header c3-text">Adım Adım Koşu Yarışı</h4>
                         <p>
