@@ -26,17 +26,19 @@
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Ad &mdash; <em>Name</em>
-                                        <p:inputText/>
+                                        <p:inputText id="accountName" value="#{registerBean.account.name}" required="true" requiredMessage="Lütfen ad alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Soyad &mdash; <em>Surname</em>
-                                        <p:inputText/>
+                                        <p:inputText id="accountSurname" value="#{registerBean.account.surname}" required="true" requiredMessage="Lütfen soyad alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Doğum Tarihi &mdash; <em>Date of Birth</em>
-                                        <p:calendar />
+                                        <p:inputMask id="accountBirthDate" value="#{registerBean.account.tempBirthDate}" mask="99.99.9999"> 
+                                            <p:ajax event="blur" update="accountParentName" oncomplete="document.getElementById('mainForm:accountParentName').focus();"/> 
+                                        </p:inputMask>
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
@@ -47,10 +49,10 @@
                                 <div class="large-12 columns">
                                     <label>Cinsiyet &mdash; <em>Gender</em>
                                         <br/>
-                                        <p:selectManyCheckbox style="border-color: #cb1910;">
+                                        <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="border-color: #cb1910;">
                                             <f:selectItem itemLabel="Kadın" itemValue="K" />
                                             <f:selectItem itemLabel="Erkek" itemValue="E" />
-                                        </p:selectManyCheckbox>
+                                        </p:selectOneRadio>
                                     </label>
                                 </div>
                                 <div class="large-12 columns">
@@ -60,22 +62,24 @@
 
                                 <div class="large-6 columns">
                                     <label>E-posta &mdash; <em>E-mail</em>
-                                        <p:inputText/>
+                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}"  required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" update=":mainForm" />
+                                        </p:inputText>
                                     </label>
                                 </div>
                                 <div class="large-6 columns end">
                                     <label>E-posta (tekrar) &mdash; <em>E-mail (confirm)</em>
-                                        <p:inputText/>
+                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen e-mail tekrar alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Şifre &mdash; <em>Password</em>
-                                        <p:password />
+                                        <p:password id="accountPassword" value="#{registerBean.account.password}" required="true" requiredMessage="Lütfen şifre alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-6 columns end">
                                     <label>Şifre (tekrar) &mdash; <em>Password (confirm)</em>
-                                        <p:password />
+                                        <p:password id="accountRePassword" value="#{registerBean.account.rePassword}" required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-12 columns">
@@ -84,12 +88,12 @@
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Ad &mdash; <em>Name</em>
-                                        <p:inputText />
+                                        <p:inputText id="emergencyName" value="#{registerBean.accountProperties['2']}"  required="true" requiredMessage="Lütfen acil durum için ad alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-6 columns end">
                                     <label>Cep Telefonu &mdash; <em>Mobile</em>
-                                        <p:inputText />
+                                        <p:inputText id="emergencyPhoneNumber" value="#{registerBean.accountProperties['3']}" size="20" maxlength="15" required="true" requiredMessage="Lütfen acil durum telefon numarası alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-12 columns">
@@ -162,7 +166,7 @@
                                 </div>
                                 <div class="large-12 columns">
                                     <br/><br/>
-                                    <p:commandButton value="Gönder" styleClass="small" />
+                                    <p:commandLink id="createAccountButton" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" style="float: right;"><h:graphicImage id="createAccountButtonImage" value="/resource/image/register.png" /></p:commandLink>
                                 </div>
                                 <div class="large-12 columns">
                                     <br/>
