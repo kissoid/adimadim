@@ -52,6 +52,7 @@ public class RegisterBean implements Serializable {
     @Inject
     private AccountBean accountBean;
     private boolean riskAccepted = false;
+    private boolean raceRulesAccepted = false;
     private Account account = new Account();
     private Map accountProperties = new HashMap();
     private boolean olderThanEighteen = true;
@@ -74,7 +75,7 @@ public class RegisterBean implements Serializable {
                 return;
             }
             Account tempAccount = accountService.findAccountByEmail(account.getEmail());
-            if(tempAccount != null/* && tempAccount.getPassword().trim().equals("")*/){
+            if(tempAccount != null && tempAccount.getPassword().trim().equals("")){
                 accountUpdateBean.setAccount(tempAccount);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
             }
@@ -101,15 +102,18 @@ public class RegisterBean implements Serializable {
         boolean registerCompleted = false;
         try {
             if (riskAccepted == false) {
-                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.riskKabulMessage"));
+                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.raceRulesAcceptMessage"));
+            }
+            if (raceRulesAccepted == false) {
+                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
             if(account.getTempBirthDate() == null){
-                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.birthDateMessage"));
+                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.birthDateMessage"));
             }
             RegisterBeanValidator.validateAccountForSignUp(account);
             account.setName(ConvertionUtil.firstCharUpperCase(account.getName()));
             account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
-            account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.dateFormat")));
+            account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.dateFormat")));
             account.setAccountPropertyList(propertyMapToList());
             account.setAccountAlbumList(accountAlbumList);
             account.setChestNumber(accountService.getNextChestNumber());
@@ -122,12 +126,12 @@ public class RegisterBean implements Serializable {
             /*accountBean.setAccount(account);
             accountBean.startSignInOperation();*/
         } catch (AccountException ex) {
-            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCouldNotCreateMessage");
+            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
             FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
-            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCouldNotCreateMessage");
+            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
             if(registerCompleted){
-                message = ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.mailCouldNotSentMessage");
+                message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.mailCouldNotSentMessage");
             }
             FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
         }
@@ -194,4 +198,14 @@ public class RegisterBean implements Serializable {
     public void setAccountProperties(Map accountProperties) {
         this.accountProperties = accountProperties;
     }
+
+    public boolean isRaceRulesAccepted() {
+        return raceRulesAccepted;
+    }
+
+    public void setRaceRulesAccepted(boolean raceRulesAccepted) {
+        this.raceRulesAccepted = raceRulesAccepted;
+    }
+    
+    
 }

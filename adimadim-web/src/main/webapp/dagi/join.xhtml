@@ -6,6 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+
+        <script type="text/javascript" >
+            function setButtonText() {
+                document.getElementById("mainForm:saveButton").firstChild.innerHTML = "Gönder &mdash; <em>Submit</em>";
+            }
+        </script>
+
     </h:head>
     <h:body>
         <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
@@ -19,7 +26,7 @@
                     <div class="large-10 large-centered columns">
 
                         <h4 class="page-header c6-text text-center">Adım Adım Koşu Yarışı Kayıt Formu</h4>
-                        <form>
+                        <h:form id="mainForm">
                             <div class="row">
                                 <div class="large-12 columns">
                                     <p class="c6-text">Kişisel Bilgiler &mdash; <em>Personal Information</em></p>
@@ -39,6 +46,13 @@
                                         <p:inputMask id="accountBirthDate" value="#{registerBean.account.tempBirthDate}" mask="99.99.9999"> 
                                             <p:ajax event="blur" update="accountParentName" oncomplete="document.getElementById('mainForm:accountParentName').focus();"/> 
                                         </p:inputMask>
+                                        <p:watermark for="accountBirthDate" value="#{text['registerBean.dateFormatForScreen']}" />
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Veli &mdash; <em>Parent</em>
+                                        <p:inputText id="accountParentName" value="#{registerBean.accountProperties['1']}" disabled="#{registerBean.olderThanEighteen?'true':'false'}" required="#{registerBean.olderThanEighteen?'false':'true'}" requiredMessage="Lütfen velinizin adını giriniz."/>
+                                        <p:watermark for="accountParentName" value="#{text['registerBean.littleThanEighteen']}" />
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
@@ -46,12 +60,12 @@
                                         <p:inputText/>
                                     </label>
                                 </div>
-                                <div class="large-12 columns">
+                                <div class="large-6 columns">
                                     <label>Cinsiyet &mdash; <em>Gender</em>
                                         <br/>
-                                        <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="border-color: #cb1910;">
-                                            <f:selectItem itemLabel="Kadın" itemValue="K" />
-                                            <f:selectItem itemLabel="Erkek" itemValue="E" />
+                                        <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="width:385px;padding: 0px;border-color: #cb1910;">
+                                            <f:selectItem itemLabel="Kadın (Female)" itemValue="K" />
+                                            <f:selectItem itemLabel="Erkek (Male)" itemValue="E" />
                                         </p:selectOneRadio>
                                     </label>
                                 </div>
@@ -62,9 +76,7 @@
 
                                 <div class="large-6 columns">
                                     <label>E-posta &mdash; <em>E-mail</em>
-                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}"  required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız.">
-                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" update=":mainForm" />
-                                        </p:inputText>
+                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}" required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-6 columns end">
@@ -101,9 +113,7 @@
                                     <table style="border:none;">
                                         <tr>
                                             <td style="padding: 0px; margin: 0px;">
-                                                <p:selectManyCheckbox style="border:none;padding: 0px; margin: 0px;" >
-                                                    <f:selectItem itemLabel="" itemValue="" />
-                                                </p:selectManyCheckbox>
+                                                <p:selectBooleanCheckbox value="#{registerBean.raceRulesAccepted}" style="border:none;padding: 0px; margin: 0px;" />
                                             </td>
                                             <td style="padding: 0px; margin: 0px;">
                                                 <p:commandLink styleClass="c6-link" value="Yarış Kuralları" onclick="detailDialogTr.show();"/>'nı kabul ediyorum. &mdash;
@@ -138,14 +148,11 @@
                                             <li>Do not leave any personal belongings in the start/finish area. If you do so, it will be at your own risk.</li>
                                             <li>Be aware that no first aid services are provided during these races.</li>
                                         </ul>
-                                        <a class="close-reveal-modal">&#215;</a>
                                     </p:dialog>
                                     <table style="border:none;">
                                         <tr>
                                             <td style="padding: 0px; margin: 0px;">
-                                                <p:selectManyCheckbox style="border:none;padding: 0px;margin: 0px;" >
-                                                    <f:selectItem itemLabel="" itemValue="" />
-                                                </p:selectManyCheckbox>
+                                                <p:selectBooleanCheckbox value="#{registerBean.riskAccepted}" style="border:none;padding: 0px;margin: 0px;" />
                                             </td>
                                             <td style="padding: 0px; margin: 0px;">
                                                 <p:commandLink onclick="riskDialogTr.show()" styleClass="c6-link" value="Risk Kabul Beyannamesi" />'ni kabul ediyorum. &mdash;
@@ -161,12 +168,11 @@
                                     <p:dialog id="riskDialogEn" width="1000" widgetVar="riskDialogEn">                          
                                         <p class="lead c6-text">Legal Waiver and Release Form</p>
                                         <p>I am fully aware of and appreciate that training for and running or speed walking may result in accidents or serious injury. I am voluntarily participating in the Adım Adım Fun Run with complete knowledge of the associated risks, and I agree to accept responsibility for all risks of injury. By signing this Waiver and Release, I declare that I am medically able and capable of participating in a run or speed walk up to 10k. I agree to independently consult my physician in the event of any injuries or medical questions arising from or related to my participation in the Adım Adım Fun Run. I also acknowledge that Adım Adım does not provide any medical assistance or first aid help in case of injury or illness and that I assume full and sole responsibility for my own medical expenses and that I am responsible for any and all medical expenses on my behalf. I have carefully read this Waiver and Release and fully understand its contents. I agree to comply fully with the Adım Adım Fun Run rules, and understand that it is forbidden to disturb or otherwise harm any other participants or others during the race, and to abide by any general rules of conduct on the race course.  If I am under 18 years of age at the time of registration, my parents or legal guardians have fully read, understand, and consented to the terms of this Waiver and Release and by signature below authorize my participation. By signing this waiver, I have indicated that I have read, understand and agree to the conditions and commitment of the Waiver and Release above.</p>
-                                        <a class="close-reveal-modal">&#215;</a>
                                     </p:dialog>
                                 </div>
                                 <div class="large-12 columns">
                                     <br/><br/>
-                                    <p:commandLink id="createAccountButton" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" style="float: right;"><h:graphicImage id="createAccountButtonImage" value="/resource/image/register.png" /></p:commandLink>
+                                    <p:commandButton id="saveButton" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" oncomplete="document.getElementById('mainForm:saveButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';"></p:commandButton>
                                 </div>
                                 <div class="large-12 columns">
                                     <br/>
@@ -179,10 +185,16 @@
                                         </em>
                                     </p>
                                 </div>
+                                <div class="large-12 columns">
+                                    <p:messages autoUpdate="true" />
+                                </div>
                             </div>
-                        </form>
+                        </h:form>
                     </div>
                     <hr class="end-bar c6-background" />
+                    <script type="text/javascript" >
+                        document.getElementById("mainForm:saveButton").firstChild.innerHTML = "Gönder &mdash; <em>Submit</em>";
+                    </script>
                 </div>
             </ui:define>
         </ui:composition>
