@@ -22,7 +22,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
-import org.adimadim.db.entity.AccountPropertyPK;
 import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
 import org.adimadim.util.FacesMessageUtil;
@@ -129,7 +128,7 @@ public class AccountBean implements Serializable{
     private void listToPropertyMap(List<AccountProperty> accountPropertyList){
         accountPropertyMap.clear();
         for(AccountProperty accountProperty: accountPropertyList){
-            accountPropertyMap.put((long)accountProperty.getAccountPropertyPK().getPropertyId() , accountProperty.getPropertyValue());
+            accountPropertyMap.put((long)accountProperty.getPropertyId() , accountProperty.getPropertyValue());
         }
     }
     
@@ -138,10 +137,9 @@ public class AccountBean implements Serializable{
         Iterator iterator = accountPropertyMap.entrySet().iterator();
         while (iterator.hasNext()) {
             AccountProperty accountProperty = new AccountProperty();
-            accountProperty.setAccountPropertyPK(new AccountPropertyPK());
             Map.Entry entry = (Map.Entry) iterator.next();
-            accountProperty.getAccountPropertyPK().setAccountId(account.getAccountId());
-            accountProperty.getAccountPropertyPK().setPropertyId(Integer.parseInt(entry.getKey().toString()));
+            accountProperty.setAccount(account);
+            accountProperty.setPropertyId(Integer.parseInt(entry.getKey().toString()));
             accountProperty.setPropertyValue(entry.getValue().toString());
             accountPropertyList.add(accountProperty);
         }

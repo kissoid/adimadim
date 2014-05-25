@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(catalog = "adimadim", schema = "")
@@ -60,7 +60,7 @@ public class Race implements Serializable {
     @Size(min = 1, max = 1)
     @Column(nullable = false, length = 1)
     private String active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceId")
     private List<RaceScore> raceScoreList;
 
     public Race() {
@@ -140,7 +140,7 @@ public class Race implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.entity.Race[ raceId=" + raceId + " ]";
+        return "org.adimadim.db.entity.Race[ raceId=" + raceId + " ]";
     }
     
 }

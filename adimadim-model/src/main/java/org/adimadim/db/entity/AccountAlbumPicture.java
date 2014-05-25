@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "account_album_picture", catalog = "adimadim", schema = "")
@@ -77,12 +77,12 @@ public class AccountAlbumPicture implements Serializable {
         this.pictureName = pictureName;
     }
 
-    public AccountAlbum getAlbum() {
+    public AccountAlbum getAlbumId() {
         return album;
     }
 
-    public void setAlbum(AccountAlbum album) {
-        this.album = album;
+    public void setAlbumId(AccountAlbum albumId) {
+        this.album = albumId;
     }
 
     @Override
@@ -107,7 +107,7 @@ public class AccountAlbumPicture implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entity.AccountAlbumPicture[ pictureId=" + pictureId + " ]";
+        return "org.adimadim.db.entity.AccountAlbumPicture[ pictureId=" + pictureId + " ]";
     }
     
 }

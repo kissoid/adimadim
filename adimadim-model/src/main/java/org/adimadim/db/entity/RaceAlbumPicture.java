@@ -1,19 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,16 +22,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "race_album_picture", catalog = "adimadim", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RaceAlbumPicture.findAll", query = "SELECT a FROM RaceAlbumPicture a"),
-    @NamedQuery(name = "RaceAlbumPicture.findByPictureId", query = "SELECT a FROM RaceAlbumPicture a WHERE a.pictureId = :pictureId"),
-    @NamedQuery(name = "RaceAlbumPicture.findByAlbumId", query = "SELECT a FROM RaceAlbumPicture a WHERE a.albumId = :albumId"),
-    @NamedQuery(name = "RaceAlbumPicture.findByPictureName", query = "SELECT a FROM RaceAlbumPicture a WHERE a.pictureName = :pictureName")})
+    @NamedQuery(name = "RaceAlbumPicture.findAll", query = "SELECT r FROM RaceAlbumPicture r"),
+    @NamedQuery(name = "RaceAlbumPicture.findByPictureId", query = "SELECT r FROM RaceAlbumPicture r WHERE r.pictureId = :pictureId"),
+    @NamedQuery(name = "RaceAlbumPicture.findByAlbumId", query = "SELECT r FROM RaceAlbumPicture r WHERE r.albumId = :albumId"),
+    @NamedQuery(name = "RaceAlbumPicture.findByPictureName", query = "SELECT r FROM RaceAlbumPicture r WHERE r.pictureName = :pictureName")})
 public class RaceAlbumPicture implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,10 +48,7 @@ public class RaceAlbumPicture implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "picture_name", nullable = false, length = 50)
     private String pictureName;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "album_id", insertable = false, updatable = false)
-    private RaceAlbum raceAlbum;
-    
+
     public RaceAlbumPicture() {
     }
 
@@ -90,14 +86,6 @@ public class RaceAlbumPicture implements Serializable {
         this.pictureName = pictureName;
     }
 
-    public RaceAlbum getRaceAlbum() {
-        return raceAlbum;
-    }
-
-    public void setRaceAlbum(RaceAlbum raceAlbum) {
-        this.raceAlbum = raceAlbum;
-    }    
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,7 +108,7 @@ public class RaceAlbumPicture implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.AlbumPicture[ pictureId=" + pictureId + " ]";
+        return "org.adimadim.db.entity.RaceAlbumPicture[ pictureId=" + pictureId + " ]";
     }
     
 }

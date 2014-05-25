@@ -4,6 +4,7 @@
  */
 package org.adimadim.bean.validator;
 
+import java.util.ResourceBundle;
 import org.adimadim.db.entity.Account;
 import org.adimadim.service.exception.AccountException;
 
@@ -26,14 +27,17 @@ public class RegisterBeanValidator extends AbstractValidator {
         if (isStringEmpty(account.getEmail())) {
             throw new AccountException("E-mail boş olamaz.");
         }
-        if(!account.getEmail().equals(account.getReEmail())){
+        if (!account.getEmail().equals(account.getReEmail())) {
             throw new AccountException("Girdiğiniz e-mail adresleri birbirinden farklı.");
         }
         if (isStringEmpty(account.getPassword())) {
             throw new AccountException("Şifre boş olamaz.");
         }
-        if(!account.getPassword().equals(account.getRePassword())){
+        if (!account.getPassword().equals(account.getRePassword())) {
             throw new AccountException("Girdiğiniz şifreler birbirinden farklı.");
+        }
+        if (account.getTempBirthDate() == null) {
+            throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.birthDateMessage"));
         }
         if (isStringEmpty(account.getName())) {
             throw new AccountException("İsim boş olamaz.");

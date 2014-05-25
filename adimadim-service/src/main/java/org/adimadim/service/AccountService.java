@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.LockModeType;
 import org.adimadim.db.entity.Account;
@@ -20,6 +24,8 @@ import org.adimadim.service.exception.AccountException;
  *
  * @author Adem
  */
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 @Stateless
 public class AccountService {
 
@@ -68,11 +74,13 @@ public class AccountService {
         return existsAccounts.get(0);
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Integer signUp(Account account) throws AccountException, Exception {
         Map map = new HashMap();
         map.put("email", account.getEmail());
         List<Account> existsAccounts = accountFacade.findAllByNamedQuery("Account.findByEmail", map, null);
         if (existsAccounts.isEmpty()) {
+            account.setChestNumber(getNextChestNumber());
             account.setAccountId(getNextAccountId());
             accountFacade.create(account);
             return account.getAccountId();

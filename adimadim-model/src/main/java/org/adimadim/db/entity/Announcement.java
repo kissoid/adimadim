@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
@@ -24,16 +26,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
-@Table(name="announcement", catalog = "adimadim", schema = "")
+@Table(catalog = "adimadim", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Announcement.findAll", query = "SELECT a FROM Announcement a"),
-    @NamedQuery(name = "Announcement.findAllByAnnounceIdOrderDesc", query = "SELECT a FROM Announcement a ORDER BY a.announcementId DESC"),
     @NamedQuery(name = "Announcement.findByAnnouncementId", query = "SELECT a FROM Announcement a WHERE a.announcementId = :announcementId"),
-    @NamedQuery(name = "Announcement.findByRaceDate", query = "SELECT a FROM Announcement a WHERE a.announcementDate = :announcementDate")})
+    @NamedQuery(name = "Announcement.findByAnnouncementDate", query = "SELECT a FROM Announcement a WHERE a.announcementDate = :announcementDate")})
 public class Announcement implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

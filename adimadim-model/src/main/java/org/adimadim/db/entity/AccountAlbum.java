@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "account_album", catalog = "adimadim", schema = "")
@@ -152,7 +152,7 @@ public class AccountAlbum implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entity.AccountAlbum[ albumId=" + albumId + " ]";
+        return "org.adimadim.db.entity.AccountAlbum[ albumId=" + albumId + " ]";
     }
     
 }

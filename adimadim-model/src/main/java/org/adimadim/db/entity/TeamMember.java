@@ -1,16 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -18,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "team_member", catalog = "adimadim", schema = "")
@@ -27,23 +25,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TeamMember.findAll", query = "SELECT t FROM TeamMember t"),
     @NamedQuery(name = "TeamMember.findByTeamId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.teamId = :teamId"),
     @NamedQuery(name = "TeamMember.findByRaceId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.raceId = :raceId"),
-    @NamedQuery(name = "TeamMember.findByAccountId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.accountId = :accountId"),
-    @NamedQuery(name = "TeamMember.findByRaceIdAndTeamId", query = "SELECT t FROM Team t WHERE t.teamPK.raceId = :raceId and t.teamPK.teamId = :teamId")
-})
+    @NamedQuery(name = "TeamMember.findByAccountId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.accountId = :accountId")})
 public class TeamMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TeamMemberPK teamMemberPK;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns({
-        @JoinColumn(name = "race_id", referencedColumnName = "race_id", insertable = false, updatable = false),
-        @JoinColumn(name = "team_id", referencedColumnName = "team_id", insertable = false, updatable = false)
-    })
-    private Team team;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id", insertable = false, updatable = false)
-    private Account account;
-    
+
     public TeamMember() {
     }
 
@@ -61,22 +48,6 @@ public class TeamMember implements Serializable {
 
     public void setTeamMemberPK(TeamMemberPK teamMemberPK) {
         this.teamMemberPK = teamMemberPK;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     @Override

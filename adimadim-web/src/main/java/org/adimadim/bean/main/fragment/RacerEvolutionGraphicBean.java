@@ -79,9 +79,9 @@ public class RacerEvolutionGraphicBean implements Serializable {
         LineChartSeries series1 = new LineChartSeries();
         series1.setLabel(selectedRacer.getName() + " " + selectedRacer.getSurname());
         for (RaceScore raceScore : racerScoreList) {
-            String date = ConvertionUtil.dateToString(raceScore.getRace().getRaceDate(), "dd.MM.yyyy");
+            /*String date = ConvertionUtil.dateToString(raceScore.getRace().getRaceDate(), "dd.MM.yyyy");
             Double duration = ConvertionUtil.timeToMinute(raceScore.getDuration());
-            series1.set(date, duration);
+            series1.set(date, duration);*/
         }
         linearModel.addSeries(series1);
     }

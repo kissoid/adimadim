@@ -30,7 +30,6 @@ import org.adimadim.bean.temp.AccountUpdateBean;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountAlbum;
 import org.adimadim.db.entity.AccountProperty;
-import org.adimadim.db.entity.AccountPropertyPK;
 import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
 import org.adimadim.util.ConvertionUtil;
@@ -56,10 +55,9 @@ public class RegisterBean implements Serializable {
     private Account account = new Account();
     private Map accountProperties = new HashMap();
     private boolean olderThanEighteen = true;
-    private List<AccountAlbum> accountAlbumList  = new ArrayList<>();
+    private List<AccountAlbum> accountAlbumList = new ArrayList<>();
     @Inject
     private AccountUpdateBean accountUpdateBean;
-
 
     public RegisterBean() {
         AccountAlbum accountAlbum = new AccountAlbum();
@@ -69,13 +67,13 @@ public class RegisterBean implements Serializable {
         accountAlbumList.add(accountAlbum);
     }
 
-    public void checkEmail(AjaxBehaviorEvent event){
+    public void checkEmail(AjaxBehaviorEvent event) {
         try {
-            if(account.getEmail().trim().equals("")){
+            if (account.getEmail().trim().equals("")) {
                 return;
             }
             Account tempAccount = accountService.findAccountByEmail(account.getEmail());
-            if(tempAccount != null && tempAccount.getPassword().trim().equals("")){
+            if (tempAccount != null && tempAccount.getPassword().trim().equals("")) {
                 accountUpdateBean.setAccount(tempAccount);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
             }
@@ -83,7 +81,7 @@ public class RegisterBean implements Serializable {
             Logger.getLogger(RegisterBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public boolean isOlderThanEighteen() {
         try {
             if (account.getTempBirthDate() == null) {
@@ -107,39 +105,36 @@ public class RegisterBean implements Serializable {
             if (raceRulesAccepted == false) {
                 throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
-            if(account.getTempBirthDate() == null){
-                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.birthDateMessage"));
-            }
             RegisterBeanValidator.validateAccountForSignUp(account);
-            account.setName(ConvertionUtil.firstCharUpperCase(account.getName()));
-            account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
-            account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.dateFormat")));
-            account.setAccountPropertyList(propertyMapToList());
-            account.setAccountAlbumList(accountAlbumList);
-            account.setChestNumber(accountService.getNextChestNumber());
+            prepareAccount();
             accountService.signUp(account);
             registerCompleted = true;
             accountBean.setAccount(account);
-            sendChestNumber(account);
+            //sendChestNumber(account);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
-            //FacesMessageUtil.createFacesMessage(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCreatedMessage"), null, FacesMessage.SEVERITY_INFO);
-            /*accountBean.setAccount(account);
-            accountBean.startSignInOperation();*/
         } catch (AccountException ex) {
             String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
             FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
             String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
-            if(registerCompleted){
+            if (registerCompleted) {
                 message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.mailCouldNotSentMessage");
             }
             FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
-    private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException{
+
+    private void prepareAccount() throws Exception {
+        account.setName(ConvertionUtil.firstCharUpperCase(account.getName()));
+        account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
+        account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.dateFormat")));
+        account.setAccountPropertyList(propertyMapToList());
+        account.setAccountAlbumList(accountAlbumList);
+    }
+
+    private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException {
         Integer chestNumber = account.getChestNumber();
-        String name = (account.getName() + " " +account.getSurname());
+        String name = (account.getName() + " " + account.getSurname());
         String receiver = account.getEmail();
         String subject = "AdimAdim Kosu Gogus Numarasi";
         String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
@@ -148,15 +143,14 @@ public class RegisterBean implements Serializable {
         ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);
         EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
     }
-    
+
     private List<AccountProperty> propertyMapToList() {
         List<AccountProperty> accountPropertyList = new ArrayList<AccountProperty>();
         Iterator iterator = accountProperties.entrySet().iterator();
         while (iterator.hasNext()) {
             AccountProperty accountProperty = new AccountProperty();
-            accountProperty.setAccountPropertyPK(new AccountPropertyPK());
             Map.Entry entry = (Map.Entry) iterator.next();
-            accountProperty.getAccountPropertyPK().setPropertyId(Integer.parseInt(entry.getKey().toString()));
+            accountProperty.setPropertyId(Integer.parseInt(entry.getKey().toString()));
             accountProperty.setPropertyValue(entry.getValue().toString());
             accountPropertyList.add(accountProperty);
         }
@@ -170,11 +164,11 @@ public class RegisterBean implements Serializable {
     public void setAccountAlbumList(List<AccountAlbum> accountAlbumList) {
         this.accountAlbumList = accountAlbumList;
     }
-    
+
     public void setOlderThanEighteen(boolean olderThanEighteen) {
         this.olderThanEighteen = olderThanEighteen;
     }
-    
+
     public Account getAccount() {
         return account;
     }
@@ -206,6 +200,5 @@ public class RegisterBean implements Serializable {
     public void setRaceRulesAccepted(boolean raceRulesAccepted) {
         this.raceRulesAccepted = raceRulesAccepted;
     }
-    
-    
+
 }

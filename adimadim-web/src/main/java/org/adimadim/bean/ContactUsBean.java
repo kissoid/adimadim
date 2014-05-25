@@ -44,7 +44,7 @@ public class ContactUsBean implements Serializable{
 
     public void saveMessage(){
         try {
-            contactMessage.setAccountId(accountBean.getAccount().getAccountId());
+            contactMessage.setAccount(accountBean.getAccount());
             contactMessage.setCreateDate(new Date());
             contactMessage.setUnread("E");
             contactMessageService.saveMessage(contactMessage);

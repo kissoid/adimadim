@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
@@ -16,8 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(catalog = "adimadim", schema = "")
@@ -54,7 +55,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByChestNumber", query = "SELECT a FROM Account a WHERE a.chestNumber = :chestNumber"),
     @NamedQuery(name = "Account.findBySecretKey", query = "SELECT a FROM Account a WHERE a.secretKey = :secretKey")})
 public class Account implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -71,12 +71,9 @@ public class Account implements Serializable {
     @Size(min = 1, max = 25)
     @Column(nullable = false, length = 25)
     private String surname;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 30)
     @Column(length = 30)
     private String email;
-    @Transient
-    private String reEmail;
     @Size(max = 25)
     @Column(length = 25)
     private String password;
@@ -90,8 +87,6 @@ public class Account implements Serializable {
     @Column(name = "birth_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthDate;
-    @Transient
-    private String tempBirthDate;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -131,14 +126,24 @@ public class Account implements Serializable {
     @Size(max = 10)
     @Column(name = "secret_key", length = 10)
     private String secretKey;
-    @Transient
-    private String rePassword;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    private EmergencyCall emergencyCall;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<RaceScore> raceScoreList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<AccountAlbum> accountAlbumList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<AccountProperty> accountPropertyList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    private AccountParent accountParent;
+    @OneToMany(mappedBy = "account")
+    private List<ContactMessage> contactMessageList;
+    @Transient
+    private String rePassword;
+    @Transient
+    private String tempBirthDate;
+    @Transient
+    private String reEmail;
 
     public Account() {
     }
@@ -147,34 +152,29 @@ public class Account implements Serializable {
         this.accountId = accountId;
     }
 
-    public Account(Integer accountId, String name, String surname, String gender, Date birthDate, String active, Date createDate, String manager, String adimadim, String adimadimRun) {
-        this.accountId = accountId;
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.active = active;
-        this.createDate = createDate;
-        this.manager = manager;
-        this.adimadim = adimadim;
-        this.adimadimRun = adimadimRun;
-    }
-
     @PrePersist
-    @PreUpdate
-    private void prePersistPreUpdateMethod() {
-        setAdimadimRun("E");
-        setActive("E");
-        setManager("H");
-        setCreateDate(new Date());
-        for (AccountProperty accountProperty : accountPropertyList) {
-            accountProperty.getAccountPropertyPK().setAccountId(accountId);
-            accountProperty.setAccount(this);
+    private void prePersistMethod(){
+        if(emergencyCall != null){
+            emergencyCall.setAccount(this);
         }
-        for (AccountAlbum accountAlbum : accountAlbumList) {
-            accountAlbum.setAccount(this);
+        if (accountParent != null) {
+            accountParent.setAccount(this);
         }
-
+        if (accountPropertyList != null) {
+            for(AccountProperty accountProperty : accountPropertyList){
+                accountProperty.setAccount(this);
+            }
+        }
+        if (accountAlbumList != null) {
+            for(AccountAlbum accountAlbum : accountAlbumList){
+                accountAlbum.setAccount(this);
+            }
+        }
+        this.setManager("H");
+        this.setActive("E");
+        this.setAdimadim("H");
+        this.setAdimadimRun("E");
+        this.setCreateDate(new Date());
     }
 
     public Integer getAccountId() {
@@ -305,14 +305,6 @@ public class Account implements Serializable {
         this.chestNumber = chestNumber;
     }
 
-    public String getRePassword() {
-        return rePassword;
-    }
-
-    public void setRePassword(String rePassword) {
-        this.rePassword = rePassword;
-    }
-
     public String getSecretKey() {
         return secretKey;
     }
@@ -321,20 +313,12 @@ public class Account implements Serializable {
         this.secretKey = secretKey;
     }
 
-    public String getTempBirthDate() {
-        return tempBirthDate;
+    public EmergencyCall getEmergencyCall() {
+        return emergencyCall;
     }
 
-    public void setTempBirthDate(String tempBirthDate) {
-        this.tempBirthDate = tempBirthDate;
-    }
-
-    public String getReEmail() {
-        return reEmail;
-    }
-
-    public void setReEmail(String reEmail) {
-        this.reEmail = reEmail;
+    public void setEmergencyCall(EmergencyCall emergencyCall) {
+        this.emergencyCall = emergencyCall;
     }
 
     @XmlTransient
@@ -364,29 +348,50 @@ public class Account implements Serializable {
         this.accountPropertyList = accountPropertyList;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (accountId != null ? accountId.hashCode() : 0);
-        return hash;
+    public AccountParent getAccountParent() {
+        return accountParent;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Account)) {
-            return false;
-        }
-        Account other = (Account) object;
-        if ((this.accountId == null && other.accountId != null) || (this.accountId != null && !this.accountId.equals(other.accountId))) {
-            return false;
-        }
-        return true;
+    public void setAccountParent(AccountParent accountParent) {
+        this.accountParent = accountParent;
+    }
+
+    @XmlTransient
+    public List<ContactMessage> getContactMessageList() {
+        return contactMessageList;
+    }
+
+    public void setContactMessageList(List<ContactMessage> contactMessageList) {
+        this.contactMessageList = contactMessageList;
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
+    }
+
+    public String getTempBirthDate() {
+        return tempBirthDate;
+    }
+
+    public void setTempBirthDate(String tempBirthDate) {
+        this.tempBirthDate = tempBirthDate;
+    }
+
+    public String getReEmail() {
+        return reEmail;
+    }
+
+    public void setReEmail(String reEmail) {
+        this.reEmail = reEmail;
     }
 
     @Override
     public String toString() {
-        return "com.entity.Account[ accountId=" + accountId + " ]";
+        return "org.adimadim.db.entity.Account[ accountId=" + accountId + " ]";
     }
-
+    
 }

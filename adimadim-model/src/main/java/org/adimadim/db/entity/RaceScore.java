@@ -25,14 +25,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "race_score", catalog = "adimadim", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RaceScore.findAll", query = "SELECT r FROM RaceScore r"),
-    @NamedQuery(name = "RaceScore.findByRaceAccountId", query = "SELECT r FROM RaceScore r WHERE r.account.accountId = :accountId"),
     @NamedQuery(name = "RaceScore.findByRaceScoreId", query = "SELECT r FROM RaceScore r WHERE r.raceScoreId = :raceScoreId"),
     @NamedQuery(name = "RaceScore.findByDuration", query = "SELECT r FROM RaceScore r WHERE r.duration = :duration"),
     @NamedQuery(name = "RaceScore.findByTeamId", query = "SELECT r FROM RaceScore r WHERE r.teamId = :teamId")})
@@ -49,7 +48,7 @@ public class RaceScore implements Serializable {
     private Integer teamId;
     @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false)
     @ManyToOne(optional = false)
-    private Race race;
+    private Race raceId;
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @ManyToOne(optional = false)
     private Account account;
@@ -85,12 +84,12 @@ public class RaceScore implements Serializable {
         this.teamId = teamId;
     }
 
-    public Race getRace() {
-        return race;
+    public Race getRaceId() {
+        return raceId;
     }
 
-    public void setRace(Race race) {
-        this.race = race;
+    public void setRaceId(Race raceId) {
+        this.raceId = raceId;
     }
 
     public Account getAccount() {
@@ -100,8 +99,6 @@ public class RaceScore implements Serializable {
     public void setAccount(Account account) {
         this.account = account;
     }
-
-    
 
     @Override
     public int hashCode() {
@@ -125,7 +122,7 @@ public class RaceScore implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.entity.RaceScore[ raceScoreId=" + raceScoreId + " ]";
+        return "org.adimadim.db.entity.RaceScore[ raceScoreId=" + raceScoreId + " ]";
     }
     
 }

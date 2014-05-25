@@ -52,9 +52,9 @@ public class ProfilePageBean implements Serializable{
         LineChartSeries series = new LineChartSeries();
         series.setLabel(accountBean.getProfileAccount().getName() + " " + accountBean.getProfileAccount().getSurname());
         for (RaceScore raceScore : raceScoreList) {
-            String date = ConvertionUtil.dateToString(raceScore.getRace().getRaceDate(), "dd.MM.yyyy");
+            /*String date = ConvertionUtil.dateToString(raceScore.getRace().getRaceDate(), "dd.MM.yyyy");
             Double duration = ConvertionUtil.timeToMinute(raceScore.getDuration());
-            series.set(date, duration);
+            series.set(date, duration);*/
         }
         cartesianChartModel.addSeries(series);
         return cartesianChartModel;
