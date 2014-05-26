@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
     <h:body>
@@ -23,17 +24,20 @@
                             </p>
                         </div>
                         <div class="custom-panel">
-                            <form>
+                            <h:form id="mainForm">
                                 <label>E-posta &mdash; <em>E-mail</em>
-                                    <input type="text"/>
+                                    <p:inputText id="signIn_email" value="#{accountBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz" />
                                 </label>
                                 <label>Şifre &mdash; <em>Password</em>
-                                    <input type="text"/>
+                                    <p:password id="signIn_password" value="#{accountBean.account.password}" required="true" requiredMessage="Şifrenizi giriniz" />               
                                 </label>
-                                <p><a href="#" class="c2-link" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a></p>
+                                <!--p>
+                                    <a href="#" class="c2-link" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a>
+                                </p-->
                                 <br/>
-                                <button class="small">Gönder &mdash; <em>Submit</em></button>
-                            </form>    
+                                <p:commandButton id="signInButton" actionListener="#{accountBean.startSignInOperation}" styleClass="small" oncomplete="document.getElementById('mainForm:signInButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';" /> 
+                                <p:messages autoUpdate="true" />
+                            </h:form>    
                         </div>
                     </div>
                     <hr class="end-bar c2-background" />
@@ -50,7 +54,9 @@
                     </form>
                     <a class="close-reveal-modal">&#215;</a>
                 </div>
-
+                <script type="text/javascript" >
+                    document.getElementById("mainForm:signInButton").firstChild.innerHTML = "Gönder &mdash; <em>Submit</em>";
+                </script>
             </ui:define>
         </ui:composition>
     </h:body>
