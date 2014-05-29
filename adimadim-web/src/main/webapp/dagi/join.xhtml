@@ -29,6 +29,38 @@
                         <h:form id="mainForm">
                             <div class="row">
                                 <div class="large-12 columns">
+                                    <p:messages autoUpdate="true" showDetail="true" />
+                                </div>
+                                <div class="large-12 columns">
+                                    <br/>
+                                    <p class="c6-text">Kullanıcı Bilgileri &mdash; <em>Log In Information</em></p>
+                                </div>
+
+                                <div class="large-6 columns">
+                                    <label>E-posta &mdash; <em>E-mail</em>
+                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}" required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns end">
+                                    <label>E-posta (tekrar) &mdash; <em>E-mail (confirm)</em>
+                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen e-mail tekrar alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" update=":mainForm" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Şifre &mdash; <em>Password</em>
+                                        <p:password id="accountPassword" value="#{registerBean.account.password}" required="true" requiredMessage="Lütfen şifre alanını boş bırakmayınız."/>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns end">
+                                    <label>Şifre (tekrar) &mdash; <em>Password (confirm)</em>
+                                        <p:password id="accountRePassword" value="#{registerBean.account.rePassword}" required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
+                                    </label>
+                                </div>
+                                <div class="large-12 columns">
                                     <p class="c6-text">Kişisel Bilgiler &mdash; <em>Personal Information</em></p>
                                 </div>
                                 <div class="large-6 columns">
@@ -67,31 +99,6 @@
                                             <f:selectItem itemLabel="Kadın (Female)" itemValue="K" />
                                             <f:selectItem itemLabel="Erkek (Male)" itemValue="E" />
                                         </p:selectOneRadio>
-                                    </label>
-                                </div>
-                                <div class="large-12 columns">
-                                    <br/>
-                                    <p class="c6-text">Kullanıcı Bilgileri &mdash; <em>Log In Information</em></p>
-                                </div>
-
-                                <div class="large-6 columns">
-                                    <label>E-posta &mdash; <em>E-mail</em>
-                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}" required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız."/>
-                                    </label>
-                                </div>
-                                <div class="large-6 columns end">
-                                    <label>E-posta (tekrar) &mdash; <em>E-mail (confirm)</em>
-                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen e-mail tekrar alanını boş bırakmayınız."/>
-                                    </label>
-                                </div>
-                                <div class="large-6 columns">
-                                    <label>Şifre &mdash; <em>Password</em>
-                                        <p:password id="accountPassword" value="#{registerBean.account.password}" required="true" requiredMessage="Lütfen şifre alanını boş bırakmayınız."/>
-                                    </label>
-                                </div>
-                                <div class="large-6 columns end">
-                                    <label>Şifre (tekrar) &mdash; <em>Password (confirm)</em>
-                                        <p:password id="accountRePassword" value="#{registerBean.account.rePassword}" required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız."/>
                                     </label>
                                 </div>
                                 <div class="large-12 columns">
@@ -186,7 +193,7 @@
                                     <p:commandButton id="saveButton" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" oncomplete="document.getElementById('mainForm:saveButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';"></p:commandButton>
                                 </div>
                                 <div class="large-12 columns">
-                                    <p:messages autoUpdate="true" />
+                                    <p:messages autoUpdate="true" showDetail="true" />
                                 </div>
                             </div>
                         </h:form>

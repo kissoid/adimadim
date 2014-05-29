@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -27,14 +28,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import org.adimadim.bean.temp.AccountUpdateBean;
+import org.adimadim.bean.validator.RegisterBeanValidator;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountAlbum;
 import org.adimadim.db.entity.AccountProperty;
-import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
-import org.adimadim.util.ConvertionUtil;
-import org.adimadim.bean.validator.RegisterBeanValidator;
+import org.adimadim.service.exception.AccountException;
 import org.adimadim.util.ChestNumberUtil;
+import org.adimadim.util.ConvertionUtil;
 import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;
 
@@ -43,7 +44,7 @@ import org.adimadim.util.FacesMessageUtil;
  * @author Adem
  */
 @Named(value = "registerBean")
-@ConversationScoped
+@SessionScoped
 public class RegisterBean implements Serializable {
 
     @Inject
@@ -69,13 +70,26 @@ public class RegisterBean implements Serializable {
 
     public void checkEmail(AjaxBehaviorEvent event) {
         try {
-            if (account.getEmail().trim().equals("")) {
+            if (account.getEmail() == null || account.getEmail().trim().equals("")) {
+                return;
+            }
+            if(!account.getEmail().equals(account.getReEmail())){
+                FacesMessageUtil.createFacesMessage("Uyarı", "Girilen mailler birbirinden farklı", FacesMessage.SEVERITY_ERROR);
                 return;
             }
             Account tempAccount = accountService.findAccountByEmail(account.getEmail());
-            if (tempAccount != null && tempAccount.getPassword().trim().equals("")) {
-                accountUpdateBean.setAccount(tempAccount);
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
+            if (tempAccount == null) {
+                return;
+            }
+            if (tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")) {
+                account = tempAccount;
+                String ad = account.getName() + " " +account.getSurname();
+                FacesMessageUtil.createFacesMessage("Bilgi", "Merhaba "+ad+". Daha önceden kayıt yaptırmışsınız ama bilgileriniz eksik. Lütfen bilgilerinizi tamamlayınız", FacesMessage.SEVERITY_INFO);
+                //accountUpdateBean.setAccount(tempAccount);
+                //FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
+            } else {
+                FacesMessageUtil.createFacesMessage("Uyarı", "Bu mail ile daha önceden kayıt olunmuş", FacesMessage.SEVERITY_ERROR);
+                account = new Account();
             }
         } catch (Exception ex) {
             Logger.getLogger(RegisterBean.class.getName()).log(Level.SEVERE, null, ex);
