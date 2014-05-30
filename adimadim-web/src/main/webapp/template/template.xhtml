@@ -11,12 +11,12 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Adım Adım Koşu</title>
             <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-            <link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/resource/css/foundation.css" />
-            <link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/resource/css/foundation-datepicker.css" />
-            <link rel="stylesheet" href="${facesContext.externalContext.requestContextPath}/resource/css/main.css" />
-            <script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/resource/js/vendor/modernizr.js"></script>
-            <script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/resource/js/foundation/foundation.js"></script>
-            <script type="text/javascript" src="${facesContext.externalContext.requestContextPath}/resource/js/vendor/foundation.datepicker.js"></script>
+            <link rel="stylesheet" href="#{request.contextPath}/resource/css/foundation.css" />
+            <link rel="stylesheet" href="#{request.contextPath}/resource/css/foundation-datepicker.css" />
+            <link rel="stylesheet" href="#{request.contextPath}/resource/css/main.css" />
+            <script type="text/javascript" src="#{request.contextPath}/resource/js/vendor/modernizr.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resource/js/foundation/foundation.js"></script>
+            <script type="text/javascript" src="#{request.contextPath}/resource/js/vendor/foundation.datepicker.js"></script>
             <script type="text/javascript">
                 $(document).foundation();
                 $(document).ready(function() {
@@ -35,14 +35,14 @@
                 <div class="row">
                     <div class="large-10 columns large-centered">
                         <nav>
-                            <a href="${facesContext.externalContext.requestContextPath}/index.jsp" class="logo">
-                                <img src="${facesContext.externalContext.requestContextPath}/resource/image/aa-kosu-logo.png" alt="Adım Adım Koşu" />
+                            <a href="#{request.contextPath}/index.jsp" class="logo">
+                                <img src="#{request.contextPath}/resource/image/aa-kosu-logo.png" alt="Adım Adım Koşu" />
                             </a>
-                            <a href="${facesContext.externalContext.requestContextPath}/dagi/next-run.jsf" class="next-run">Yarışlar</a>
-                            <a href="${facesContext.externalContext.requestContextPath}/dagi/about.jsf" class="about">Nedir?</a>
-                            <a href="${facesContext.externalContext.requestContextPath}/dagi/location.jsf" class="active location">Nerede?</a>
-                            <a href="${facesContext.externalContext.requestContextPath}/dagi/join.jsf" class="join">Kayıt Ol</a>
-                            <a href="${facesContext.externalContext.requestContextPath}/dagi/faq.jsf" class="faq">Sorular</a>
+                            <a href="#{request.contextPath}/dagi/next-run.jsf" class="next-run">Yarışlar</a>
+                            <a href="#{request.contextPath}/dagi/about.jsf" class="about">Nedir?</a>
+                            <a href="#{request.contextPath}/dagi/location.jsf" class="location">Nerede?</a>
+                            <a href="#{request.contextPath}/dagi/join.jsf" class="join">Kayıt Ol</a>
+                            <a href="#{request.contextPath}/dagi/faq.jsf" class="faq">Sorular</a>
                         </nav>        
                     </div>
                 </div>
@@ -59,10 +59,10 @@
                                 <p>® Adım Adım Koşu Yarışı, <a href="http://www.adimadim.org" class="c4-link" target="blank">Adım Adım Oluşumu</a>’nun projesidir.</p>
                             </div>
                             <div class="large-4 columns social-icons">
-                                <a href="http://www.facebook.com/hareketegec"><img src="${facesContext.externalContext.requestContextPath}/resource/image/facebook.png" alt="Facebook" target="_blank" /></a>
-                                <a href="http://www.twitter.com/adimadimaao"><img src="${facesContext.externalContext.requestContextPath}/resource/image/twitter.png" alt="Twitter" target="_blank" /></a>
-                                <a href="http://www.instagram.com/adim_adim"><img src="${facesContext.externalContext.requestContextPath}/resource/image/instagram.png" alt="Instagram" target="_blank" /></a>
-                                <a href="http://www.youtube.com/user/adimadimaao"><img src="${facesContext.externalContext.requestContextPath}/resource/image/youtube.png" alt="Youtube" target="_blank" /></a>
+                                <a href="http://www.facebook.com/hareketegec"><img src="#{request.contextPath}/resource/image/facebook.png" alt="Facebook" target="_blank" /></a>
+                                <a href="http://www.twitter.com/adimadimaao"><img src="#{request.contextPath}/resource/image/twitter.png" alt="Twitter" target="_blank" /></a>
+                                <a href="http://www.instagram.com/adim_adim"><img src="#{request.contextPath}/resource/image/instagram.png" alt="Instagram" target="_blank" /></a>
+                                <a href="http://www.youtube.com/user/adimadimaao"><img src="#{request.contextPath}/resource/image/youtube.png" alt="Youtube" target="_blank" /></a>
                             </div>
                         </div>
                     </div>

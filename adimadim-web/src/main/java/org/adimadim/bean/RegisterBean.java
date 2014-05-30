@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -38,6 +37,7 @@ import org.adimadim.util.ChestNumberUtil;
 import org.adimadim.util.ConvertionUtil;
 import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -81,14 +81,15 @@ public class RegisterBean implements Serializable {
             if (tempAccount == null) {
                 return;
             }
+            
             if (tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")) {
                 account = tempAccount;
-                String ad = account.getName() + " " +account.getSurname();
-                FacesMessageUtil.createFacesMessage("Bilgi", "Merhaba "+ad+". Daha önceden kayıt yaptırmışsınız ama bilgileriniz eksik. Lütfen bilgilerinizi tamamlayınız", FacesMessage.SEVERITY_INFO);
+                RequestContext.getCurrentInstance().execute("completeRegistrationDialog.show();");
                 //accountUpdateBean.setAccount(tempAccount);
                 //FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
             } else {
-                FacesMessageUtil.createFacesMessage("Uyarı", "Bu mail ile daha önceden kayıt olunmuş", FacesMessage.SEVERITY_ERROR);
+                RequestContext.getCurrentInstance().update("mainForm");
+                RequestContext.getCurrentInstance().execute("alreadyRegisteredDialog.show();");
                 account = new Account();
             }
         } catch (Exception ex) {

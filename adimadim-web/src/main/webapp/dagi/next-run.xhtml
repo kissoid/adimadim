@@ -6,7 +6,7 @@
     <h:head>
     </h:head>
     <h:body>
-        <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
+        <ui:composition template="#{request.contextPath}/template/template.xhtml">
             <ui:define name="head">  
 
             </ui:define>
@@ -14,7 +14,7 @@
                 <!-- 1-Yarışlar -->
 
                 <div id="next-run" class="row page">
-                    <img src="${facesContext.externalContext.requestContextPath}/resource/image/run-icon.png" class="page-icon" />
+                    <img src="#{request.contextPath}/resource/image/run-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns">
                         <h4 class="page-header c1-text">Önümüzdeki Yarış</h4>
                         <div class="panel c1-background text-center">
@@ -27,10 +27,9 @@
                         </div>
                         <br/>
                         <p>Bu ay güzel bir sürprizimiz olacak: 'Koşan Adam' Kemal Özdemir'in önderliğinde Adıgüzel İlköğretim Okulu 5 sınıf ogrencilerinden 20 kişilik bir çocuk grubu yarışımıza katılacak, yarıştan önce 200 metrelik mesafeyi koşacaklar.</p>
-                        <p>Daha önce AA Koşu'ya katılıp ve kayıt formununu doldurduysanız sadece <a href="" class="c1-link">buradan</a> göğüs numaranızı basıp gelin. İlk kez katılacaksanız <a href="" class="c1-link">buradan</a> kayıt olunuz. UNUTMAYIN, gögüs no yoksa sonuç da yok!</p>
+                        <p>Daha önce AA Koşu'ya katılıp ve kayıt formununu doldurduysanız sadece <a href="#{request.contextPath}/dagi/barcode.jsf" class="c1-link">buradan</a> göğüs numaranızı basıp gelin. İlk kez katılacaksanız <a href="#{request.contextPath}/dagi/join.jsf" class="c1-link">buradan</a> kayıt olunuz. UNUTMAYIN, gögüs no yoksa sonuç da yok!</p>
                         <p>Bu yarışta gönüllü olarak yardımcı olmak isteyenler doğrudan Nezihe arkadaşımıza <a href="mailto:nezihecitav@yahoo.com" target="_top" class="c1-link">mail</a> atabilirler.</p>
                         <p>Simit, elma, mandalina gibi ufak ikramlarınızı paylaşmak üzere getirirseniz de çok seviniriz.</p>
-                        <p>Not: Yarıştan sonra TEMA ve Toprak Dede'yle kahvaltı programı var. Runtalya'da Adım Adım olarak desteklediğimiz güzel projelerden biri olan Dünyayı Kurtaran Adım projesiyle ve Toprak Dede'yle tanışmak için süper fırsat! Ayrıntılı bilgi <a href="" class="c1-link">bu linkte</a>.</p>
                     </div>
                     <hr class="end-bar c1-background" />
                 </div>

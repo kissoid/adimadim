@@ -15,14 +15,14 @@
 
     </h:head>
     <h:body>
-        <ui:composition template="${facesContext.externalContext.requestContextPath}/template/template.xhtml">
+        <ui:composition template="${request.contextPath}/template/template.xhtml">
             <ui:define name="head">  
 
             </ui:define>
             <ui:define name="content">
                 <!-- 6 - Kayıt Ol -->
                 <div id="join" class="row page">
-                    <img src="${facesContext.externalContext.requestContextPath}/resource/image/join-icon.png" class="page-icon" />
+                    <img src="${request.contextPath}/resource/image/join-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns">
 
                         <h4 class="page-header c6-text text-center">Adım Adım Koşu Yarışı Kayıt Formu</h4>
@@ -46,7 +46,7 @@
                                 <div class="large-6 columns end">
                                     <label>E-posta (tekrar) &mdash; <em>E-mail (confirm)</em>
                                         <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen e-mail tekrar alanını boş bırakmayınız.">
-                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" update=":mainForm" />
+                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" />
                                         </p:inputText>
                                     </label>
                                 </div>
@@ -93,13 +93,12 @@
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
-                                    <label>Cinsiyet &mdash; <em>Gender</em>
-                                        <br/>
-                                        <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="width:385px;padding: 0px;border:none;border-color: #cb1910;">
+                                    <label>Cinsiyet &mdash; <em>Gender</em></label>
+                                        <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="width:385px;padding: 0px;border: none;">
                                             <f:selectItem itemLabel="Kadın (Female)" itemValue="K" />
                                             <f:selectItem itemLabel="Erkek (Male)" itemValue="E" />
                                         </p:selectOneRadio>
-                                    </label>
+                                    
                                 </div>
                                 <div class="large-12 columns">
                                     <br/>
@@ -190,13 +189,33 @@
                                 </div>
                                 <div class="large-12 columns">
                                     <br/><br/>
-                                    <p:commandButton id="saveButton" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" oncomplete="document.getElementById('mainForm:saveButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';"></p:commandButton>
+                                    <p:commandButton id="saveButton" actionListener="#{registerBean.startSignUpOperation}" ajax="false" update=":mainForm" styleClass="small" oncomplete="document.getElementById('mainForm:saveButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';"></p:commandButton>
                                 </div>
                                 <div class="large-12 columns">
                                     <p:messages autoUpdate="true" showDetail="true" />
                                 </div>
                             </div>
                         </h:form>
+                        <p:dialog header="Uyarı" id="alreadyRegisteredDialog" closable="true" widgetVar="alreadyRegisteredDialog" width="700" height="250">
+                            Merhaba,
+                            <br/><br/>
+                            Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden kayıt yaptırmış ve şifre oluşturmuş olduğunuzu gördük.
+                            <br/>
+                            Göğüs numarası almak için tekrardan kayıt yaptırmanıza gerek yok. Aynı göğüs numarasını kullanmaya devam edebilirsiniz.
+                            <br/>
+                            Göğüs numarasını bastırmak istiyorsanız, lütfen <a href="#{request.contextPath}/dagi/barcode.jsf" style="font-weight: bold;" class="c6-link">tıklayınız</a>
+                            <br/><br/>
+                            Teşekkürler
+                        </p:dialog>
+                        <p:dialog header="Uyarı" id="completeRegistrationDialog" closable="true" widgetVar="completeRegistrationDialog" width="700" height="250">
+                            Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
+                            <br/><br/>
+                            Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden adım adım koşuya kayıt yaptırdığınızı gördük.
+                            <br/>Yarış sistemimizi daha iyi bir hale getirmek için bu siteyi ve kayıt sistemini ooluşturduk.
+                            <br/>Lütfen daha önceki yarış bilgilerinize ulaşabilmek ve istediğiniz zaman kendi göğüs numaranızı
+                            <br/>sistemde otomatik olarak oluşturabilmek için, sadece bu mail adresini kullanarak bilgilerinizi tamamlayınız ve kendinize şifre oluşturunuz.
+                            <br/><br/>Teşekkürler
+                        </p:dialog>
                     </div>
                     <hr class="end-bar c6-background" />
                     <script type="text/javascript" >
