@@ -46,13 +46,18 @@ public class AccountService {
         params.put("secretKey", secretKey);
         return accountFacade.findByNamedQuery("Account.findBySecretKey", params, null);
     }
-    
+
     public Account findAccountByEmail(String email) throws Exception {
         Map params = new HashMap();
         params.put("email", email);
-        return accountFacade.findByNamedQuery("Account.findByEmail", params, null);
+        List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findByEmail", params, null);
+        if(accountList.isEmpty()){
+            return null;
+        } else {
+            return accountList.get(0);
+        }
     }
-    
+
     public void saveAccount(Account account) throws Exception {
         if (account.getAccountId() == null) {
             accountFacade.create(account);
@@ -78,15 +83,11 @@ public class AccountService {
     public Integer signUp(Account account) throws AccountException, Exception {
         Map map = new HashMap();
         map.put("email", account.getEmail());
-        List<Account> existsAccounts = accountFacade.findAllByNamedQuery("Account.findByEmail", map, null);
-        if (existsAccounts.isEmpty()) {
-            account.setChestNumber(getNextChestNumber());
-            account.setAccountId(getNextAccountId());
-            accountFacade.create(account);
-            return account.getAccountId();
-        } else {
-            throw new AccountException("Bu email daha önceden kayıt ettirilmiş.");
-        }
+        account.setChestNumber(getNextChestNumber());
+        //account.setAccountId(getNextAccountId());
+        accountFacade.edit(account);
+        return account.getAccountId();
+
     }
 
     public Integer updateAccount(Account account) throws AccountException, Exception {
@@ -101,27 +102,28 @@ public class AccountService {
         chestNumber = (chestNumber == null ? 0 : chestNumber) + 1;
         return chestNumber;
     }
-    
+
+    /*
     public Integer getNextAccountId() throws Exception {
         String jpqlString = "select max(a.accountId) from Account a";
         Integer accountId = (Integer) accountFacade.findByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
         accountId = (accountId == null ? 0 : accountId) + 1;
         return accountId;
-    }
-    
-    public List<AccountProperty> findAccountPropertiesByAccountId(Integer accountId) throws Exception{
+    }*/
+
+    public List<AccountProperty> findAccountPropertiesByAccountId(Integer accountId) throws Exception {
         Map map = new HashMap();
         map.put("accountId", accountId);
         return accountPropertyFacade.findAllByNamedQuery("AccountProperty.findByAccountId", map, null);
     }
-    
-    public void saveAccountProperties(List<AccountProperty> accountPropertyList) throws Exception{
-        for(AccountProperty accountProperty: accountPropertyList){
+
+    public void saveAccountProperties(List<AccountProperty> accountPropertyList) throws Exception {
+        for (AccountProperty accountProperty : accountPropertyList) {
             accountPropertyFacade.edit(accountProperty);
         }
     }
-    
-    public List<Account> getAccountRange(int from, int to){
+
+    public List<Account> getAccountRange(int from, int to) {
         return accountFacade.findRange(new int[]{from, to});
     }
 }

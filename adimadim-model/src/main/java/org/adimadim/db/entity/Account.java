@@ -13,12 +13,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,8 +60,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id", nullable = false)
     private Integer accountId;
     @Basic(optional = false)
@@ -72,7 +74,7 @@ public class Account implements Serializable {
     @Column(nullable = false, length = 25)
     private String surname;
     @Size(max = 30)
-    @Column(length = 30)
+    @Column(length = 50)
     private String email;
     @Size(max = 25)
     @Column(length = 25)
@@ -153,6 +155,7 @@ public class Account implements Serializable {
     }
 
     @PrePersist
+    @PreUpdate
     private void prePersistMethod(){
         if(emergencyCall != null){
             emergencyCall.setAccount(this);

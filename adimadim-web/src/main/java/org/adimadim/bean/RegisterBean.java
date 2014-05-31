@@ -73,7 +73,7 @@ public class RegisterBean implements Serializable {
             if (account.getEmail() == null || account.getEmail().trim().equals("")) {
                 return;
             }
-            if(!account.getEmail().equals(account.getReEmail())){
+            if (!account.getEmail().equals(account.getReEmail())) {
                 FacesMessageUtil.createFacesMessage("Uyarı", "Girilen mailler birbirinden farklı", FacesMessage.SEVERITY_ERROR);
                 return;
             }
@@ -81,9 +81,11 @@ public class RegisterBean implements Serializable {
             if (tempAccount == null) {
                 return;
             }
-            
+
             if (tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")) {
+                tempAccount.setReEmail(account.getReEmail());
                 account = tempAccount;
+                RequestContext.getCurrentInstance().update("mainForm");
                 RequestContext.getCurrentInstance().execute("completeRegistrationDialog.show();");
                 //accountUpdateBean.setAccount(tempAccount);
                 //FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
@@ -121,6 +123,11 @@ public class RegisterBean implements Serializable {
                 throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
             RegisterBeanValidator.validateAccountForSignUp(account);
+            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
+            if (tempAccount != null && account.getAccountId() == null) {
+                String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
+                throw new AccountException(message);
+            }
             prepareAccount();
             accountService.signUp(account);
             registerCompleted = true;
@@ -128,8 +135,7 @@ public class RegisterBean implements Serializable {
             //sendChestNumber(account);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
-            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
-            FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
+            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
             String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
             if (registerCompleted) {

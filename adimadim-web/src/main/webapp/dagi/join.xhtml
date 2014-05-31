@@ -94,11 +94,11 @@
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Cinsiyet &mdash; <em>Gender</em></label>
-                                        <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="width:385px;padding: 0px;border: none;">
-                                            <f:selectItem itemLabel="Kadın (Female)" itemValue="K" />
-                                            <f:selectItem itemLabel="Erkek (Male)" itemValue="E" />
-                                        </p:selectOneRadio>
-                                    
+                                    <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="width:385px;padding: 0px;border: none;">
+                                        <f:selectItem itemLabel="Kadın (Female)" itemValue="K" />
+                                        <f:selectItem itemLabel="Erkek (Male)" itemValue="E" />
+                                    </p:selectOneRadio>
+
                                 </div>
                                 <div class="large-12 columns">
                                     <br/>
@@ -189,38 +189,35 @@
                                 </div>
                                 <div class="large-12 columns">
                                     <br/><br/>
-                                    <p:commandButton id="saveButton" actionListener="#{registerBean.startSignUpOperation}" ajax="false" update=":mainForm" styleClass="small" oncomplete="document.getElementById('mainForm:saveButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';"></p:commandButton>
+                                    <p:commandButton id="saveButton" value="Gönder - Submit" actionListener="#{registerBean.startSignUpOperation}" ajax="false" update=":mainForm" styleClass="small" ></p:commandButton>
                                 </div>
                                 <div class="large-12 columns">
                                     <p:messages autoUpdate="true" showDetail="true" />
                                 </div>
                             </div>
+                            <p:dialog header="Bilgi" id="alreadyRegisteredDialog" closable="true" widgetVar="alreadyRegisteredDialog" width="700" height="250">
+                                Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
+                                <br/><br/>
+                                Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden kayıt yaptırmış ve şifre oluşturmuş olduğunuzu gördük.
+                                <br/>
+                                Göğüs numarası almak için tekrardan kayıt yaptırmanıza gerek yok. Aynı göğüs numarasını kullanmaya devam edebilirsiniz.
+                                <br/>
+                                Göğüs numarasını bastırmak istiyorsanız, lütfen <a href="#{request.contextPath}/dagi/barcode.jsf" style="font-weight: bold;" class="c6-link">tıklayınız</a>
+                                <br/><br/>
+                                Teşekkürler
+                            </p:dialog>
+                            <p:dialog header="Bilgi" id="completeRegistrationDialog" closable="true" widgetVar="completeRegistrationDialog" width="700" height="250">
+                                Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
+                                <br/><br/>
+                                Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden adım adım koşuya kayıt yaptırdığınızı gördük.
+                                <br/>Yarış sistemimizi daha iyi bir hale getirmek için bu siteyi ve kayıt sistemini oluşturduk.
+                                <br/>Lütfen daha önceki yarış bilgilerinize ulaşabilmek ve istediğiniz zaman kendi göğüs numaranızı
+                                <br/>sistemde otomatik olarak oluşturabilmek için, sadece bu mail adresini kullanarak bilgilerinizi tamamlayınız ve kendinize şifre oluşturunuz.
+                                <br/><br/>Teşekkürler
+                            </p:dialog>
                         </h:form>
-                        <p:dialog header="Uyarı" id="alreadyRegisteredDialog" closable="true" widgetVar="alreadyRegisteredDialog" width="700" height="250">
-                            Merhaba,
-                            <br/><br/>
-                            Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden kayıt yaptırmış ve şifre oluşturmuş olduğunuzu gördük.
-                            <br/>
-                            Göğüs numarası almak için tekrardan kayıt yaptırmanıza gerek yok. Aynı göğüs numarasını kullanmaya devam edebilirsiniz.
-                            <br/>
-                            Göğüs numarasını bastırmak istiyorsanız, lütfen <a href="#{request.contextPath}/dagi/barcode.jsf" style="font-weight: bold;" class="c6-link">tıklayınız</a>
-                            <br/><br/>
-                            Teşekkürler
-                        </p:dialog>
-                        <p:dialog header="Uyarı" id="completeRegistrationDialog" closable="true" widgetVar="completeRegistrationDialog" width="700" height="250">
-                            Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
-                            <br/><br/>
-                            Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden adım adım koşuya kayıt yaptırdığınızı gördük.
-                            <br/>Yarış sistemimizi daha iyi bir hale getirmek için bu siteyi ve kayıt sistemini ooluşturduk.
-                            <br/>Lütfen daha önceki yarış bilgilerinize ulaşabilmek ve istediğiniz zaman kendi göğüs numaranızı
-                            <br/>sistemde otomatik olarak oluşturabilmek için, sadece bu mail adresini kullanarak bilgilerinizi tamamlayınız ve kendinize şifre oluşturunuz.
-                            <br/><br/>Teşekkürler
-                        </p:dialog>
                     </div>
                     <hr class="end-bar c6-background" />
-                    <script type="text/javascript" >
-                        document.getElementById("mainForm:saveButton").firstChild.innerHTML = "Gönder &mdash; <em>Submit</em>";
-                    </script>
                 </div>
             </ui:define>
         </ui:composition>

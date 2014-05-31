@@ -46,7 +46,6 @@ public class AccountAlbum implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "album_id", nullable = false)
     private Integer albumId;
     @Basic(optional = false)

@@ -35,7 +35,7 @@
                                     <a href="#" class="c2-link" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a>
                                 </p-->
                                 <br/>
-                                <p:commandButton id="signInButton" actionListener="#{accountBean.startSignInOperation}" styleClass="small" oncomplete="document.getElementById('mainForm:signInButton').firstChild.innerHTML = 'Gönder &mdash; &lt;em&gt; Submit &lt;&#47;em&gt;';" /> 
+                                <p:commandButton id="signInButton" value="Gönder - Submit" actionListener="#{accountBean.startSignInOperation}" styleClass="small" /> 
                                 <p:messages autoUpdate="true" />
                             </h:form>    
                         </div>
@@ -54,9 +54,6 @@
                     </form>
                     <a class="close-reveal-modal">&#215;</a>
                 </div>
-                <script type="text/javascript" >
-                    document.getElementById("mainForm:signInButton").firstChild.innerHTML = "Gönder &mdash; <em>Submit</em>";
-                </script>
             </ui:define>
         </ui:composition>
     </h:body>
