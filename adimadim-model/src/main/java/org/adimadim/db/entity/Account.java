@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
@@ -52,12 +51,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByManager", query = "SELECT a FROM Account a WHERE a.manager = :manager"),
     @NamedQuery(name = "Account.findByAdimadim", query = "SELECT a FROM Account a WHERE a.adimadim = :adimadim"),
     @NamedQuery(name = "Account.findByAdimadimRun", query = "SELECT a FROM Account a WHERE a.adimadimRun = :adimadimRun"),
-    @NamedQuery(name = "Account.findByPhoneCode", query = "SELECT a FROM Account a WHERE a.phoneCode = :phoneCode"),
     @NamedQuery(name = "Account.findByPhoneNumber", query = "SELECT a FROM Account a WHERE a.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Account.findByPicture", query = "SELECT a FROM Account a WHERE a.picture = :picture"),
     @NamedQuery(name = "Account.findByChestNumber", query = "SELECT a FROM Account a WHERE a.chestNumber = :chestNumber"),
     @NamedQuery(name = "Account.findBySecretKey", query = "SELECT a FROM Account a WHERE a.secretKey = :secretKey")})
 public class Account implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +72,7 @@ public class Account implements Serializable {
     @Size(min = 1, max = 25)
     @Column(nullable = false, length = 25)
     private String surname;
-    @Size(max = 30)
+    @Size(max = 50)
     @Column(length = 50)
     private String email;
     @Size(max = 25)
@@ -115,21 +114,19 @@ public class Account implements Serializable {
     @Column(name = "adimadim_run", nullable = false, length = 1)
     private String adimadimRun;
     @Size(max = 10)
-    @Column(name = "phone_code", length = 10)
-    private String phoneCode;
-    @Size(max = 10)
-    @Column(name = "phone_number", length = 10)
+    @Column(name = "phone_number", length = 15)
     private String phoneNumber;
     @Size(max = 30)
     @Column(length = 30)
     private String picture;
     @Column(name = "chest_number")
     private Integer chestNumber;
+    @Size(max = 30)
+    @Column(name = "user_name", length = 30)
+    private String userName;
     @Size(max = 10)
     @Column(name = "secret_key", length = 10)
     private String secretKey;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
-    private EmergencyCall emergencyCall;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<RaceScore> raceScoreList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
@@ -146,6 +143,8 @@ public class Account implements Serializable {
     private String tempBirthDate;
     @Transient
     private String reEmail;
+    @Transient
+    private String reUserName;
 
     public Account() {
     }
@@ -156,28 +155,38 @@ public class Account implements Serializable {
 
     @PrePersist
     @PreUpdate
-    private void prePersistMethod(){
-        if(emergencyCall != null){
-            emergencyCall.setAccount(this);
-        }
+    private void prePersistMethod() {
         if (accountParent != null) {
             accountParent.setAccount(this);
         }
         if (accountPropertyList != null) {
-            for(AccountProperty accountProperty : accountPropertyList){
+            for (AccountProperty accountProperty : accountPropertyList) {
                 accountProperty.setAccount(this);
             }
         }
         if (accountAlbumList != null) {
-            for(AccountAlbum accountAlbum : accountAlbumList){
+            for (AccountAlbum accountAlbum : accountAlbumList) {
                 accountAlbum.setAccount(this);
             }
         }
-        this.setManager("H");
-        this.setActive("E");
-        this.setAdimadim("H");
-        this.setAdimadimRun("E");
-        this.setCreateDate(new Date());
+        if (manager == null || manager.equals("")) {
+            setManager("H");
+        }
+        if (active == null || active.equals("")) {
+            setActive("H");
+        }
+        if (adimadim == null || adimadim.equals("")) {
+            setAdimadim("H");
+        }
+        if (adimadimRun == null || adimadimRun.equals("")) {
+            setAdimadimRun("E");
+        }
+        if (createDate == null) {
+            setCreateDate(new Date());
+        }
+        if (picture == null) {
+            setPicture("default.png");
+        }
     }
 
     public Integer getAccountId() {
@@ -276,14 +285,6 @@ public class Account implements Serializable {
         this.adimadimRun = adimadimRun;
     }
 
-    public String getPhoneCode() {
-        return phoneCode;
-    }
-
-    public void setPhoneCode(String phoneCode) {
-        this.phoneCode = phoneCode;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -314,14 +315,6 @@ public class Account implements Serializable {
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
-    }
-
-    public EmergencyCall getEmergencyCall() {
-        return emergencyCall;
-    }
-
-    public void setEmergencyCall(EmergencyCall emergencyCall) {
-        this.emergencyCall = emergencyCall;
     }
 
     @XmlTransient
@@ -392,9 +385,25 @@ public class Account implements Serializable {
         this.reEmail = reEmail;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getReUserName() {
+        return reUserName;
+    }
+
+    public void setReUserName(String reUserName) {
+        this.reUserName = reUserName;
+    }
+
     @Override
     public String toString() {
         return "org.adimadim.db.entity.Account[ accountId=" + accountId + " ]";
     }
-    
+
 }

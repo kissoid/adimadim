@@ -24,6 +24,7 @@ import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
 import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
+import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;
 
 /**
@@ -31,26 +32,28 @@ import org.adimadim.util.FacesMessageUtil;
  * @author Adem
  */
 @SessionScoped
-@Named(value="accountBean")
-public class AccountBean implements Serializable{
-    @Inject private AccountService accountService;
+@Named(value = "accountBean")
+public class AccountBean implements Serializable {
+
+    @Inject
+    private AccountService accountService;
     private Account profileAccount = new Account();
     private Map accountPropertyMap = new HashMap();
     private Account account = new Account();
-    
+
     public AccountBean() {
     }
 
-    public void changeProfileAccount(Account profileAccount){
+    public void changeProfileAccount(Account profileAccount) {
         this.profileAccount = profileAccount;
-        try{
+        try {
             List<AccountProperty> accountPropertyList = accountService.findAccountPropertiesByAccountId(profileAccount.getAccountId());
             listToPropertyMap(accountPropertyList);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
+
     public boolean isUserSignedIn() {
         return account.getAccountId() != null;
     }
@@ -72,13 +75,13 @@ public class AccountBean implements Serializable{
             //FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/main/mainPage.jsf");
             FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
-            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);    
+            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
-    public void updateAccount(){
+
+    public void updateAccount() {
         try {
             accountService.saveAccount(account);
             account = accountService.findAccount(account.getAccountId());
@@ -87,8 +90,8 @@ public class AccountBean implements Serializable{
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
-    public void updatePassword(){
+
+    public void updatePassword() {
         try {
             if (!account.getPassword().equals(account.getRePassword())) {
                 throw new AccountException("İki şifre birbirinden farklı olamaz.");
@@ -102,8 +105,8 @@ public class AccountBean implements Serializable{
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
-    public void saveReloadAccountAndProperties(){
+
+    public void saveReloadAccountAndProperties() {
         try {
             accountService.saveAccountProperties(propertyMapToList());
             accountService.saveAccount(profileAccount);
@@ -114,7 +117,29 @@ public class AccountBean implements Serializable{
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
+
+    public void sendPassword() {
+        try {
+            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
+            if (tempAccount == null) {
+                throw new AccountException("Email adresi bulunamadı.");
+            }
+            if (tempAccount.getEmail() == null) {
+                throw new AccountException("Henüz şifre oluşturmamışsınız.");
+            }
+            String name = (tempAccount.getName() + " " + tempAccount.getSurname());
+            String receiver = account.getEmail();
+            String subject = "Sifre hatirlatma";
+            String content = "Sayin " + name + ", sifreniz : " + tempAccount.getPassword();
+            EmailUtil.sendMail(EmailUtil.SENDER_INFO, receiver, subject, content);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Şifreniz e-mail adresinize gönderildi", FacesMessage.SEVERITY_INFO);
+        } catch (AccountException ex) {
+            FacesMessageUtil.createFacesMessage("Hata", ex.getMessage(), FacesMessage.SEVERITY_ERROR);
+        } catch (Exception ex) {
+            FacesMessageUtil.createFacesMessage("Hata", "Beklenmedik bir hata oluştu", FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
     public void startSignOutOperation() {
         try {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -124,14 +149,14 @@ public class AccountBean implements Serializable{
             Logger.getLogger(AccountBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void listToPropertyMap(List<AccountProperty> accountPropertyList){
+
+    private void listToPropertyMap(List<AccountProperty> accountPropertyList) {
         accountPropertyMap.clear();
-        for(AccountProperty accountProperty: accountPropertyList){
-            accountPropertyMap.put((long)accountProperty.getPropertyId() , accountProperty.getPropertyValue());
+        for (AccountProperty accountProperty : accountPropertyList) {
+            accountPropertyMap.put((long) accountProperty.getPropertyId(), accountProperty.getPropertyValue());
         }
     }
-    
+
     private List<AccountProperty> propertyMapToList() {
         List<AccountProperty> accountPropertyList = new ArrayList<>();
         Iterator iterator = accountPropertyMap.entrySet().iterator();
@@ -145,18 +170,18 @@ public class AccountBean implements Serializable{
         }
         return accountPropertyList;
     }
-    
-    public void changeLanguage(String language, String country){
+
+    public void changeLanguage(String language, String country) {
         FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale(language, country));
     }
-    
+
     public Account getAccount() {
         return account;
     }
 
     public void setAccount(Account account) {
         this.account = account;
-    }    
+    }
 
     public Account getProfileAccount() {
         return profileAccount;
@@ -173,5 +198,5 @@ public class AccountBean implements Serializable{
     public void setAccountPropertyMap(Map accountPropertyMap) {
         this.accountPropertyMap = accountPropertyMap;
     }
-    
+
 }

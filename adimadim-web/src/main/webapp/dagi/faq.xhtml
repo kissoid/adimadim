@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
     <h:body>
@@ -21,13 +22,15 @@
                                     <h5 style="color: #F58026">Kayıt</h5>
                                     <div id="faq1" class="content">
                                         <p class="c7-text">İlk kez kayıt olacaksanız:</p>
-                                        <p>Kayıt ol bölümüne gidin, kayıt ve kullanıcı bilgilerinizi girin, şifrenizi belirleyin. Belirttiğiniz e-posta adresine otomatik kayıd teyidi gelecek. <a href="#{request.contextPath}/dagi/barcode.jsf" class="c7-link">Buradan</a> barkodlu göğüs numaranızı indirip bastırın. (Kendiniz basamıyorsanız bir arkadaşınıza iletebilirsiniz basması için. Göğüs numaranızı mutlaka her yarışa getirmelisiniz. Barkodlu göğüs numaranız yok ise sonuçlarınız yayınlanamayacaktır. Bir kere kayıt olduktan sonra her ay sadece göğüs numaranızı tekrar basıp getirmeniz yeterli olacak; yeniden kayıt olmanıza gerek yok! 
+                                        <p><a href="#{request.contextPath}/dagi/join.jsf" class="c7-link">Kayıt ol</a> bölümüne gidin, kayıt ve kullanıcı bilgilerinizi girin, şifrenizi belirleyin. Belirttiğiniz e-posta adresine aktivasyon maili gelecek. Ana sayfadaki <a href="#{request.contextPath}/dagi/barcode.jsf" class="c7-link">Göğüs No Al</a> bölümünden barkodlu göğüs numaranızı indirip bastırın. (Kendiniz basamıyorsanız bir arkadaşınıza iletebilirsiniz basması için. Göğüs numaranızı mutlaka her yarışa getirmelisiniz. Barkodlu göğüs numaranız yok ise sonuçlarınız yayınlanamayacaktır. Bir kere kayıt olduktan sonra her ay sadece göğüs numaranızı tekrar basıp getirmeniz yeterli olacak; yeniden kayıt olmanıza gerek yok! 
                                         </p>
                                         <p class="c7-text">Daha önce kayıt olduysanız:</p>
-                                        <p>Kayıt bölümünden sistemdeki mevcut kayıt bilgilerinizi kontrol edip güncelleyiniz. Eposta adresi kullanıcı adı olacağı için değişmeyecek bir eposta adresi belirtiniz. Kullanıcı bilgilerinizi girip şifre belirledikten sonra göğüs numaranızı indirip basınız. Barkodlu göğüs numaranızı yarışa getirmeyi unutmayın!
+                                        <p>Kayıt bölümünden sistemdeki mevcut kayıt bilgilerinizi kontrol edip güncelleyiniz. E-posta adresi kullanıcı adı olacağı için kişisel e-posta adresinizi belirtiniz. Kullanıcı bilgilerinizi girip şifre belirledikten sonra göğüs numaranızı indirip basınız. Barkodlu göğüs numaranızı yarışa getirmeyi unutmayın! 
                                         </p>
-                                        <p>DİKKAT: Daha önce göğüs numaranız başka bir kişinin eposta adresine geliyorduysa, yeniden kayıt olmanız gerekecek.</p>
+                                        <p>DİKKAT: Daha önce göğüs numaranız başka bir kişinin eposta adresine geliyor idiyse, yeniden kayıt olmanız gerekecek. </p>
                                         <p>DİKKAT: Daha önce birkaç kez kayıt olup farklı göğüs numaraları aldıysanız, sistemde sadece en son göğüs numaranız görünecek.</p>
+                                        <p class="c7-text">Takım maratonuna kayıdınızı yaptıracaksanız: </p>
+                                        <p><a href="mailto:takimmaratonu@gmail.com" class="c7-link">takimmaratonu@gmail.com</a> adresinden bize ulaşınız.</p>
                                     </div>
                                 </dd>
                                 <dd>
@@ -120,7 +123,10 @@
                                                 <li>7 Takım Üyesinin Adı/Soyadı, Göğüs Numarası</li>
                                             </ul>
                                         </p>
-                                        <p>Takım kayıtları yarıştan önceki perşembe akşamı öğlen saat 18’e  kadar tamamlanmak zorunda!
+                                        <p>
+                                            <a href="mailto:takimmaratonu@gmail.com" class="c7-link">takimmaratonu@gmail.com</a>
+                                        </p>
+                                        <p>Takım kayıtları yarıştan önceki cuma öğlen saat 12’e  kadar tamamlanmak zorunda!
                                         </p>
                                         <p class="c7-text">Takım Maratonu hangi yarışlarda düzenleniyor?</p>
                                         <p>Takım Maratonu; Şubat, Haziran ve Ekim aylarında AA Koşu yarışlarının bir parçası olarak 4 ayda bir düzenleniyor.

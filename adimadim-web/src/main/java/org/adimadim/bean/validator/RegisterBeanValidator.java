@@ -30,6 +30,12 @@ public class RegisterBeanValidator extends AbstractValidator {
         if (!account.getEmail().equals(account.getReEmail())) {
             throw new AccountException("Girdiğiniz e-mail adresleri birbirinden farklı.");
         }
+        if (isStringEmpty(account.getUserName())) {
+            throw new AccountException("Kullanıcı adı boş olamaz.");
+        }
+        if(!account.getUserName().equals(account.getReUserName())){
+            throw new AccountException("Kullanıcı adı ve kullanıcı adı tekrar birbirinden farklı olamaz.");
+        }
         if (isStringEmpty(account.getPassword())) {
             throw new AccountException("Şifre boş olamaz.");
         }

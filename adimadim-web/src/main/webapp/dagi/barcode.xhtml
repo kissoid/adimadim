@@ -19,9 +19,7 @@
                     <div class="large-8 large-centered columns">
                         <h4 class="page-header c2-text text-center">Göğüs Numaranı Al</h4>
                         <div>
-                            <p class="c2-text text-center">Barkodlu göğüs numaranızı almak için lütfen kullanıcı bilgilerinizi giriniz.<br/>
-                                <em>Please fill in your login information to get your barcoded bib number.</em>
-                            </p>
+                            <p class="c2-text text-center">Eğer şifreniz yoksa, <a href="${request.contextPath}/dagi/join.jsf" class="c7-link">Kayıt Ol</a> sayfasından kayıt işleminizi tamamlayınız.<br/>Her yarışa barkodlu göğüs numaranızı basıp getirmeyi unutmayın!</p>
                         </div>
                         <div class="custom-panel">
                             <h:form id="mainForm">
@@ -31,28 +29,29 @@
                                 <label>Şifre &mdash; <em>Password</em>
                                     <p:password id="signIn_password" value="#{accountBean.account.password}" required="true" requiredMessage="Şifrenizi giriniz" />               
                                 </label>
-                                <!--p>
-                                    <a href="#" class="c2-link" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a>
-                                </p-->
+                                <p>
+                                    <a href="#" class="c2-link" onclick="lostPassword.show();" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a>
+                                </p>
                                 <br/>
                                 <p:commandButton id="signInButton" value="Gönder - Submit" actionListener="#{accountBean.startSignInOperation}" styleClass="small" /> 
                                 <p:messages autoUpdate="true" />
                             </h:form>    
+                            <h:form id="sendPasswordForm">
+                                <p:dialog id="lostPassword" header="Tekrar Gönder - Recover" widgetVar="lostPassword" style="width: 200px;height: 150;">
+                                    <label>E-posta &mdash; <em>E-mail</em>
+                                        <p:inputText id="lostPasswordEmail" value="#{accountBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz">
+                                            <p:ajax event="keyup" />
+                                        </p:inputText>
+                                    </label>
+                                    <br/>
+                                    <p:messages autoUpdate="true" showDetail="true" />
+                                    <br/>
+                                    <p:commandButton value="Gönder - Submit" actionListener="#{accountBean.sendPassword()}" style="margin-bottom:0;"/>    
+                                </p:dialog>
+                            </h:form>
                         </div>
                     </div>
                     <hr class="end-bar c2-background" />
-                </div>
-
-                <div id="lost-password" class="reveal-modal small" data-reveal="">
-                    <h5 class="c2-text text-center">Tekrar Gönder &mdash; <em>Recover</em></h5><br/>
-                    <form style="margin-bottom:0;">
-                        <label>E-posta &mdash; <em>E-mail</em>
-                            <input type="text"/>
-                        </label>
-                        <br/>
-                        <button class="small" style="margin-bottom:0;">Gönder &mdash; <em>Submit</em></button>    
-                    </form>
-                    <a class="close-reveal-modal">&#215;</a>
                 </div>
             </ui:define>
         </ui:composition>

@@ -44,14 +44,19 @@ public class AccountService {
     public Account findAccountBySecretKey(String secretKey) throws Exception {
         Map params = new HashMap();
         params.put("secretKey", secretKey);
-        return accountFacade.findByNamedQuery("Account.findBySecretKey", params, null);
+        List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findBySecretKey", params, null);
+        if (accountList.isEmpty()) {
+            return null;
+        } else {
+            return accountList.get(0);
+        }
     }
 
     public Account findAccountByEmail(String email) throws Exception {
         Map params = new HashMap();
         params.put("email", email);
         List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findByEmail", params, null);
-        if(accountList.isEmpty()){
+        if (accountList.isEmpty()) {
             return null;
         } else {
             return accountList.get(0);
@@ -83,7 +88,9 @@ public class AccountService {
     public Integer signUp(Account account) throws AccountException, Exception {
         Map map = new HashMap();
         map.put("email", account.getEmail());
-        account.setChestNumber(getNextChestNumber());
+        if (account.getChestNumber() == null) {
+            account.setChestNumber(getNextChestNumber());
+        }
         //account.setAccountId(getNextAccountId());
         accountFacade.edit(account);
         return account.getAccountId();
@@ -104,13 +111,12 @@ public class AccountService {
     }
 
     /*
-    public Integer getNextAccountId() throws Exception {
-        String jpqlString = "select max(a.accountId) from Account a";
-        Integer accountId = (Integer) accountFacade.findByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
-        accountId = (accountId == null ? 0 : accountId) + 1;
-        return accountId;
-    }*/
-
+     public Integer getNextAccountId() throws Exception {
+     String jpqlString = "select max(a.accountId) from Account a";
+     Integer accountId = (Integer) accountFacade.findByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
+     accountId = (accountId == null ? 0 : accountId) + 1;
+     return accountId;
+     }*/
     public List<AccountProperty> findAccountPropertiesByAccountId(Integer accountId) throws Exception {
         Map map = new HashMap();
         map.put("accountId", accountId);

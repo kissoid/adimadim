@@ -17,11 +17,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -132,8 +132,13 @@ public class RegisterBean implements Serializable {
             accountService.signUp(account);
             registerCompleted = true;
             accountBean.setAccount(account);
+            sendActivationLink(account);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Kayıt işleminiz tamamlanmıştır", FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Aktivasyon linkiniz mail adresinize gönderilmiştir.", FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Lütfen spam klasörünü de kontrol etmeyi unutmayınız.", FacesMessage.SEVERITY_INFO);
+            
             //sendChestNumber(account);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
@@ -146,13 +151,24 @@ public class RegisterBean implements Serializable {
     }
 
     private void prepareAccount() throws Exception {
+        account.setSecretKey(UUID.randomUUID().toString());
         account.setName(ConvertionUtil.firstCharUpperCase(account.getName()));
         account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
         account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.dateFormat")));
         account.setAccountPropertyList(propertyMapToList());
-        account.setAccountAlbumList(accountAlbumList);
+        if(account.getAccountAlbumList() == null){
+            account.setAccountAlbumList(accountAlbumList);
+        }
     }
 
+    private void sendActivationLink(Account account) throws MessagingException {
+        String receiver = account.getEmail();
+        String subject = "AdimAdim Kosu Gogus Numarasi";
+        String content = "Kaydınızı aktive etmek için lütfen aşağıdaki linke tıklayınız<br/>";
+        content += "<a href='http://www.aakosu.org/ActivationServlet?key="+account.getSecretKey()+"'";
+        EmailUtil.sendMail(EmailUtil.SENDER_INFO, receiver, subject, content);
+    }
+    
     private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException {
         Integer chestNumber = account.getChestNumber();
         String name = (account.getName() + " " + account.getSurname());
@@ -177,7 +193,7 @@ public class RegisterBean implements Serializable {
         }
         return accountPropertyList;
     }
-
+    
     public List<AccountAlbum> getAccountAlbumList() {
         return accountAlbumList;
     }
