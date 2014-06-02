@@ -16,7 +16,7 @@
         <script src="/resource/js/vendor/modernizr.js"></script>
     </head>
     <body class="antialiased no-bg">
-       <hr class="gradient-bar" />
+        <hr class="gradient-bar" />
         <a href="" class="menu-toggle">
             <img src="/resource/image/hamburger.png" width="24" />    
         </a>
@@ -24,24 +24,24 @@
         <img src="/resource/image/aakosu-big-logo.png" alt="Adım Adım Koşu" class="cover-logo" />
 
         <ul class="example-orbit" data-orbit="" data-options="animation: fade; circular: true; slide_number: false; navigation_arrows: false; timer_show_progress_bar: false; timer_speed: 3000; pause_on_hover: false;">
-            <li style="background-image: url('/resource/image/cover1.png');"></li>
-            <li style="background-image: url('/resource/image/cover2.png');"></li>
-            <li style="background-image: url('/resource/image/cover3.png');"></li>
-            <li style="background-image: url('/resource/image/cover1.png');"></li>
-            <li style="background-image: url('/resource/image/cover2.png');"></li>
-            <li style="background-image: url('/resource/image/cover3.png');"></li>
-            <li style="background-image: url('/resource/image/cover1.png');"></li>
-            <li style="background-image: url('/resource/image/cover2.png');"></li>
-            <li style="background-image: url('/resource/image/cover3.png');"></li>
-            <li style="background-image: url('/resource/image/cover1.png');"></li>
-            <li style="background-image: url('/resource/image/cover2.png');"></li>
-            <li style="background-image: url('/resource/image/cover3.png');"></li>
-            <li style="background-image: url('/resource/image/cover1.png');"></li>
-            <li style="background-image: url('/resource/image/cover2.png');"></li>
-            <li style="background-image: url('/resource/image/cover3.png');"></li>
-            <li style="background-image: url('/resource/image/cover1.png');"></li>
-            <li style="background-image: url('/resource/image/cover2.png');"></li>
-            <li style="background-image: url('/resource/image/cover3.png');"></li>
+            <li style="background-image: url('/resource/image/cover1.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover2.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover3.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover1.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover2.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover3.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover1.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover2.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover3.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover1.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover2.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover3.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover1.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover2.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover3.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover1.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover2.jpg');"></li>
+            <li style="background-image: url('/resource/image/cover3.jpg');"></li>
         </ul>
 
         <nav class="cover">
@@ -85,6 +85,23 @@
                 $('nav.cover').fadeToggle();
                 e.preventDefault();
             });
+        </script>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-51572429-1', 'aakosu.org');
+            ga('send', 'pageview');
+
         </script>
     </body>
 </html>

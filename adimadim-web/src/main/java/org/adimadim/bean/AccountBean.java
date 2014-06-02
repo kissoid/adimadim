@@ -77,13 +77,13 @@ public class AccountBean implements Serializable {
         try {
             account = accountService.signIn(account);
             if(account.getActive().equals("H")){
-                throw new AccountException("Hesabınız henü aktifleştirilmediği için göğüs numarası alamazsınız.");
+                throw new AccountException("Hesabınız henüz aktifleştirilmediği için göğüs numarası alamazsınız.");
             }
             changeProfileAccount(account);
             sendChestNumber(account);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
-            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
+            FacesMessageUtil.createFacesMessage("Hata", ex.getMessage(), FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
         }

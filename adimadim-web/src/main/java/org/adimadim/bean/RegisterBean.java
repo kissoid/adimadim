@@ -4,10 +4,6 @@
  */
 package org.adimadim.bean;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.DocumentException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -33,7 +29,6 @@ import org.adimadim.db.entity.AccountAlbum;
 import org.adimadim.db.entity.AccountProperty;
 import org.adimadim.service.AccountService;
 import org.adimadim.service.exception.AccountException;
-import org.adimadim.util.ChestNumberUtil;
 import org.adimadim.util.ConvertionUtil;
 import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;

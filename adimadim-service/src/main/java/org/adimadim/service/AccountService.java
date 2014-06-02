@@ -78,7 +78,11 @@ public class AccountService {
         if (existsAccounts.isEmpty()) {
             throw new AccountException("Kullanıcı bulunamadı.");
         }
-        if (!existsAccounts.get(0).getPassword().equals(account.getPassword())) {
+        Account tempAccount = existsAccounts.get(0);
+        if(tempAccount.getPassword() == null){
+            throw new AccountException("Henüz kaydınızı güncellememişsiniz. Önce kayıt ol sayfasına gidip kaydınızı güncelleyiniz.");
+        }
+        if (!tempAccount.getPassword().equals(account.getPassword())) {
             throw new AccountException("Şifre yanlış");
         }
         return existsAccounts.get(0);
