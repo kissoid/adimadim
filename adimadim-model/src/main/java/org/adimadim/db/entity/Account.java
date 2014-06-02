@@ -113,7 +113,7 @@ public class Account implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "adimadim_run", nullable = false, length = 1)
     private String adimadimRun;
-    @Size(max = 10)
+    @Size(max = 15)
     @Column(name = "phone_number", length = 15)
     private String phoneNumber;
     @Size(max = 30)
@@ -121,11 +121,11 @@ public class Account implements Serializable {
     private String picture;
     @Column(name = "chest_number")
     private Integer chestNumber;
-    @Size(max = 30)
-    @Column(name = "user_name", length = 30)
+    @Size(max = 50)
+    @Column(name = "user_name", length = 50)
     private String userName;
-    @Size(max = 10)
-    @Column(name = "secret_key", length = 10)
+    @Size(max = 50)
+    @Column(name = "secret_key", length = 50)
     private String secretKey;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
     private List<RaceScore> raceScoreList;
@@ -167,6 +167,11 @@ public class Account implements Serializable {
         if (accountAlbumList != null) {
             for (AccountAlbum accountAlbum : accountAlbumList) {
                 accountAlbum.setAccount(this);
+            }
+        }
+        if (contactMessageList != null) {
+            for (ContactMessage contactMessage : contactMessageList) {
+                contactMessage.setAccount(this);
             }
         }
         if (manager == null || manager.equals("")) {

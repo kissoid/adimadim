@@ -103,9 +103,9 @@
                                 </div>
                                 <div class="large-6 columns">
                                     <label>Telefon &mdash; <em>Telephone</em>
-                                        <p:inputText id="phoneNumber" value="#{registerBean.account.phoneNumber}">
+                                        <p:inputMask id="phoneNumber" value="#{registerBean.account.phoneNumber}" mask="(999) 999-9999">
                                             <p:ajax event="blur" />
-                                        </p:inputText>
+                                        </p:inputMask>
                                     </label>
                                 </div>
                                 <div class="large-6 columns">
@@ -130,9 +130,9 @@
                                 </div>
                                 <div class="large-6 columns end">
                                     <label>Cep Telefonu &mdash; <em>Mobile</em>
-                                        <p:inputText id="emergencyPhoneNumber" value="#{registerBean.accountProperties['3']}" size="20" maxlength="15" required="true" requiredMessage="Lütfen acil durum telefon numarası alanını boş bırakmayınız.">
+                                        <p:inputMask id="emergencyPhoneNumber" value="#{registerBean.accountProperties['3']}" size="20" maxlength="15" mask="(999) 999-9999" required="true" requiredMessage="Lütfen acil durum telefon numarası alanını boş bırakmayınız.">
                                             <p:ajax event="blur" />
-                                        </p:inputText>
+                                        </p:inputMask>
                                     </label>
                                 </div>
                                 <div class="large-12 columns">
@@ -209,11 +209,11 @@
                                     </p>
                                 </div>
                                 <div class="large-12 columns">
-                                    <br/><br/>
-                                    <p:commandButton id="saveButton" value="Gönder - Submit" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" ></p:commandButton>
+                                    <p:messages autoUpdate="true" showDetail="true" />
                                 </div>
                                 <div class="large-12 columns">
-                                    <p:messages autoUpdate="true" showDetail="true" />
+                                    <br/><br/>
+                                    <p:commandButton id="saveButton" value="Gönder - Submit" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" ></p:commandButton>
                                 </div>
                             </div>
                             <p:dialog header="Bilgi" id="alreadyRegisteredDialog" closable="true" widgetVar="alreadyRegisteredDialog" width="700" height="250">

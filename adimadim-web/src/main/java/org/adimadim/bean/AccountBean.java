@@ -4,6 +4,9 @@
  */
 package org.adimadim.bean;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.DocumentException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,11 +22,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
 import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
+import org.adimadim.util.ChestNumberUtil;
 import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;
 
@@ -71,8 +76,11 @@ public class AccountBean implements Serializable {
     public void startSignInOperation() {
         try {
             account = accountService.signIn(account);
+            if(account.getActive().equals("H")){
+                throw new AccountException("Hesabınız henü aktifleştirilmediği için göğüs numarası alamazsınız.");
+            }
             changeProfileAccount(account);
-            //FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/main/mainPage.jsf");
+            sendChestNumber(account);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
@@ -106,6 +114,18 @@ public class AccountBean implements Serializable {
         }
     }
 
+    private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException {
+        Integer chestNumber = account.getChestNumber();
+        String name = (account.getName() + " " + account.getSurname());
+        String receiver = account.getEmail();
+        String subject = "Gogus Numarasi";
+        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
+        String fileName = "GogusNo.pdf";
+        String fileFormat = "application/pdf";
+        ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);
+        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
+    }
+    
     public void saveReloadAccountAndProperties() {
         try {
             accountService.saveAccountProperties(propertyMapToList());

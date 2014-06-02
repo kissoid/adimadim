@@ -7,6 +7,8 @@ package org.adimadim.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +23,6 @@ import org.adimadim.service.AccountService;
  */
 @WebServlet(name = "ActivationServlet", urlPatterns = {"/ActivationServlet"})
 public class ActivationServlet extends HttpServlet {
-
-    private AccountService accountService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +44,8 @@ public class ActivationServlet extends HttpServlet {
                 }
                 String key = request.getParameter("key");
                 Account tempAccount = null;
-
+                Context context = new InitialContext();
+                AccountService accountService = (AccountService) context.lookup("java:app/adimadim-service-1.0/accountService");
                 tempAccount = accountService.findAccountBySecretKey(key);
 
                 if (tempAccount == null) {
@@ -53,7 +54,8 @@ public class ActivationServlet extends HttpServlet {
                 }
                 tempAccount.setActive("E");
                 accountService.updateAccount(tempAccount);
-                response.sendRedirect("/dagi/barcode.jsf");
+                //FacesContext.getCurrentInstance().
+                response.sendRedirect("/dagi/account_activated.jsf");
             } catch (Exception ex) {
                 out.write("Hata oluştu");
             }

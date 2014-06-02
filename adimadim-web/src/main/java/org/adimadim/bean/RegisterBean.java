@@ -68,6 +68,16 @@ public class RegisterBean implements Serializable {
         accountAlbumList.add(accountAlbum);
     }
 
+    private void listToPropertyMap(Account account) {
+        accountProperties.clear();
+        if (account.getAccountPropertyList() == null) {
+            return;
+        }
+        for (AccountProperty accountProperty : account.getAccountPropertyList()) {
+            accountProperties.put(accountProperty.getPropertyId(), accountProperty.getPropertyValue());
+        }
+    }
+
     public void checkEmail(AjaxBehaviorEvent event) {
         try {
             if (account.getEmail() == null || account.getEmail().trim().equals("")) {
@@ -85,10 +95,12 @@ public class RegisterBean implements Serializable {
             if (tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")) {
                 tempAccount.setReEmail(account.getReEmail());
                 account = tempAccount;
+                listToPropertyMap(account);
+                if (account.getBirthDate() != null) {
+                    account.setTempBirthDate(ConvertionUtil.dateToString(account.getBirthDate(), "dd.MM.yyyy"));
+                }
                 RequestContext.getCurrentInstance().update("mainForm");
                 RequestContext.getCurrentInstance().execute("completeRegistrationDialog.show();");
-                //accountUpdateBean.setAccount(tempAccount);
-                //FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
             } else {
                 RequestContext.getCurrentInstance().update("mainForm");
                 RequestContext.getCurrentInstance().execute("alreadyRegisteredDialog.show();");
@@ -131,12 +143,12 @@ public class RegisterBean implements Serializable {
             prepareAccount();
             accountService.signUp(account);
             registerCompleted = true;
-            accountBean.setAccount(account);
+            //accountBean.setAccount(account);
             sendActivationLink(account);
             FacesMessageUtil.createFacesMessage("Bilgi", "Kayıt işleminiz tamamlanmıştır", FacesMessage.SEVERITY_INFO);
             FacesMessageUtil.createFacesMessage("Bilgi", "Aktivasyon linkiniz mail adresinize gönderilmiştir.", FacesMessage.SEVERITY_INFO);
             FacesMessageUtil.createFacesMessage("Bilgi", "Lütfen spam klasörünü de kontrol etmeyi unutmayınız.", FacesMessage.SEVERITY_INFO);
-            
+            account = new Account();
             //sendChestNumber(account);
             //FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
@@ -156,29 +168,18 @@ public class RegisterBean implements Serializable {
         account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
         account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.dateFormat")));
         account.setAccountPropertyList(propertyMapToList());
-        if(account.getAccountAlbumList() == null){
+        if (account.getAccountAlbumList() == null) {
             account.setAccountAlbumList(accountAlbumList);
         }
     }
 
     private void sendActivationLink(Account account) throws MessagingException {
         String receiver = account.getEmail();
-        String subject = "AdimAdim Kosu Gogus Numarasi";
-        String content = "Kaydınızı aktive etmek için lütfen aşağıdaki linke tıklayınız<br/>";
-        content += "<a href='http://www.aakosu.org/ActivationServlet?key="+account.getSecretKey()+"'";
+        String subject = "Adimadim kosu aktivasyon linki";
+        String link = "http://www.aakosu.org/ActivationServlet?key=" + account.getSecretKey();
+        String content = "Kaydınızı aktive etmek için lütfen aşağıdaki linke tklayınız<br/>";
+        content += "<a href='" + link + "' >" + link + "</a>";
         EmailUtil.sendMail(EmailUtil.SENDER_INFO, receiver, subject, content);
-    }
-    
-    private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException {
-        Integer chestNumber = account.getChestNumber();
-        String name = (account.getName() + " " + account.getSurname());
-        String receiver = account.getEmail();
-        String subject = "AdimAdim Kosu Gogus Numarasi";
-        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
-        String fileName = "GogusNo.pdf";
-        String fileFormat = "application/pdf";
-        ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);
-        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
     }
 
     private List<AccountProperty> propertyMapToList() {
@@ -193,7 +194,7 @@ public class RegisterBean implements Serializable {
         }
         return accountPropertyList;
     }
-    
+
     public List<AccountAlbum> getAccountAlbumList() {
         return accountAlbumList;
     }

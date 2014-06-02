@@ -77,12 +77,12 @@ public class AccountAlbumPicture implements Serializable {
         this.pictureName = pictureName;
     }
 
-    public AccountAlbum getAlbumId() {
+    public AccountAlbum getAlbum() {
         return album;
     }
 
-    public void setAlbumId(AccountAlbum albumId) {
-        this.album = albumId;
+    public void setAlbum(AccountAlbum album) {
+        this.album = album;
     }
 
     @Override

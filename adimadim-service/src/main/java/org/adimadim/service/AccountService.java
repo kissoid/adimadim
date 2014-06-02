@@ -26,7 +26,7 @@ import org.adimadim.service.exception.AccountException;
  */
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-@Stateless
+@Stateless(name = "accountService")
 public class AccountService {
 
     @Inject

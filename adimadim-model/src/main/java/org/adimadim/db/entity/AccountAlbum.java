@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
@@ -21,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AccountAlbum.findByAlbumDate", query = "SELECT a FROM AccountAlbum a WHERE a.albumDate = :albumDate"),
     @NamedQuery(name = "AccountAlbum.findByProfileAlbum", query = "SELECT a FROM AccountAlbum a WHERE a.profileAlbum = :profileAlbum")})
 public class AccountAlbum implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +80,16 @@ public class AccountAlbum implements Serializable {
         this.albumId = albumId;
         this.albumName = albumName;
         this.profileAlbum = profileAlbum;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void prePersistUpdateMethod() {
+        if(accountAlbumPictureList != null){
+            for(AccountAlbumPicture accountAlbumPicture : accountAlbumPictureList){
+                accountAlbumPicture.setAlbum(this);
+            }
+        }
     }
 
     public Integer getAlbumId() {
@@ -153,5 +165,5 @@ public class AccountAlbum implements Serializable {
     public String toString() {
         return "org.adimadim.db.entity.AccountAlbum[ albumId=" + albumId + " ]";
     }
-    
+
 }
