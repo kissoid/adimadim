@@ -37,6 +37,10 @@ public class AccountService {
     public AccountService() {
     }
 
+    public List<Account> retrieveAllAccounts() throws Exception{
+        return accountFacade.findAll();
+    }
+    
     public Account findAccount(Integer accountId) throws Exception {
         return accountFacade.find(accountId);
     }
