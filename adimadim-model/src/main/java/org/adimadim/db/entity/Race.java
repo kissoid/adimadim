@@ -22,6 +22,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,12 +34,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(catalog = "adimadim", schema = "")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Race.findAll", query = "SELECT r FROM Race r"),
     @NamedQuery(name = "Race.findByRaceId", query = "SELECT r FROM Race r WHERE r.raceId = :raceId"),
     @NamedQuery(name = "Race.findByRaceName", query = "SELECT r FROM Race r WHERE r.raceName = :raceName"),
     @NamedQuery(name = "Race.findByRaceDate", query = "SELECT r FROM Race r WHERE r.raceDate = :raceDate"),
-    @NamedQuery(name = "Race.findByActive", query = "SELECT r FROM Race r WHERE r.active = :active")})
+    @NamedQuery(name = "Race.findByActive", query = "SELECT r FROM Race r WHERE r.active = :active"),
+    @NamedQuery(name = "Race.findAllByDateOrderDesc", query = "SELECT r FROM Race r order by r.raceDate desc")})
 public class Race implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,7 +64,8 @@ public class Race implements Serializable {
     @Size(min = 1, max = 1)
     @Column(nullable = false, length = 1)
     private String active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceId")
+    @XmlTransient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<RaceScore> raceScoreList;
 
     public Race() {
@@ -109,33 +114,12 @@ public class Race implements Serializable {
         this.active = active;
     }
 
-    @XmlTransient
     public List<RaceScore> getRaceScoreList() {
         return raceScoreList;
     }
 
     public void setRaceScoreList(List<RaceScore> raceScoreList) {
         this.raceScoreList = raceScoreList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (raceId != null ? raceId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Race)) {
-            return false;
-        }
-        Race other = (Race) object;
-        if ((this.raceId == null && other.raceId != null) || (this.raceId != null && !this.raceId.equals(other.raceId))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

@@ -48,7 +48,7 @@ public class RaceScore implements Serializable {
     private Integer teamId;
     @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false)
     @ManyToOne(optional = false)
-    private Race raceId;
+    private Race race;
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @ManyToOne(optional = false)
     private Account account;
@@ -84,12 +84,12 @@ public class RaceScore implements Serializable {
         this.teamId = teamId;
     }
 
-    public Race getRaceId() {
-        return raceId;
+    public Race getRace() {
+        return race;
     }
 
-    public void setRaceId(Race raceId) {
-        this.raceId = raceId;
+    public void setRace(Race race) {
+        this.race = race;
     }
 
     public Account getAccount() {
