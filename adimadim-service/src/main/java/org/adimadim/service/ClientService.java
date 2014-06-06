@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.Race;
@@ -36,6 +37,7 @@ public class ClientService {
      * Web service operation
      * @return 
      */
+    /*
     @WebMethod(operationName = "retrieveAccounts")
     public List<Account> retrieveAccounts() {
         try {
@@ -66,7 +68,55 @@ public class ClientService {
             Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    /**
+     * Web service operation
+     * @param raceScores
+     * @return 
+     */
+    @WebMethod(operationName = "saveRaceScores")
+    public String saveRaceScores(@WebParam(name = "raceScores") List<RaceScore> raceScores) {
+        String result = "";
+        try {
+            result =  raceScoreService.saveRaceScores(raceScores);
+        } catch (Exception ex) {
+            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * @return 
+     */
+    @WebMethod(operationName = "retrieveRaces")
+    public List<Race> retrieveRaces() {
+        try {
+            return raceService.retrieveAllRaces();
+        } catch (Exception ex) {
+            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * @return 
+     */
+    @WebMethod(operationName = "retrieveAccounts")
+    public List<Account> retrieveAccounts() {
+        try {
+            List<Account> accountList = accountService.retrieveAllAccounts();
+            for(Account account : accountList){
+                account.setPassword("*****");
+            }
+            return accountList;
+        } catch (Exception ex) {
+            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
