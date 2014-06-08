@@ -137,7 +137,7 @@ public class AccountService {
         }
     }
 
-    public List<Account> getAccountRange(int from, int to) {
+    public List<Account> retrieveAccountRange(int from, int to) {
         return accountFacade.findRange(new int[]{from, to});
     }
 }

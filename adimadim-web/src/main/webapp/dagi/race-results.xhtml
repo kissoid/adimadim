@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="${request.contextPath}/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                
+    <!-- 1-Yarış Sonuçları -->
+
+    <div id="next-run" class="row page">
+        <img src="${request.contextPath}/resource/image/run-icon.png" class="page-icon" />
+        <div class="large-10 large-centered columns">
+            <h4 class="page-header c1-text">Önümüzdeki Yarış</h4>
+            <div class="panel c1-background text-center">
+                <p><strong>38. Adım Adım Koşu Yarışı ve Takım Maratonu</strong><br/></p>
+                <p>Tarih: 7 Haziran 2014, Cumartesi<br/>
+                    Yer: Belgrad Ormanı Neşet Suyu Parkuru<br/>
+                    Toplanma/Isınma: Saat 8.00<br/>
+                    Start: 8.30</p>
+                </div>
+                <br/>
+                <p>121 kişinin katılımıyla gerçekleştirdiğimiz 38. AA Koşu nisbeten daha düşük katılımlı ama çok da keyifli geçti. 1 Mayıs tatili ve Alanya yarışlarına giden arkadaşlarımızın yokluğunu hissettiysek de yarış gönüllülerimiz Adem, Gizem, Eda, Nur, Özgül, Yeşim ve Esra ile harika bir organizasyon oldu. Destek veren katılan herkese teşekkürler!</p>
+                <p>Bir sonraki yarışımız 7 Haziran'da, şimdiden not ediniz.</p>
+                <table class="race-results" width="100%">
+                    <tr>
+                        <td width="80px;">SIRA</td>
+                        <td width="120px;">GÖĞÜS NO</td>
+                        <td>AD</td>
+                        <td>SOYAD</td>
+                        <td width="100px;">SÜRE</td>
+                        <td width="40px;">K/E</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>3575</td>
+                        <td>Hasan</td>
+                        <td>Kesgin</td>
+                        <td>00:25:52</td>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>6009</td>
+                        <td>Metin</td>
+                        <td>Şanlı</td>
+                        <td>00:26:00</td>
+                        <td>E</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>6018</td>
+                        <td>Ivan</td>
+                        <td>Gladstone</td>
+                        <td>00:26:14</td>
+                        <td>E</td>
+                    </tr>
+                </table>
+            </div>
+            <hr class="end-bar c1-background" />
+        </div>
+
+    <div>
+
+        
+    </div>     
+                <script>
+                    (function(i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function() {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-51572429-1', 'aakosu.org');
+                    ga('require', 'displayfeatures');
+                    ga('send', 'pageview');
+
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

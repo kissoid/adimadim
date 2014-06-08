@@ -104,9 +104,29 @@ public class ClientService {
 
     /**
      * Web service operation
+     * @param start
+     * @param end
      * @return 
      */
     @WebMethod(operationName = "retrieveAccounts")
+    public List<Account> retrieveAccounts(@WebParam(name = "start") int start, @WebParam(name = "end") int end) {
+        try {
+            List<Account> accountList = accountService.retrieveAccountRange(start, end);
+            for(Account account : accountList){
+                account.setPassword("*****");
+            }
+            return accountList;
+        } catch (Exception ex) {
+            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /**
+     * Web service operation
+     * @return 
+     */
+    /*@WebMethod(operationName = "retrieveAccounts")
     public List<Account> retrieveAccounts() {
         try {
             List<Account> accountList = accountService.retrieveAllAccounts();
@@ -118,5 +138,5 @@ public class ClientService {
             Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
 }

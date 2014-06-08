@@ -23,7 +23,7 @@ public class LazyAccountDataModel extends LazyDataModel<Account> {
     List<Account> data;
     
     public LazyAccountDataModel() {
-        data = accountService.getAccountRange(0, 10);
+        data = accountService.retrieveAccountRange(0, 10);
     }
 
  @Override  
@@ -44,7 +44,7 @@ public class LazyAccountDataModel extends LazyDataModel<Account> {
     
     @Override
     public List<Account> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        data = accountService.getAccountRange(first, first + pageSize);
+        data = accountService.retrieveAccountRange(first, first + pageSize);
         for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
             try {
                 String filterProperty = it.next();
