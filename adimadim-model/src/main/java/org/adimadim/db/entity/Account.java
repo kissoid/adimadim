@@ -54,7 +54,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByPhoneNumber", query = "SELECT a FROM Account a WHERE a.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Account.findByPicture", query = "SELECT a FROM Account a WHERE a.picture = :picture"),
     @NamedQuery(name = "Account.findByChestNumber", query = "SELECT a FROM Account a WHERE a.chestNumber = :chestNumber"),
-    @NamedQuery(name = "Account.findBySecretKey", query = "SELECT a FROM Account a WHERE a.secretKey = :secretKey")})
+    @NamedQuery(name = "Account.findBySecretKey", query = "SELECT a FROM Account a WHERE a.secretKey = :secretKey"),
+    @NamedQuery(name = "Account.findByEmailOrUserName", query = "SELECT a FROM Account a WHERE a.email = :searchText or a.userName = :searchText"),
+})
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;

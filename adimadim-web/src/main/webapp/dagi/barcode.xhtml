@@ -23,9 +23,11 @@
                         </div>
                         <div class="custom-panel">
                             <h:form id="mainForm">
-                                <p:messages autoUpdate="true" showDetail="true" />
-                                <label>E-posta &mdash; <em>E-mail</em>
-                                    <p:inputText id="signIn_email" value="#{accountBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz" />
+                                <p:messages autoUpdate="true" showSummary="false" showDetail="true" escape="false" />
+                                <label>E-posta &mdash; <em>E-mail</em> veya <em>or</em> Kullanıcı adı <em>E-User Name</em>
+                                    <p:inputText id="signIn_email" value="#{accountBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz" >
+                                        <p:ajax event="blur" update=":sendPasswordForm:lostPasswordEmail" />
+                                    </p:inputText>
                                 </label>
                                 <label>Şifre &mdash; <em>Password</em>
                                     <p:password id="signIn_password" value="#{accountBean.account.password}" required="true" requiredMessage="Şifrenizi giriniz" />               
@@ -35,7 +37,7 @@
                                 </p>
                                 <br/>
                                 <p:commandButton id="signInButton" value="Gönder - Submit" actionListener="#{accountBean.startSignInOperation}" styleClass="small" /> 
-                                <p:messages autoUpdate="true" showDetail="true" />
+                                <p:messages autoUpdate="true" showSummary="false" showDetail="true" escape="false" />
                             </h:form>    
                             <h:form id="sendPasswordForm">
                                 <p:dialog id="lostPassword" header="Tekrar Gönder - Recover" widgetVar="lostPassword" style="width: 200px;height: 150;">
@@ -45,7 +47,7 @@
                                         </p:inputText>
                                     </label>
                                     <br/>
-                                    <p:messages autoUpdate="true" showDetail="true" />
+                                    <p:messages autoUpdate="true" showSummary="false" showDetail="true" />
                                     <br/>
                                     <p:commandButton value="Gönder - Submit" actionListener="#{accountBean.sendPassword()}" style="margin-bottom:0;"/>    
                                 </p:dialog>

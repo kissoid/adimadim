@@ -144,13 +144,16 @@ public class AccountBean implements Serializable {
             if (tempAccount == null) {
                 throw new AccountException("Email adresi bulunamadı.");
             }
-            if (tempAccount.getEmail() == null) {
-                throw new AccountException("Henüz şifre oluşturmamışsınız.");
-            }
             String name = (tempAccount.getName() + " " + tempAccount.getSurname());
+            String content;
+            if (tempAccount.getPassword() != null && !tempAccount.getPassword().trim().equals("")) {
+                content = "Merhaba Sayin " + name + "<br/>Sifreniz : " + tempAccount.getPassword();
+            } else {
+                content = "Merhaba Sayin " + name + "<br/>Şifre tanımlamadığınız anlaşılmıştır. Asagidaki linki tiklayarak kayit bilgilerinizi güncelleyin ve sifrenizi belirleyiniz.<br/>";
+                content += "<a href='http://www.aakosu.org/dagi/join.jsf'>http://www.aakosu.org/dagi/join.jsf</a>";;
+            }
             String receiver = account.getEmail();
             String subject = "Sifre hatirlatma";
-            String content = "Sayin " + name + ", sifreniz : " + tempAccount.getPassword();
             EmailUtil.sendMail(EmailUtil.SENDER_INFO, receiver, subject, content);
             FacesMessageUtil.createFacesMessage("Bilgi", "Şifreniz e-mail adresinize gönderildi", FacesMessage.SEVERITY_INFO);
         } catch (AccountException ex) {

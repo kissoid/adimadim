@@ -77,17 +77,21 @@ public class AccountService {
 
     public Account signIn(Account account) throws AccountException, Exception {
         Map map = new HashMap();
-        map.put("email", account.getEmail());
-        List<Account> existsAccounts = accountFacade.findAllByNamedQuery("Account.findByEmail", map, null);
+        map.put("searchText", account.getEmail());
+        List<Account> existsAccounts = accountFacade.findAllByNamedQuery("Account.findByEmailOrUserName", map, null);
         if (existsAccounts.isEmpty()) {
-            throw new AccountException("Kullanıcı bulunamadı.");
+            String notFoundMessage = "Sistemimizde böyle bir kayıt bulunamadı. Lütfen bilgilerinizi kontrol ediniz veya aşağıdaki linkten kayıt oluşturun.";
+            notFoundMessage += "<a href='http://www.aakosu.org/dagi/join.jsf' class='c7-link'>Kayıt ol</a>";;
+            throw new AccountException(notFoundMessage);
         }
         Account tempAccount = existsAccounts.get(0);
-        if(tempAccount.getPassword() == null){
-            throw new AccountException("Henüz kaydınızı güncellememişsiniz. Önce kayıt ol sayfasına gidip kaydınızı güncelleyiniz.");
+        if(tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")){
+            String notUpdatedAccountMessage = "Şifre tanımlamadiginiz anlasilmistir. Lütfen <a href='http://www.aakosu.org/dagi/join.jsf' class='c7-link'>Kayıt ol</a> ";
+            notUpdatedAccountMessage += "sayfasına giderek kayit bilgilerinizi güncelleyiniz ve sifrenizi belirleyiniz.<br/>";
+            throw new AccountException(notUpdatedAccountMessage);
         }
         if (!tempAccount.getPassword().equals(account.getPassword())) {
-            throw new AccountException("Şifre yanlış");
+            throw new AccountException("Yanlış şifre girdiniz");
         }
         return existsAccounts.get(0);
     }
