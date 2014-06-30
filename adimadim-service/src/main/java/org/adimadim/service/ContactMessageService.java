@@ -40,7 +40,7 @@ public class ContactMessageService {
     
     public List<ContactMessage> getReadMessages() throws Exception{
         Map map = new HashMap();
-        map.put("unread", "N");
+        map.put("unread", "H");
         return contactMessageFacade.findRangeByNamedQuery(new int[]{0,50}, "ContactMessage.findReadMessages", map, null);
     }
     
