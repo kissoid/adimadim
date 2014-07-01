@@ -57,37 +57,43 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    public List<T> findRangeByNamedQuery(int[] range, String namedQuery, LockModeType lockModeType) {
+    public List<T> findRangeByNamedQuery(int[] range, String namedQuery) {
         Query q = getEntityManager().createNamedQuery(namedQuery);
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return (List<T>) q.getResultList();
     }
 
-    public List<T> findRangeByNamedQuery(int[] range, String namedQuery, Map parameters, LockModeType lockModeType) {
+    public List<T> findRangeByNamedQuery(int[] range, String namedQuery, Map parameters) {
         Query q = getEntityManager().createNamedQuery(namedQuery);
         Iterator iterator = parameters.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             q.setParameter(entry.getKey().toString(), entry.getValue());
         }
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return (List<T>) q.getResultList();
     }
 
+    public List<T> findRangeByQuery(int[] range, String query, Map parameters) {
+        Query q = getEntityManager().createQuery(query);
+        Iterator iterator = parameters.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            q.setParameter(entry.getKey().toString(), entry.getValue());
+        }
+        q.setMaxResults(range[1] - range[0]);
+        q.setFirstResult(range[0]);
+        return (List<T>) q.getResultList();
+    }
+    
     public T findByNamedQuery(String namedQuery, LockModeType lockModeType) throws Exception {
         Query q = getEntityManager().createNamedQuery(namedQuery);
         return (T) q.getSingleResult();
     }
 
-    public List<T> findAllByNamedQuery(String namedQuery, LockModeType lockModeType) throws Exception {
+    public List<T> findAllByNamedQuery(String namedQuery) throws Exception {
         Query q = getEntityManager().createNamedQuery(namedQuery);
         return (List<T>) q.getResultList();
     }
@@ -105,15 +111,12 @@ public abstract class AbstractFacade<T> {
         return (T) q.getSingleResult();
     }
 
-    public List<T> findAllByNamedQuery(String namedQuery, Map parameters, LockModeType lockModeType) throws Exception {
+    public List<T> findAllByNamedQuery(String namedQuery, Map parameters) throws Exception {
         Query q = getEntityManager().createNamedQuery(namedQuery);
         Iterator iterator = parameters.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             q.setParameter(entry.getKey().toString(), entry.getValue());
-        }
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
         }
         return (List<T>) q.getResultList();
     }
@@ -139,67 +142,49 @@ public abstract class AbstractFacade<T> {
         return q.getSingleResult();
     }
 
-    public List findAllByQuery(String query, LockModeType lockModeType) throws Exception {
+    public List findAllByQuery(String query) throws Exception {
         Query q = getEntityManager().createQuery(query);
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         return q.getResultList();
     }
 
-    public List findAllByQuery(String query, Map parameters, LockModeType lockModeType) throws Exception {
+    public List findAllByQuery(String query, Map parameters) throws Exception {
         Query q = getEntityManager().createQuery(query);
         Iterator iterator = parameters.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             q.setParameter(entry.getKey().toString(), entry.getValue());
         }
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         return q.getResultList();
     }
 
-    public List findAllByNativeQuery(String query, LockModeType lockModeType) throws Exception {
+    public List findAllByNativeQuery(String query) throws Exception {
         Query q = getEntityManager().createNativeQuery(query);
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         return q.getResultList();
     }
 
-    public List findAllByNativeQuery(String query, Map parameters, LockModeType lockModeType) throws Exception {
+    public List findAllByNativeQuery(String query, Map parameters) throws Exception {
         Query q = getEntityManager().createNativeQuery(query);
         Iterator iterator = parameters.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             q.setParameter(entry.getKey().toString(), entry.getValue());
         }
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         return q.getResultList();
     }
 
-    public List findRangeByNativeQuery(int[] range, String query, LockModeType lockModeType) throws Exception {
+    public List findRangeByNativeQuery(int[] range, String query) throws Exception {
         Query q = getEntityManager().createNativeQuery(query);
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
-        }
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
 
-    public List findRangeByNativeQuery(int[] range, String query, Map parameters, LockModeType lockModeType) throws Exception {
+    public List findRangeByNativeQuery(int[] range, String query, Map parameters) throws Exception {
         Query q = getEntityManager().createNativeQuery(query);
         Iterator iterator = parameters.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry) iterator.next();
             q.setParameter(entry.getKey().toString(), entry.getValue());
-        }
-        if (lockModeType != null) {
-            q.setLockMode(lockModeType);
         }
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);

@@ -48,7 +48,7 @@ public class AccountService {
     public Account findAccountBySecretKey(String secretKey) throws Exception {
         Map params = new HashMap();
         params.put("secretKey", secretKey);
-        List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findBySecretKey", params, null);
+        List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findBySecretKey", params);
         if (accountList.isEmpty()) {
             return null;
         } else {
@@ -59,7 +59,7 @@ public class AccountService {
     public Account findAccountByEmail(String email) throws Exception {
         Map params = new HashMap();
         params.put("email", email);
-        List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findByEmail", params, null);
+        List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findByEmail", params);
         if (accountList.isEmpty()) {
             return null;
         } else {
@@ -78,7 +78,7 @@ public class AccountService {
     public Account signIn(Account account) throws AccountException, Exception {
         Map map = new HashMap();
         map.put("searchText", account.getEmail());
-        List<Account> existsAccounts = accountFacade.findAllByNamedQuery("Account.findByEmailOrUserName", map, null);
+        List<Account> existsAccounts = accountFacade.findAllByNamedQuery("Account.findByEmailOrUserName", map);
         if (existsAccounts.isEmpty()) {
             String notFoundMessage = "Sistemimizde böyle bir kayıt bulunamadı. Lütfen bilgilerinizi kontrol ediniz veya aşağıdaki linkten kayıt oluşturun.";
             notFoundMessage += "<a href='http://www.aakosu.org/dagi/join.jsf' class='c7-link'>Kayıt ol</a>";;
@@ -132,7 +132,7 @@ public class AccountService {
     public List<AccountProperty> findAccountPropertiesByAccountId(Integer accountId) throws Exception {
         Map map = new HashMap();
         map.put("accountId", accountId);
-        return accountPropertyFacade.findAllByNamedQuery("AccountProperty.findByAccountId", map, null);
+        return accountPropertyFacade.findAllByNamedQuery("AccountProperty.findByAccountId", map);
     }
 
     public void saveAccountProperties(List<AccountProperty> accountPropertyList) throws Exception {
@@ -143,5 +143,12 @@ public class AccountService {
 
     public List<Account> retrieveAccountRange(int from, int to) {
         return accountFacade.findRange(new int[]{from, to});
+    }
+    
+    public List<Account> retrieveAccountRangeStartByAccountId(Integer startAccountId, int count) {
+        String jpql = "select a from Account a where a.accountId > :startAccountId order by a.accountId";
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("startAccountId", startAccountId);
+        return accountFacade.findRangeByQuery(new int[]{0, count}, jpql , map);
     }
 }

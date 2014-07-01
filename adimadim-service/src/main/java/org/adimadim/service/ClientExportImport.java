@@ -24,7 +24,7 @@ import org.adimadim.db.entity.RaceScore;
  */
 @Stateless
 @WebService
-public class ClientService {
+public class ClientExportImport {
 
     @Inject
     private AccountService accountService;
@@ -43,7 +43,7 @@ public class ClientService {
         try {
             return accountService.retrieveAllAccounts();
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class ClientService {
         try {
             return raceService.retrieveAllRaces();
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -65,7 +65,7 @@ public class ClientService {
         try {
             result =  raceScoreService.saveRaceScores(raceScores);
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }*/
@@ -83,7 +83,7 @@ public class ClientService {
         try {
             result =  raceScoreService.saveRaceScores(raceScores);
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -97,18 +97,31 @@ public class ClientService {
         try {
             return raceService.retrieveAllRaces();
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     /**
      * Web service operation
-     * @param start
-     * @param end
+     * @param startAccountId
+     * @param count
      * @return 
      */
     @WebMethod(operationName = "retrieveAccounts")
+    public List<Account> retrieveAccounts(@WebParam(name = "startAccountId") Integer startAccountId, @WebParam(name = "count") Integer count) {
+        try {
+            List<Account> accountList = accountService.retrieveAccountRangeStartByAccountId(startAccountId, count);
+            for(Account account : accountList){
+                account.setPassword("*****");
+            }
+            return accountList;
+        } catch (Exception ex) {
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    /*@WebMethod(operationName = "retrieveAccounts")
     public List<Account> retrieveAccounts(@WebParam(name = "start") int start, @WebParam(name = "end") int end) {
         try {
             List<Account> accountList = accountService.retrieveAccountRange(start, end);
@@ -117,10 +130,10 @@ public class ClientService {
             }
             return accountList;
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
+    }*/
 
     /**
      * Web service operation
@@ -135,7 +148,7 @@ public class ClientService {
             }
             return accountList;
         } catch (Exception ex) {
-            Logger.getLogger(ClientService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }*/

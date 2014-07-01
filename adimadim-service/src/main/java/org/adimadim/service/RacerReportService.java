@@ -44,7 +44,7 @@ public class RacerReportService {
         params.put(1, startDate);
         params.put(2, endDate);
         
-        List<Object[]> racerList = raceFacade.findAllByNativeQuery(sqlString.toString(), params, null);
+        List<Object[]> racerList = raceFacade.findAllByNativeQuery(sqlString.toString(), params);
         List<MostRunningDto> mostRunningList = new ArrayList<MostRunningDto>();
         for (Object[] object : racerList) {
             MostRunningDto mostRunning = new MostRunningDto();
@@ -92,7 +92,7 @@ public class RacerReportService {
         params.put(3, startDate);
         params.put(4, endDate);
         
-        List<Object[]> racerList = raceFacade.findAllByNativeQuery(sqlString.toString(), params, null);
+        List<Object[]> racerList = raceFacade.findAllByNativeQuery(sqlString.toString(), params);
         List<BestEvolutionDto> bestEvolutionList = new ArrayList<BestEvolutionDto>();
         for (Object[] object : racerList) {
             BestEvolutionDto bestEvolution = new BestEvolutionDto();
