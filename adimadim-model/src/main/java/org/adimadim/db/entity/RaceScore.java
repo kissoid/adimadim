@@ -20,11 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  *
@@ -33,8 +29,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @Entity
 @Table(name = "race_score", catalog = "adimadim", schema = "")
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlSeeAlso({Race.class, Account.class})
 @NamedQueries({
     @NamedQuery(name = "RaceScore.findAll", query = "SELECT r FROM RaceScore r"),
     @NamedQuery(name = "RaceScore.findByRaceScoreId", query = "SELECT r FROM RaceScore r WHERE r.raceScoreId = :raceScoreId"),
@@ -43,25 +37,19 @@ import javax.xml.bind.annotation.XmlSeeAlso;
     @NamedQuery(name = "RaceScore.findByAccountIdRaceId", query = "select r from RaceScore r where r.account.accountId = :accountId and r.race.raceId = :raceId")
 })
 public class RaceScore implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @XmlElement
     @Column(name = "race_score_id", nullable = false)
     private Integer raceScoreId;
-    @XmlElement
     @Temporal(TemporalType.TIME)
     private Date duration;
-    @XmlElement
     @Column(name = "team_id")
     private Integer teamId;
-    @XmlElement
     @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false)
     @ManyToOne(optional = false)
     private Race race;
-    @XmlElement
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @ManyToOne(optional = false)
     private Account account;

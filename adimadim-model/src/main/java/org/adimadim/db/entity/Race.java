@@ -22,8 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,7 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(catalog = "adimadim", schema = "")
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Race.findAll", query = "SELECT r FROM Race r"),
     @NamedQuery(name = "Race.findByRaceId", query = "SELECT r FROM Race r WHERE r.raceId = :raceId"),
@@ -114,12 +111,33 @@ public class Race implements Serializable {
         this.active = active;
     }
 
+    @XmlTransient
     public List<RaceScore> getRaceScoreList() {
         return raceScoreList;
     }
 
     public void setRaceScoreList(List<RaceScore> raceScoreList) {
         this.raceScoreList = raceScoreList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (raceId != null ? raceId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Race)) {
+            return false;
+        }
+        Race other = (Race) object;
+        if ((this.raceId == null && other.raceId != null) || (this.raceId != null && !this.raceId.equals(other.raceId))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
