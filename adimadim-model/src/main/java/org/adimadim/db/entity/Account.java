@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -37,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(catalog = "adimadim", schema = "")
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
     @NamedQuery(name = "Account.findByAccountId", query = "SELECT a FROM Account a WHERE a.accountId = :accountId"),
@@ -180,7 +183,7 @@ public class Account implements Serializable {
             setManager("H");
         }
         if (active == null || active.equals("")) {
-            setActive("H");
+            setActive("E");
         }
         if (adimadim == null || adimadim.equals("")) {
             setAdimadim("H");
@@ -324,7 +327,6 @@ public class Account implements Serializable {
         this.secretKey = secretKey;
     }
 
-    @XmlTransient
     public List<RaceScore> getRaceScoreList() {
         return raceScoreList;
     }

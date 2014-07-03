@@ -28,6 +28,10 @@ public class RaceService {
     @Inject private RaceFacade raceFacade;
     @Inject private RaceScoreFacade raceScoreFacade;
     @Inject private TeamFacade teamFacade;
+
+    public Race retrieveRace(Integer raceId) throws Exception{
+        return raceFacade.find(raceId);
+    } 
     
     public List<Race> retrieveAllRaces() throws Exception{
         return raceFacade.findAllByNamedQuery("Race.findAllByDateOrderDesc");

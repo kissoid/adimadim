@@ -64,7 +64,7 @@ public class AccountUpdateBean implements Serializable {
         if(request.getParameter("key") != null){
             try {
                 String secretKey = request.getParameter("key");
-                account = accountService.findAccountBySecretKey(secretKey);
+                account = accountService.retrieveAccountBySecretKey(secretKey);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
                 birthDate = sdf.format(account.getBirthDate());
             } catch (Exception ex) {

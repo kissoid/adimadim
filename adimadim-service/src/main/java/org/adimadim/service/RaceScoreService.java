@@ -5,8 +5,9 @@
  */
 package org.adimadim.service;
 
+import java.util.HashMap;
 import java.util.List;
-import javax.ejb.LocalBean;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -29,10 +30,20 @@ public class RaceScoreService {
     private RaceScoreFacade raceScoreFacade;
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public String saveRaceScores(List<RaceScore> raceScores) throws Exception {
+    public void saveRaceScores(List<RaceScore> raceScores) throws Exception {
         for (RaceScore raceScore : raceScores) {
+            RaceScore tempRaceScore = retrieveRaceScoreByAccountIdRaceId(raceScore.getAccount().getAccountId(), raceScore.getRace().getRaceId());
+            if(tempRaceScore != null){
+                raceScore.setRaceScoreId(tempRaceScore.getRaceScoreId());
+            }
             raceScoreFacade.edit(raceScore);
         }
-        return "Kayıt işlemi tamamlandı";
+    }
+
+    public RaceScore retrieveRaceScoreByAccountIdRaceId(Integer accountId, Integer raceId) throws Exception {
+        Map params = new HashMap();
+        params.put("accountId", accountId);
+        params.put("raceId", raceId);
+        return raceScoreFacade.findByNamedQuery("RaceScore.findByAccountIdRaceId", params, null);
     }
 }

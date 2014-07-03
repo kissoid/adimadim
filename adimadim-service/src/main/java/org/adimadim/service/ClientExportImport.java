@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.adimadim.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import org.adimadim.db.dto.RaceScoreDto;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.Race;
 import org.adimadim.db.entity.RaceScore;
@@ -32,65 +33,36 @@ public class ClientExportImport {
     private RaceService raceService;
     @Inject
     private RaceScoreService raceScoreService;
-    
-    /**
-     * Web service operation
-     * @return 
-     */
-    /*
-    @WebMethod(operationName = "retrieveAccounts")
-    public List<Account> retrieveAccounts() {
-        try {
-            return accountService.retrieveAllAccounts();
-        } catch (Exception ex) {
-            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    @WebMethod(operationName = "retrieveRaces")
-    public List<Race> retrieveRaces() {
-        try {
-            return raceService.retrieveAllRaces();
-        } catch (Exception ex) {
-            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    
-    @WebMethod(operationName = "saveRaceScores")
-    public String retrieveRaces(List<RaceScore> raceScores) {
-        String result = "";
-        try {
-            result =  raceScoreService.saveRaceScores(raceScores);
-        } catch (Exception ex) {
-            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }*/
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     /**
      * Web service operation
+     *
      * @param raceScores
-     * @return 
+     * @return
      */
     @WebMethod(operationName = "saveRaceScores")
-    public String saveRaceScores(@WebParam(name = "raceScores") List<RaceScore> raceScores) {
-        String result = "";
+    public String saveRaceScores(@WebParam(name = "raceScores") List<RaceScoreDto> raceScores) {
         try {
-            result =  raceScoreService.saveRaceScores(raceScores);
+            List<RaceScore> raceScoreList = new ArrayList<RaceScore>();
+            for(RaceScoreDto raceScoreDto: raceScores){
+                RaceScore raceScore = new RaceScore();
+                raceScore.setRaceScoreId(raceScoreDto.getRaceScoreId());
+                raceScore.setDuration(raceScoreDto.getDuration());
+                raceScore.setAccount(accountService.retrieveAccount(raceScoreDto.getAccountId()));
+                raceScore.setRace(raceService.retrieveRace(raceScoreDto.getRaceId()));
+                raceScoreList.add(raceScore);
+            }
+            raceScoreService.saveRaceScores(raceScoreList);
+            return "Kayıt işlemi başarılı";
         } catch (Exception ex) {
-            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
+            return ("Server error : " + ex.getMessage());
         }
-        return null;
     }
 
     /**
      * Web service operation
-     * @return 
+     *
+     * @return
      */
     @WebMethod(operationName = "retrieveRaces")
     public List<Race> retrieveRaces() {
@@ -104,52 +76,19 @@ public class ClientExportImport {
 
     /**
      * Web service operation
+     *
      * @param startAccountId
      * @param count
-     * @return 
+     * @return
      */
     @WebMethod(operationName = "retrieveAccounts")
     public List<Account> retrieveAccounts(@WebParam(name = "startAccountId") Integer startAccountId, @WebParam(name = "count") Integer count) {
         try {
-            List<Account> accountList = accountService.retrieveAccountRangeStartByAccountId(startAccountId, count);
-            for(Account account : accountList){
-                account.setPassword("*****");
-            }
-            return accountList;
+            return accountService.retrieveAccountRangeStartByAccountId(startAccountId, count);
         } catch (Exception ex) {
             Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    /*@WebMethod(operationName = "retrieveAccounts")
-    public List<Account> retrieveAccounts(@WebParam(name = "start") int start, @WebParam(name = "end") int end) {
-        try {
-            List<Account> accountList = accountService.retrieveAccountRange(start, end);
-            for(Account account : accountList){
-                account.setPassword("*****");
-            }
-            return accountList;
-        } catch (Exception ex) {
-            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }*/
-
-    /**
-     * Web service operation
-     * @return 
-     */
-    /*@WebMethod(operationName = "retrieveAccounts")
-    public List<Account> retrieveAccounts() {
-        try {
-            List<Account> accountList = accountService.retrieveAllAccounts();
-            for(Account account : accountList){
-                account.setPassword("*****");
-            }
-            return accountList;
-        } catch (Exception ex) {
-            Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }*/
+    
 }

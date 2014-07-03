@@ -41,11 +41,11 @@ public class AccountService {
         return accountFacade.findAll();
     }
     
-    public Account findAccount(Integer accountId) throws Exception {
+    public Account retrieveAccount(Integer accountId) throws Exception {
         return accountFacade.find(accountId);
     }
 
-    public Account findAccountBySecretKey(String secretKey) throws Exception {
+    public Account retrieveAccountBySecretKey(String secretKey) throws Exception {
         Map params = new HashMap();
         params.put("secretKey", secretKey);
         List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findBySecretKey", params);
@@ -56,7 +56,7 @@ public class AccountService {
         }
     }
 
-    public Account findAccountByEmail(String email) throws Exception {
+    public Account retrieveAccountByEmail(String email) throws Exception {
         Map params = new HashMap();
         params.put("email", email);
         List<Account> accountList = accountFacade.findAllByNamedQuery("Account.findByEmail", params);

@@ -90,7 +90,11 @@ public abstract class AbstractFacade<T> {
     
     public T findByNamedQuery(String namedQuery, LockModeType lockModeType) throws Exception {
         Query q = getEntityManager().createNamedQuery(namedQuery);
-        return (T) q.getSingleResult();
+        List<T> result = q.getResultList();
+        if(result.isEmpty()){
+            return null;
+        }
+        return (T)result.get(0);
     }
 
     public List<T> findAllByNamedQuery(String namedQuery) throws Exception {
@@ -108,7 +112,11 @@ public abstract class AbstractFacade<T> {
         if (lockModeType != null) {
             q.setLockMode(lockModeType);
         }
-        return (T) q.getSingleResult();
+        List<T> result = q.getResultList();
+        if(result.isEmpty()){
+            return null;
+        }
+        return (T)result.get(0);
     }
 
     public List<T> findAllByNamedQuery(String namedQuery, Map parameters) throws Exception {
@@ -126,7 +134,11 @@ public abstract class AbstractFacade<T> {
         if (lockModeType != null) {
             q.setLockMode(lockModeType);
         }
-        return q.getSingleResult();
+        List result = q.getResultList();
+        if(result.isEmpty()){
+            return null;
+        }
+        return result.get(0);
     }
 
     public Object findByQuery(String query, Map parameters, LockModeType lockModeType) throws Exception {
@@ -139,7 +151,11 @@ public abstract class AbstractFacade<T> {
         if (lockModeType != null) {
             q.setLockMode(lockModeType);
         }
-        return q.getSingleResult();
+        List result = q.getResultList();
+        if(result.isEmpty()){
+            return null;
+        }
+        return result.get(0);
     }
 
     public List findAllByQuery(String query) throws Exception {

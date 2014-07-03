@@ -30,7 +30,7 @@ public class LazyAccountDataModel extends LazyDataModel<Account> {
     public Account getRowData(String rowKey) { 
         Account account = null;
         try {
-            account = accountService.findAccount(Integer.valueOf(rowKey));
+            account = accountService.retrieveAccount(Integer.valueOf(rowKey));
         } catch (Exception ex) {
             Logger.getLogger(LazyAccountDataModel.class.getName()).log(Level.SEVERE, null, ex);
         }
