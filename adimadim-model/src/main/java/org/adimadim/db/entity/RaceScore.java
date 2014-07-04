@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RaceScore.findByRaceScoreId", query = "SELECT r FROM RaceScore r WHERE r.raceScoreId = :raceScoreId"),
     @NamedQuery(name = "RaceScore.findByDuration", query = "SELECT r FROM RaceScore r WHERE r.duration = :duration"),
     @NamedQuery(name = "RaceScore.findByTeamId", query = "SELECT r FROM RaceScore r WHERE r.teamId = :teamId"),
-    @NamedQuery(name = "RaceScore.findByAccountIdRaceId", query = "select r from RaceScore r where r.account.accountId = :accountId and r.race.raceId = :raceId")
+    @NamedQuery(name = "RaceScore.findByAccountIdRaceId", query = "select r from RaceScore r where r.account.accountId = :accountId and r.race.raceId = :raceId"),
+    @NamedQuery(name = "RaceScore.findByRaceIdByTimeOrder", query = "select r from RaceScore r where r.race.raceId = :raceId order by r.duration")
 })
 public class RaceScore implements Serializable {
     private static final long serialVersionUID = 1L;

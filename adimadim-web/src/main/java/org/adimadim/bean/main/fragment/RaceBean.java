@@ -34,13 +34,13 @@ public class RaceBean implements Serializable {
     private RaceService raceService;
     private Race selectedRace;
     private Race newRace = new Race();
-    private List<Race> raceList = new ArrayList<Race>();
-    private List<RaceScore> raceScoreList = new ArrayList<RaceScore>();
+    private List<Race> raceList;
+    private List<RaceScore> raceScoreList;
     private Team selectedTeam;
-    private Team newTeam = new Team();
-    private List<Team> teamList = new ArrayList<Team>();
-    private List<RaceScore> teamScoreList = new ArrayList<RaceScore>();
-    private List<TeamMember> teamMemberList = new ArrayList<TeamMember>();
+    private Team newTeam;
+    private List<Team> teamList;
+    private List<RaceScore> teamScoreList;
+    private List<TeamMember> teamMemberList;
 
     public RaceBean() {
     }

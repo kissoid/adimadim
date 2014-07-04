@@ -1,0 +1,61 @@
+/* 
+    Document   : index
+    Created on : Feb 11, 2013, 8:55:52 PM
+    Author     : Adem
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+
+
+.ui-menu{
+    background-color: white;
+}
+
+.ui-panelgrid tr, .ui-panelgrid td{
+    border:0 !important;
+}   
+
+.ui-panelgrid tr {
+    background-color: inherit;
+}
+
+table{
+    border:none !important;
+}
+
+td{
+    background: white !important;
+}
+
+.ui-dialog{
+    height:auto;
+    width:auto;
+}
+
+img {  
+    border-style: none;
+}
+
+ul, li {
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+.shadowed-box{
+    border: 1px solid #eee;
+    -webkit-box-shadow: #eee 3px 3px 3px;
+    -moz-box-shadow: #eee 3px 3px 3px;
+    box-shadow: #eee 3px 3px 3px;
+}
+
+.menuitem{
+    vertical-align: middle;
+    text-align: center;
+    color: #FFFFFF; 
+    padding-top: 5px;
+}

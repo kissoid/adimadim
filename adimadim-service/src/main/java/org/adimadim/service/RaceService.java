@@ -34,7 +34,7 @@ public class RaceService {
     } 
     
     public List<Race> retrieveAllRaces() throws Exception{
-        return raceFacade.findAllByNamedQuery("Race.findAllByDateOrderDesc");
+        return raceFacade.findAllByNamedQuery("Race.findAllOrderByIdDesc");
     } 
     
     public List<RaceScore> retrieveRaceScoreByRaceId(Integer raceId) throws Exception{
