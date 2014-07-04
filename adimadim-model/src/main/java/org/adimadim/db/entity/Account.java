@@ -180,7 +180,7 @@ public class Account implements Serializable {
             setManager("H");
         }
         if (active == null || active.equals("")) {
-            setActive("ES");
+            setActive("E");
         }
         if (adimadim == null || adimadim.equals("")) {
             setAdimadim("H");
