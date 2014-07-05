@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.adimadim.db.entity.Account;
 
 /**
  *
@@ -31,6 +30,8 @@ public class RaceScoreDto {
     private Integer raceId;
     @XmlElement
     private Integer accountId;
+    @XmlElement
+    private Integer orderNo;
     
     public RaceScoreDto(){
         
@@ -75,5 +76,13 @@ public class RaceScoreDto {
     public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }    
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+    }
     
 }

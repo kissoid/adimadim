@@ -47,7 +47,8 @@ public class RaceBean implements Serializable {
 
     @PostConstruct
     private void init() {
-        retrieveAllRaces();
+        //retrieveAllRaces();
+        retriveRaceScoreByRaceIdTemp();
     }
 
     public void retrieveAllRaces() {
@@ -58,6 +59,14 @@ public class RaceBean implements Serializable {
         }
     }
 
+    public void retriveRaceScoreByRaceIdTemp() {
+        try {
+            raceScoreList = raceService.retrieveRaceScoreByRaceId(41);
+        } catch (Exception ex) {
+            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
+        }
+    }
+    
     public void retriveRaceScoreByRaceId() {
         try {
             if (selectedRace == null) {

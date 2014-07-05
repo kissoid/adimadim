@@ -11,26 +11,10 @@
                 <h:outputText value="Yarış Sonuçları" style="color:#336699; font-weight: bold;font-size: 16px;" />
                 <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
                 <div style="width: 650px;">
-                    <p:dataTable id="raceTable" var="race"  value="#{raceBean.raceList}" style="margin-bottom: 50px;width: 425px;" widgetVar="raceTableWidget" emptyMessage="Yarış bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceBean.selectedRace}" selectionMode="single" rowKey="#{race.raceId}">  
-                        <f:facet name="header">  
-                            <h:outputText value="Yarış Listesi"/>   
-                        </f:facet>  
-                        <p:ajax event="rowSelect" onstart="raceScoreTableBlock.show();" oncomplete="raceScoreTableBlock.hide();" listener="#{raceBean.retriveRaceScoreByRaceId}" update=":mainForm:raceScoreTable" />
-
-                        <p:column id="raceNameColumn" filterStyle="width:250px;" filterBy="#{race.raceName}" sortBy="#{race.raceName}" headerText="Yarış Adı" width="250" filterMatchMode="contains">  
-                            <h:outputText value="#{race.raceName}" />  
-                        </p:column>  
-
-                        <p:column id="raceDateColumn" width="150" headerText="Yarış Tarihi" >  
-                            <h:outputText value="#{race.raceDate}" >  
-                                <f:convertDateTime pattern="dd.MM.yyyy" locale="tr_TR" type="date" dateStyle="short" timeZone="Turkey" />
-                            </h:outputText>
-                        </p:column>    
-                    </p:dataTable>  
                     <p:blockUI id="raceScoreTableBlock" block="raceScoreTable" widgetVar="raceScoreTableBlock" />
-                    <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" rowIndexVar="rowIndex" widgetVar="raceScoreTableWidget" emptyMessage="Yarışçı bulunamadı" style="margin-top: 20px;">  
+                    <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" rowIndexVar="rowIndex" widgetVar="raceScoreTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
                         <f:facet name="header">  
-                            <h:outputText value="#{raceBean.selectedRace.raceName} sonuçları"/>  
+                            <h:outputText value="#{raceBean.selectedRace.raceName}2014 Temmuz Yarışı Sonuçları"/>  
                         </f:facet>  
                         <p:column id="orderNoColumn" headerText="Sıra">  
                             <h:outputText value="#{raceBean.raceScoreList.indexOf(score)+1}" style="float: right;"/>  
