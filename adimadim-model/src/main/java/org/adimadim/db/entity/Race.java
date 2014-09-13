@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Race.findByRaceName", query = "SELECT r FROM Race r WHERE r.raceName = :raceName"),
     @NamedQuery(name = "Race.findByRaceDate", query = "SELECT r FROM Race r WHERE r.raceDate = :raceDate"),
     @NamedQuery(name = "Race.findByActive", query = "SELECT r FROM Race r WHERE r.active = :active"),
-    @NamedQuery(name = "Race.findAllOrderByIdDesc", query = "SELECT r FROM Race r where r.active='E' order by r.raceId desc")})
+    @NamedQuery(name = "Race.findAllOrderByIdDesc", query = "SELECT new org.adimadim.db.entity.Race(r.raceId,r.raceName,r.raceDate,r.active) FROM Race r where r.active='E' order by r.raceId desc")})
 public class Race implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

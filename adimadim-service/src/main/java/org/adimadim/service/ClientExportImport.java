@@ -44,12 +44,13 @@ public class ClientExportImport {
     public String saveRaceScores(@WebParam(name = "raceScores") List<RaceScoreDto> raceScores) {
         try {
             List<RaceScore> raceScoreList = new ArrayList<RaceScore>();
-            for(RaceScoreDto raceScoreDto: raceScores){
+            for (RaceScoreDto raceScoreDto : raceScores) {
                 RaceScore raceScore = new RaceScore();
                 raceScore.setRaceScoreId(raceScoreDto.getRaceScoreId());
                 raceScore.setDuration(raceScoreDto.getDuration());
                 raceScore.setAccount(accountService.retrieveAccount(raceScoreDto.getAccountId()));
                 raceScore.setRace(raceService.retrieveRace(raceScoreDto.getRaceId()));
+                raceScore.setOrderNo(raceScoreDto.getOrderNo());
                 raceScoreList.add(raceScore);
             }
             raceScoreService.saveRaceScores(raceScoreList);
@@ -90,5 +91,37 @@ public class ClientExportImport {
         }
         return null;
     }
-    
+
+    @WebMethod(operationName = "createRace")
+    public String createRace(@WebParam(name = "race") Race race) {
+        try {
+            Race tempRace = new Race();
+            tempRace.setRaceName(race.getRaceName());
+            tempRace.setRaceDate(race.getRaceDate());
+            tempRace.setActive(race.getActive());
+            raceService.createRace(tempRace);
+            return "Kayıt işlemi başarılı";
+        } catch (Exception ex) {
+            return ("Server error : " + ex.getMessage());
+        }
+    }
+
+    @WebMethod(operationName = "updateRace")
+    public String updateRace(@WebParam(name = "race") Race race) {
+        try {
+            Race tempRace = raceService.retrieveRace(race.getRaceId());
+            if (tempRace != null) {
+                tempRace.setRaceName(race.getRaceName());
+                tempRace.setRaceDate(race.getRaceDate());
+                tempRace.setActive(race.getActive());
+                raceService.updateRace(tempRace);
+                return "Güncelleme işlemi başarılı";
+            } else {
+                return "Güncellenecek kayıt bulunamadı";
+            }
+        } catch (Exception ex) {
+            return ("Server error : " + ex.getMessage());
+        }
+    }
+
 }

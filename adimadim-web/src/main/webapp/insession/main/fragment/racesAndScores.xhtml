@@ -7,17 +7,96 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <ui:fragment>
         <h:form id="mainForm">
+            <p:blockUI id="raceScoremainFormBlock" block="mainForm" trigger="raceList" widgetVar="raceScoremainFormBlock" />
             <div style="margin-bottom: 30px;">
+                <div style="width: 650px;">
+                    <p:panelGrid style="border:none;">
+                        <p:row>
+                            <p:column style="border:none;"><p:outputLabel value="Yarış : " style="width:80px;" /></p:column>
+                            <p:column style="border:none;">
+                                <p:selectOneMenu id="raceList" widgetVar="raceListWidget" value="#{raceBean.selectedRace}" converter="commonConverter" style="width:580px">
+                                    <p:ajax listener="#{raceBean.retriveSelectedRaceScores()}" update=":mainForm" />
+                                    <f:selectItem itemLabel="Yarış Seçiniz..." itemValue="" noSelectionOption="true" />
+                                    <f:selectItems value="#{raceBean.raceList}" var="race" itemLabel="#{race.raceName}" itemValue="#{race}" />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </div>
                 <h:outputText value="Yarış Sonuçları" style="color:#336699; font-weight: bold;font-size: 16px;" />
                 <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
                 <div style="width: 650px;">
                     <p:blockUI id="raceScoreTableBlock" block="raceScoreTable" widgetVar="raceScoreTableBlock" />
                     <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" rowIndexVar="rowIndex" widgetVar="raceScoreTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
                         <f:facet name="header">  
-                            <h:outputText value="#{raceBean.selectedRace.raceName}2014 Temmuz Yarışı Sonuçları"/>  
+                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Tüm Liste"/>  
                         </f:facet>  
                         <p:column id="orderNoColumn" headerText="Sıra">  
                             <h:outputText value="#{raceBean.raceScoreList.indexOf(score)+1}" style="float: right;"/>  
+                        </p:column> 
+                        <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
+                            <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.name}" />  
+                        </p:column>  
+
+                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.surname}" />  
+                        </p:column>  
+
+                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.gender}" />  
+                        </p:column>  
+
+                        <p:column id="racerDurationColumn" headerText="Süre">  
+                            <h:outputText value="#{score.duration}">
+                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                            </h:outputText>
+                        </p:column>    
+                    </p:dataTable>  
+                </div>
+                <div style="width: 650px;">
+                    <p:blockUI id="raceScoreWomenTableBlock" block="raceScoreWomenTable" widgetVar="raceScoreWomenTableBlock" />
+                    <p:dataTable id="raceScoreWomenTable" var="score" value="#{raceBean.raceScoreWomenList}" rowIndexVar="rowIndex" widgetVar="raceScoreWomenTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
+                        <f:facet name="header">  
+                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Kadınlar Listesi"/>  
+                        </f:facet>  
+                        <p:column id="orderNoColumn" headerText="Sıra">  
+                            <h:outputText value="#{raceBean.raceScoreWomenList.indexOf(score)+1}" style="float: right;"/>  
+                        </p:column> 
+                        <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
+                            <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
+                        </p:column>  
+
+                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.name}" />  
+                        </p:column>  
+
+                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.surname}" />  
+                        </p:column>  
+
+                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                            <h:outputText value="#{score.account.gender}" />  
+                        </p:column>  
+
+                        <p:column id="racerDurationColumn" headerText="Süre">  
+                            <h:outputText value="#{score.duration}">
+                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                            </h:outputText>
+                        </p:column>    
+                    </p:dataTable>  
+                </div>
+                <div style="width: 650px;">
+                    <p:blockUI id="raceScoreMenTableBlock" block="raceScoreMenTable" widgetVar="raceScoreMenTableBlock" />
+                    <p:dataTable id="raceScoreMenTable" var="score" value="#{raceBean.raceScoreMenList}" rowIndexVar="rowIndex" widgetVar="raceScoreMenTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
+                        <f:facet name="header">  
+                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Erkekler Listesi"/>  
+                        </f:facet>  
+                        <p:column id="orderNoColumn" headerText="Sıra">  
+                            <h:outputText value="#{raceBean.raceScoreMenList.indexOf(score)+1}" style="float: right;"/>  
                         </p:column> 
                         <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
                             <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  

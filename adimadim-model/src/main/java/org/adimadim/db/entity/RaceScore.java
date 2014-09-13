@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "RaceScore.findByDuration", query = "SELECT r FROM RaceScore r WHERE r.duration = :duration"),
     @NamedQuery(name = "RaceScore.findByTeamId", query = "SELECT r FROM RaceScore r WHERE r.teamId = :teamId"),
     @NamedQuery(name = "RaceScore.findByAccountIdRaceId", query = "select r from RaceScore r where r.account.accountId = :accountId and r.race.raceId = :raceId"),
-    @NamedQuery(name = "RaceScore.findByRaceIdByTimeOrder", query = "select r from RaceScore r where r.race.raceId = :raceId order by r.duration")
+    @NamedQuery(name = "RaceScore.findByRaceIdByTimeOrder", query = "select r from RaceScore r where r.race.raceId = :raceId order by r.duration, r.orderNo")
 })
 public class RaceScore implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -54,6 +54,8 @@ public class RaceScore implements Serializable {
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @ManyToOne(optional = false)
     private Account account;
+    @Column(name = "order_no")
+    private Integer orderNo;
 
     public RaceScore() {
     }
@@ -100,6 +102,14 @@ public class RaceScore implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
     @Override
