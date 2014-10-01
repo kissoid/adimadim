@@ -129,11 +129,10 @@ public class RegisterBean implements Serializable {
                 throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
             RegisterBeanValidator.validateAccountForSignUp(account);
-            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
-            if (tempAccount != null && account.getAccountId() == null) {
-                String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
+            /*Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+             if (tempAccount != null && account.getAccountId() == null) {                String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
                 throw new AccountException(message);
-            }
+            }*/
             prepareAccount();
             accountService.signUp(account);
             registerCompleted = true;
@@ -152,7 +151,7 @@ public class RegisterBean implements Serializable {
             if (registerCompleted) {
                 message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.mailCouldNotSentMessage");
             }
-            FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
+            FacesMessageUtil.createFacesMessage("Hata", message, FacesMessage.SEVERITY_ERROR);
         }
     }
 

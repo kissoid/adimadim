@@ -21,9 +21,7 @@
                         <h4 class="page-header c6-text text-center">Adım Adım Koşu Yarışı Kayıt Formu</h4>
                         <h:form id="mainForm">
                             <div class="row">
-                                <div class="large-12 columns">
-                                    <p:messages autoUpdate="true" showDetail="true" />
-                                </div>
+                                <p:growl autoUpdate="true" showDetail="true" />
                                 <div class="large-12 columns">
                                     <br/>
                                     <p class="c6-text">Kullanıcı Bilgileri &mdash; <em>Log In Information</em></p>
@@ -209,9 +207,6 @@
                                     </p>
                                 </div>
                                 <div class="large-12 columns">
-                                    <p:messages autoUpdate="true" showDetail="true" />
-                                </div>
-                                <div class="large-12 columns">
                                     <br/><br/>
                                     <p:commandButton id="saveButton" value="Gönder - Submit" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" ></p:commandButton>
                                 </div>
@@ -241,9 +236,9 @@
                     <hr class="end-bar c6-background" />
                 </div>
                 <script>
-                    (function(i, s, o, g, r, a, m) {
+                    (function (i, s, o, g, r, a, m) {
                         i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function() {
+                        i[r] = i[r] || function () {
                             (i[r].q = i[r].q || []).push(arguments)
                         }, i[r].l = 1 * new Date();
                         a = s.createElement(o),
