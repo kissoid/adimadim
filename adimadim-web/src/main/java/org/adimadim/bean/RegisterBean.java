@@ -83,19 +83,7 @@ public class RegisterBean implements Serializable {
                 return;
             }
             Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
-            if (tempAccount == null) {
-                return;
-            }
-
-            if (tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")) {
-                tempAccount.setReEmail(account.getReEmail());
-                account = tempAccount;
-                listToPropertyMap(account);
-                if (account.getBirthDate() != null) {
-                    account.setTempBirthDate(ConvertionUtil.dateToString(account.getBirthDate(), "dd.MM.yyyy"));
-                }
-                RequestContext.getCurrentInstance().update("mainForm");
-            } else {
+            if (tempAccount != null) {
                 RequestContext.getCurrentInstance().update("mainForm");
                 RequestContext.getCurrentInstance().execute("alreadyRegisteredDialog.show();");
                 account = new Account();
@@ -129,10 +117,11 @@ public class RegisterBean implements Serializable {
                 throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
             RegisterBeanValidator.validateAccountForSignUp(account);
-            /*Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
-             if (tempAccount != null && account.getAccountId() == null) {                String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
+            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+            if (tempAccount != null) {
+                String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
                 throw new AccountException(message);
-            }*/
+            }
             prepareAccount();
             accountService.signUp(account);
             registerCompleted = true;
