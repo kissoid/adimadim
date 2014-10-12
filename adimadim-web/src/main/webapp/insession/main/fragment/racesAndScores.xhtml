@@ -7,7 +7,7 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <ui:fragment>
         <h:form id="mainForm">
-            <p:blockUI id="raceScoremainFormBlock" block="mainForm" trigger="raceList" widgetVar="raceScoremainFormBlock" />
+            <p:blockUI id="raceScoreMainFormBlock" block="mainForm" trigger="raceList" widgetVar="raceScoreMainFormBlock" />
             <div style="margin-bottom: 30px;">
                 <div style="width: 650px;">
                     <p:panelGrid style="border:none;">
@@ -26,100 +26,275 @@
                 <h:outputText value="Yarış Sonuçları" style="color:#336699; font-weight: bold;font-size: 16px;" />
                 <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
                 <div style="width: 650px;">
-                    <p:blockUI id="raceScoreTableBlock" block="raceScoreTable" widgetVar="raceScoreTableBlock" />
-                    <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" rowIndexVar="rowIndex" widgetVar="raceScoreTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
-                        <f:facet name="header">  
-                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Tüm Liste"/>  
-                        </f:facet>  
-                        <p:column id="orderNoColumn" headerText="Sıra">  
-                            <h:outputText value="#{raceBean.raceScoreList.indexOf(score)+1}" style="float: right;"/>  
-                        </p:column> 
-                        <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
-                            <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
-                        </p:column>  
+                    <p:tabView>
+                        <p:tab title="Tüm Liste" >
+                            <p:blockUI id="raceScoreTableBlock" block="raceScoreTable" widgetVar="raceScoreTableBlock" />
+                            <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" rowIndexVar="rowIndex" widgetVar="raceScoreTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Tüm Liste"/>  
+                                </f:facet>  
+                                <p:column id="orderNoColumn" headerText="Sıra">  
+                                    <h:outputText value="#{raceBean.raceScoreList.indexOf(score)+1}" style="float: right;"/>  
+                                </p:column> 
+                                <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
+                                    <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
+                                </p:column>  
 
-                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.name}" />  
-                        </p:column>  
+                                <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.name}" />  
+                                </p:column>  
 
-                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.surname}" />  
-                        </p:column>  
+                                <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.surname}" />  
+                                </p:column>  
 
-                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.gender}" />  
-                        </p:column>  
+                                <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.gender}" />  
+                                </p:column>  
 
-                        <p:column id="racerDurationColumn" headerText="Süre">  
-                            <h:outputText value="#{score.duration}">
-                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
-                            </h:outputText>
-                        </p:column>    
-                    </p:dataTable>  
-                </div>
-                <div style="width: 650px;">
-                    <p:blockUI id="raceScoreWomenTableBlock" block="raceScoreWomenTable" widgetVar="raceScoreWomenTableBlock" />
-                    <p:dataTable id="raceScoreWomenTable" var="score" value="#{raceBean.raceScoreWomenList}" rowIndexVar="rowIndex" widgetVar="raceScoreWomenTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
-                        <f:facet name="header">  
-                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Kadınlar Listesi"/>  
-                        </f:facet>  
-                        <p:column id="orderNoColumn" headerText="Sıra">  
-                            <h:outputText value="#{raceBean.raceScoreWomenList.indexOf(score)+1}" style="float: right;"/>  
-                        </p:column> 
-                        <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
-                            <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
-                        </p:column>  
+                                <p:column id="racerDurationColumn" headerText="Süre">  
+                                    <h:outputText value="#{score.duration}">
+                                        <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                                    </h:outputText>
+                                </p:column>    
+                            </p:dataTable>  
+                        </p:tab>
+                        <p:tab title="Kadın Listesi">
+                            <p:blockUI id="raceScoreWomenTableBlock" block="raceScoreWomenTable" widgetVar="raceScoreWomenTableBlock" />
+                            <p:dataTable id="raceScoreWomenTable" var="score" value="#{raceBean.raceScoreWomenList}" rowIndexVar="rowIndex" widgetVar="raceScoreWomenTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Kadınlar Listesi"/>  
+                                </f:facet>  
+                                <p:column id="orderNoColumn" headerText="Sıra">  
+                                    <h:outputText value="#{raceBean.raceScoreWomenList.indexOf(score)+1}" style="float: right;"/>  
+                                </p:column> 
+                                <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
+                                    <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
+                                </p:column>  
 
-                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.name}" />  
-                        </p:column>  
+                                <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.name}" />  
+                                </p:column>  
 
-                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.surname}" />  
-                        </p:column>  
+                                <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.surname}" />  
+                                </p:column>  
 
-                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.gender}" />  
-                        </p:column>  
+                                <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.gender}" />  
+                                </p:column>  
 
-                        <p:column id="racerDurationColumn" headerText="Süre">  
-                            <h:outputText value="#{score.duration}">
-                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
-                            </h:outputText>
-                        </p:column>    
-                    </p:dataTable>  
-                </div>
-                <div style="width: 650px;">
-                    <p:blockUI id="raceScoreMenTableBlock" block="raceScoreMenTable" widgetVar="raceScoreMenTableBlock" />
-                    <p:dataTable id="raceScoreMenTable" var="score" value="#{raceBean.raceScoreMenList}" rowIndexVar="rowIndex" widgetVar="raceScoreMenTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
-                        <f:facet name="header">  
-                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Erkekler Listesi"/>  
-                        </f:facet>  
-                        <p:column id="orderNoColumn" headerText="Sıra">  
-                            <h:outputText value="#{raceBean.raceScoreMenList.indexOf(score)+1}" style="float: right;"/>  
-                        </p:column> 
-                        <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
-                            <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
-                        </p:column>  
+                                <p:column id="racerDurationColumn" headerText="Süre">  
+                                    <h:outputText value="#{score.duration}">
+                                        <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                                    </h:outputText>
+                                </p:column>    
+                            </p:dataTable>  
+                        </p:tab>
+                        <p:tab title="Erkek Listesi">
+                            <p:blockUI id="raceScoreMenTableBlock" block="raceScoreMenTable" widgetVar="raceScoreMenTableBlock" />
+                            <p:dataTable id="raceScoreMenTable" var="score" value="#{raceBean.raceScoreMenList}" rowIndexVar="rowIndex" widgetVar="raceScoreMenTableWidget" emptyMessage="Sonuç bulunamadı" style="margin-top: 20px;">  
+                                <f:facet name="header">  
+                                    <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Erkekler Listesi"/>  
+                                </f:facet>  
+                                <p:column id="orderNoColumn" headerText="Sıra">  
+                                    <h:outputText value="#{raceBean.raceScoreMenList.indexOf(score)+1}" style="float: right;"/>  
+                                </p:column> 
+                                <p:column id="racerChestNumberColumn" filterBy="#{score.account.chestNumber}" headerText="Göğüs No" filterStyle="width:100px;" width="100" filterMatchMode="exact">  
+                                    <h:outputText value="#{score.account.chestNumber}" style="float: right;"/>  
+                                </p:column>  
 
-                        <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.name}" />  
-                        </p:column>  
+                                <p:column id="racerNameColumn" filterStyle="width:150px;" filterBy="#{score.account.name}" headerText="Ad" width="150" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.name}" />  
+                                </p:column>  
 
-                        <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.surname}" />  
-                        </p:column>  
+                                <p:column id="racerSurnameColumn" filterStyle="width:150px;" filterBy="#{score.account.surname}" headerText="Soyad" width="150" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.surname}" />  
+                                </p:column>  
 
-                        <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
-                            <h:outputText value="#{score.account.gender}" />  
-                        </p:column>  
+                                <p:column id="racerGenderColumn" filterStyle="width:50px;" filterBy="#{score.account.gender}" headerText="Cinsiyet" width="50" filterMatchMode="contains">  
+                                    <h:outputText value="#{score.account.gender}" />  
+                                </p:column>  
 
-                        <p:column id="racerDurationColumn" headerText="Süre">  
-                            <h:outputText value="#{score.duration}">
-                                <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
-                            </h:outputText>
-                        </p:column>    
-                    </p:dataTable>  
+                                <p:column id="racerDurationColumn" headerText="Süre">  
+                                    <h:outputText value="#{score.duration}">
+                                        <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                                    </h:outputText>
+                                </p:column>    
+                            </p:dataTable>  
+                        </p:tab>
+                        <p:tab title="Takım Listesi" rendered="#{raceBean.selectedRace.raceId eq 43}">
+                            <p:panelGrid>  
+                                <f:facet name="header">  
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Takım Listesi"/> 
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>Takım Genel Sıra</p:column> 
+                                        <p:column>Takım Klasman Sıra</p:column>  
+                                        <p:column>Takım</p:column>  
+                                        <p:column>Bitiren Koşucu</p:column>  
+                                        <p:column>Süre</p:column>
+                                        <p:column>Klasman</p:column>
+                                    </p:row>
+                                </f:facet>
+                                    <p:row>
+                                        <p:column>1</p:column> 
+                                        <p:column>1</p:column>  
+                                        <p:column>Ortaköyrun</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:06:59</p:column>
+                                        <p:column>Bağımsız</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>2</p:column> 
+                                        <p:column>1</p:column>  
+                                        <p:column>Arçelik Elektronik - 1</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:24:41</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>3</p:column> 
+                                        <p:column>1</p:column>  
+                                        <p:column>Akut-1</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:24:44</p:column>
+                                        <p:column>STK/Okul</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>4</p:column> 
+                                        <p:column>2</p:column>  
+                                        <p:column>İpragaz-1</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:33:27</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>5</p:column> 
+                                        <p:column>2</p:column>  
+                                        <p:column>ODTÜ-1</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:36:31</p:column>
+                                        <p:column>STK/Okul</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>6</p:column> 
+                                        <p:column>3</p:column>  
+                                        <p:column>TNT</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:40:13</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>7</p:column> 
+                                        <p:column>3</p:column>  
+                                        <p:column>ODTÜ-2</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:52:48</p:column>
+                                        <p:column>STK/Okul</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>8</p:column> 
+                                        <p:column>4</p:column>  
+                                        <p:column>TOFAŞ</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:56:52</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>9</p:column> 
+                                        <p:column>4</p:column>  
+                                        <p:column>Akut-2</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>04:00:30</p:column>
+                                        <p:column>STK/Okul</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>10</p:column> 
+                                        <p:column>5</p:column>  
+                                        <p:column>Kızlı Erkekli - POAŞ</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>04:13:44</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>11</p:column> 
+                                        <p:column>6</p:column>  
+                                        <p:column>Arçelik  / Türk Metal Sendikası Temsilciliği</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>03:06:59</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>12</p:column> 
+                                        <p:column>7</p:column>  
+                                        <p:column>İpragaz-2</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>04:25:41</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>13</p:column> 
+                                        <p:column>8</p:column>  
+                                        <p:column>Arçelik Elektronik - 2</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>04:27:04</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>14</p:column> 
+                                        <p:column>9</p:column>  
+                                        <p:column>Eczacıbaşı</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>04:54:13</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>15</p:column> 
+                                        <p:column>5</p:column>  
+                                        <p:column>ODTÜ-3</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>04:55:52</p:column>
+                                        <p:column>STK/Okul</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>16</p:column> 
+                                        <p:column>6</p:column>  
+                                        <p:column>Temacanlar</p:column>  
+                                        <p:column>7</p:column>  
+                                        <p:column>05:37:07</p:column>
+                                        <p:column>STK/Okul</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>17</p:column> 
+                                        <p:column>10</p:column>  
+                                        <p:column>KPMG</p:column>  
+                                        <p:column>6</p:column>  
+                                        <p:column>-</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>18</p:column> 
+                                        <p:column>11</p:column>  
+                                        <p:column>ING RUN &amp; ROLL</p:column>  
+                                        <p:column>5</p:column>  
+                                        <p:column>-</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>19</p:column> 
+                                        <p:column>12</p:column>  
+                                        <p:column>TİM</p:column>  
+                                        <p:column>4</p:column>  
+                                        <p:column>-</p:column>
+                                        <p:column>Şirket</p:column>
+                                    </p:row>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
                 </div>
             </div>
         </h:form>
