@@ -135,7 +135,7 @@ public class ChestNumberUtil {
     }
 
     private static PdfPCell createAsicsLogo() throws BadElementException, MalformedURLException, IOException {
-        Image asicsLogo = Image.getInstance(ChestNumberUtil.class.getResource("/org/adimadim/image/asics-logo.png"));
+        Image nbLogo = Image.getInstance(ChestNumberUtil.class.getResource("/org/adimadim/image/nb-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
@@ -143,7 +143,7 @@ public class ChestNumberUtil {
         cell.setPaddingLeft(50);
         cell.setPaddingRight(50);
         cell.setFixedHeight(100);
-        cell.addElement(asicsLogo);
+        cell.addElement(nbLogo);
 
         return cell;
     }
