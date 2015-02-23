@@ -19,12 +19,25 @@
             <script type="text/javascript" src="#{request.contextPath}/resource/js/vendor/foundation.datepicker.js"></script>
             <script type="text/javascript">
                 $(document).foundation();
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#dob').fdatepicker({
                         format: 'dd-mm-yyyy'
                     });
                 });
             </script>
+            <style>
+                .tableizer-table td {
+                    padding: 4px;
+                    margin: 3px;
+                    border: 1px solid #ccc;
+                    font-size: 12px;
+                }
+                .tableizer-table th {
+                    background-color: #104E8B; 
+                    color: #FFF;
+                    font-weight: bold;
+                }
+            </style>
         </h:head>
 
         <h:body class="antialiased">

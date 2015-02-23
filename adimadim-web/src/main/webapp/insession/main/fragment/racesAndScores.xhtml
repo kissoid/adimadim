@@ -123,176 +123,54 @@
                                 </p:column>    
                             </p:dataTable>  
                         </p:tab>
-                        <p:tab title="Takım Listesi" rendered="#{raceBean.selectedRace.raceId eq 43}">
-                            <p:panelGrid>  
-                                <f:facet name="header">  
-                                    <p:row>
-                                        <p:column colspan="6">
-                                            <h:outputText value="#{raceBean.selectedRace.raceName} Sonuçları Takım Listesi"/> 
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>Takım Genel Sıra</p:column> 
-                                        <p:column>Takım Klasman Sıra</p:column>  
-                                        <p:column>Takım</p:column>  
-                                        <p:column>Bitiren Koşucu</p:column>  
-                                        <p:column>Süre</p:column>
-                                        <p:column>Klasman</p:column>
-                                    </p:row>
-                                </f:facet>
-                                    <p:row>
-                                        <p:column>1</p:column> 
-                                        <p:column>1</p:column>  
-                                        <p:column>Ortaköyrun</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:06:59</p:column>
-                                        <p:column>Bağımsız</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>2</p:column> 
-                                        <p:column>1</p:column>  
-                                        <p:column>Arçelik Elektronik - 1</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:24:41</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>3</p:column> 
-                                        <p:column>1</p:column>  
-                                        <p:column>Akut-1</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:24:44</p:column>
-                                        <p:column>STK/Okul</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>4</p:column> 
-                                        <p:column>2</p:column>  
-                                        <p:column>İpragaz-1</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:33:27</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>5</p:column> 
-                                        <p:column>2</p:column>  
-                                        <p:column>ODTÜ-1</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:36:31</p:column>
-                                        <p:column>STK/Okul</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>6</p:column> 
-                                        <p:column>3</p:column>  
-                                        <p:column>TNT</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:40:13</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>7</p:column> 
-                                        <p:column>3</p:column>  
-                                        <p:column>ODTÜ-2</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:52:48</p:column>
-                                        <p:column>STK/Okul</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>8</p:column> 
-                                        <p:column>4</p:column>  
-                                        <p:column>TOFAŞ</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:56:52</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>9</p:column> 
-                                        <p:column>4</p:column>  
-                                        <p:column>Akut-2</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>04:00:30</p:column>
-                                        <p:column>STK/Okul</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>10</p:column> 
-                                        <p:column>5</p:column>  
-                                        <p:column>Kızlı Erkekli - POAŞ</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>04:13:44</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>11</p:column> 
-                                        <p:column>6</p:column>  
-                                        <p:column>Arçelik  / Türk Metal Sendikası Temsilciliği</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>03:06:59</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>12</p:column> 
-                                        <p:column>7</p:column>  
-                                        <p:column>İpragaz-2</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>04:25:41</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>13</p:column> 
-                                        <p:column>8</p:column>  
-                                        <p:column>Arçelik Elektronik - 2</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>04:27:04</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>14</p:column> 
-                                        <p:column>9</p:column>  
-                                        <p:column>Eczacıbaşı</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>04:54:13</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>15</p:column> 
-                                        <p:column>5</p:column>  
-                                        <p:column>ODTÜ-3</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>04:55:52</p:column>
-                                        <p:column>STK/Okul</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>16</p:column> 
-                                        <p:column>6</p:column>  
-                                        <p:column>Temacanlar</p:column>  
-                                        <p:column>7</p:column>  
-                                        <p:column>05:37:07</p:column>
-                                        <p:column>STK/Okul</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>17</p:column> 
-                                        <p:column>10</p:column>  
-                                        <p:column>KPMG</p:column>  
-                                        <p:column>6</p:column>  
-                                        <p:column>-</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>18</p:column> 
-                                        <p:column>11</p:column>  
-                                        <p:column>ING RUN &amp; ROLL</p:column>  
-                                        <p:column>5</p:column>  
-                                        <p:column>-</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column>19</p:column> 
-                                        <p:column>12</p:column>  
-                                        <p:column>TİM</p:column>  
-                                        <p:column>4</p:column>  
-                                        <p:column>-</p:column>
-                                        <p:column>Şirket</p:column>
-                                    </p:row>
-                            </p:panelGrid>
+                        <p:tab title="Takım Listesi" rendered="#{raceBean.selectedRace.raceId eq 47}">
+                            <table class="tableizer-table" >
+                                <tr class="tableizer-firstrow"><th>S&#305;ra</th><th>Kategori</th><th>Kategori s&#305;ra</th><th>Tak&#305;m</th><th>Süre</th></tr>
+                                <tr><td>1</td><td>BA&#286;IMSIZ</td><td>1</td><td>ORTAKÖY RUN CLUB</td><td>3:01:11</td></tr>
+                                <tr><td>2</td><td>BA&#286;IMSIZ</td><td>2</td><td>SÖ&#286;ÜTLÜ TEAM</td><td>3:03:45</td></tr>
+                                <tr><td>3</td><td>BA&#286;IMSIZ</td><td>3</td><td>KURTARUN</td><td>3:22:19</td></tr>
+                                <tr><td>4</td><td>STK/OKUL/ÜN&#304;.</td><td>1</td><td>TÜB&#304;TAK</td><td>3:22:48</td></tr>
+                                <tr><td>5</td><td>&#350;&#304;RKET</td><td>1</td><td>AKATLAR CLUB SPORIUM</td><td>3:23:19</td></tr>
+                                <tr><td>6</td><td>&#350;&#304;RKET</td><td>2</td><td>&#304;PRAGAZ-1</td><td>3:23:42</td></tr>
+                                <tr><td>7</td><td>&#350;&#304;RKET</td><td>3</td><td>ARÇEL&#304;K ELEKTRON&#304;K-1</td><td>3:23:59</td></tr>
+                                <tr><td>8</td><td>STK/OKUL/ÜN&#304;.</td><td>2</td><td>ODTÜ-1</td><td>3:29:09</td></tr>
+                                <tr><td>9</td><td>BA&#286;IMSIZ</td><td>4</td><td>RUN TOGETHER DIE ALONE</td><td>3:40:01</td></tr>
+                                <tr><td>10</td><td>STK/OKUL/ÜN&#304;.</td><td>3</td><td>AKUT -1</td><td>3:40:49</td></tr>
+                                <tr><td>11</td><td>STK/OKUL/ÜN&#304;.</td><td>4</td><td>BAHÇE&#350;EH&#304;R ÜN&#304;VERS&#304;TES&#304;</td><td>3:50:00</td></tr>
+                                <tr><td>12</td><td>BA&#286;IMSIZ</td><td>5</td><td>ÇAYLAKLAR YÜKSEKTEN UÇAR -1</td><td>3:50:59</td></tr>
+                                <tr><td>13</td><td>&#350;&#304;RKET</td><td>4</td><td>NEW BALANCE RUNNING TEAM</td><td>3:59:56</td></tr>
+                                <tr><td>14</td><td>&#350;&#304;RKET</td><td>5</td><td>SIEMENS ÇALI&#350;ANLARI</td><td>4:01:46</td></tr>
+                                <tr><td>15</td><td>BA&#286;IMSIZ</td><td>6</td><td>ROOKIES BUT GOLDIES</td><td>4:02:29</td></tr>
+                                <tr><td>16</td><td>&#350;&#304;RKET</td><td>6</td><td>TOFA&#350;</td><td>4:02:45</td></tr>
+                                <tr><td>17</td><td>BA&#286;IMSIZ</td><td>7</td><td>NE&#350;EL&#304; KO&#350;UCULAR</td><td>4:03:51</td></tr>
+                                <tr><td>18</td><td>BA&#286;IMSIZ</td><td>8</td><td>MAÇKA ROOKIES 1</td><td>4:07:28</td></tr>
+                                <tr><td>19</td><td>STK/OKUL/ÜN&#304;.</td><td>5</td><td>AÇEV KO&#350;U TAKIMI</td><td>4:07:40</td></tr>
+                                <tr><td>20</td><td>&#350;&#304;RKET</td><td>7</td><td>Arçelik A.&#350; (Genel Müdürlük)</td><td>4:09:54</td></tr>
+                                <tr><td>21</td><td>&#350;&#304;RKET</td><td>8</td><td>TELEPERFORMANS ASLANLARI-I</td><td>4:13:03</td></tr>
+                                <tr><td>22</td><td>&#350;&#304;RKET</td><td>9</td><td>JOHNSON &amp; JOHNSON RUNNING CLINIC</td><td>4:14:44</td></tr>
+                                <tr><td>23</td><td>&#350;&#304;RKET</td><td>10</td><td>&#304;PRAGAZ-2</td><td>4:17:34</td></tr>
+                                <tr><td>24</td><td>STK/OKUL/ÜN&#304;.</td><td>6</td><td>KOS-D&#304;REN FAT&#304;H ORMANI</td><td>4:20:49</td></tr>
+                                <tr><td>25</td><td>&#350;&#304;RKET</td><td>11</td><td>DOYHAK</td><td>4:21:23</td></tr>
+                                <tr><td>26</td><td>BA&#286;IMSIZ</td><td>9</td><td>ÇAYLAKLAR YÜKSEKTEN UÇAR -3</td><td>4:24:15</td></tr>
+                                <tr><td>27</td><td>BA&#286;IMSIZ</td><td>10</td><td>MAÇKA ROOKIES 2</td><td>4:24:16</td></tr>
+                                <tr><td>28</td><td>BA&#286;IMSIZ</td><td>11</td><td>ÇAYLAKLAR YÜKSEKTEN UÇAR -2</td><td>4:34:24</td></tr>
+                                <tr><td>29</td><td>STK/OKUL/ÜN&#304;.</td><td>7</td><td>AKUT -2</td><td>4:40:26</td></tr>
+                                <tr><td>30</td><td>&#350;&#304;RKET</td><td>12</td><td>ECZACIBA&#350;I BAXTER</td><td>4:54:34</td></tr>
+                                <tr><td>31</td><td>STK/OKUL/ÜN&#304;.</td><td>8</td><td>KOS-D&#304;REN VAL&#304;DEBA&#286;</td><td>5:03:35</td></tr>
+                                <tr><td>32-43</td><td>BA&#286;IMSIZ</td><td>12</td><td>ORTAKÖY RUN CLUB JR.</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>STK/OKUL/ÜN&#304;.</td><td>9-10</td><td>ODTÜ-2</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>STK/OKUL/ÜN&#304;.</td><td>9-10</td><td>TOG</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>ACIBADEM MOB&#304;L SA&#286;LIK</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>ARÇEL&#304;K ELEKTRON&#304;K-2</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>ATOS</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>AVERY DENNISON</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>HILLSIDE RUNNING TEAM</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>MEMORIAL</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>SONOTOM</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>TELEPERFORMANS KAPLANLARI-II</td><td>#YOK</td></tr>
+                                <tr><td>32-43</td><td>&#350;&#304;RKET</td><td>13-21</td><td>TNT</td><td>#YOK</td></tr>
+                            </table>
+
                         </p:tab>
                     </p:tabView>
                 </div>
