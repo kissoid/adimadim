@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.adimadim.bean.AccountBean;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
-import org.adimadim.db.entity.AccountPropertyPK;
 import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
 import org.adimadim.util.ConvertionUtil;
@@ -66,7 +64,7 @@ public class AccountUpdateBean implements Serializable {
         if(request.getParameter("key") != null){
             try {
                 String secretKey = request.getParameter("key");
-                account = accountService.findAccountBySecretKey(secretKey);
+                account = accountService.retrieveAccountBySecretKey(secretKey);
                 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
                 birthDate = sdf.format(account.getBirthDate());
             } catch (Exception ex) {
@@ -135,10 +133,9 @@ public class AccountUpdateBean implements Serializable {
         Iterator iterator = accountProperties.entrySet().iterator();
         while (iterator.hasNext()) {
             AccountProperty accountProperty = new AccountProperty();
-            accountProperty.setAccountPropertyPK(new AccountPropertyPK());
             Map.Entry entry = (Map.Entry) iterator.next();
-            accountProperty.getAccountPropertyPK().setAccountId(account.getAccountId());
-            accountProperty.getAccountPropertyPK().setPropertyId(Integer.parseInt(entry.getKey().toString()));
+            accountProperty.setAccount(account);
+            accountProperty.setPropertyId(Integer.parseInt(entry.getKey().toString()));
             accountProperty.setPropertyValue(entry.getValue().toString());
             accountPropertyList.add(accountProperty);
         }
@@ -148,7 +145,7 @@ public class AccountUpdateBean implements Serializable {
     private void listToProperties(List<AccountProperty> accountPropertyList){
         accountProperties.clear();
         for(AccountProperty accountProperty: accountPropertyList){
-            accountProperties.put(String.valueOf(accountProperty.getAccountPropertyPK().getPropertyId()), accountProperty.getPropertyValue());
+            accountProperties.put(String.valueOf(accountProperty.getPropertyId()), accountProperty.getPropertyValue());
         }
     }
     

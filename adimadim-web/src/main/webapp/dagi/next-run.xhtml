@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="#{request.contextPath}/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                <!-- 1-Yarışlar -->
+
+                <div id="next-run" class="row page">
+                    <img src="#{request.contextPath}/resource/image/run-icon.png" class="page-icon" />
+                    <div class="large-10 large-centered columns" style="margin-bottom: 50px;">
+                        <h4 class="page-header c1-text">Önümüzdeki Yarış</h4>
+                        <div class="panel c1-background text-center">
+                            <p><strong>07 Mart 2015 Adım Adım Koşu</strong>
+                                <p/>
+
+                                    Tarih: 07 Mart 2015, Cumartesi<br/>
+                                    Yer: Belgrad Ormanı Neşet Suyu Parkuru<br/>
+                                    Toplanma/Isınma: Saat 8.00<br/>
+                                    Start: Saat 8.30<br/>
+                                </p>
+                        </div>
+                        <br/>
+                        <div>
+                            <p>Merhaba,</p>
+
+                                <p>Çok güzel bir takım maratonu koşusu oldu: “Adım Adım Koşu” organizasyonunun Şubat
+
+                                    2015 ayı ayağını hep birlikte 7 Şubat 2015 Cumartesi günü gerçekleştirdik.</p>
+
+                                <p>43 takımın takım maratonu yarışına kayıt olduğu ve 31 takımın eksiksiz tamamladığı bu 
+
+                                    organizasyonumuzu 289’u erkek 116’sı kadın olmak üzere 416 koşucu resmi olarak 
+
+                                    tamamladı. Ne yazık ki 11 koşucumuz barkodlu sıra numarasıyla birlikte göğüs numarasını 
+
+                                    bize iletmeyi atladı. (Bu durum normalde sadece ilgili sıranın boş kalmasına yol açıyor, ama 
+
+                                    ne yazık ki bu koşuda 7 üyesinin de koşuyu tamamlaması zorunluluğu olduğu için takım 
+
+                                    sonuçlarını da etkileme riski var!)</p>
+
+                                <p>Sonuçları aşağıda açıkladığımız koşumuza katılan tüm takımlara ve koşuculara tebrikler!
+
+                                    Bu organizasyonda gönüllü görevli olan:
+
+                                    Mesut Özdinç, Mehmet Adem Şengül, Mehmet Vanlı, Aykut Üstündağ, Nezihe Çıtav Süngün, 
+
+                                    Özgür Süngün, Memnune Bozoğlu, Tanyar Ablak, Kıvanç Ergun ve ben Yavuz Abadan’a
+
+                                    ayrıca teşekkürler!</p>
+
+                                <p>"Adım Adım Koşu" organizasyon komitesi adına</p>
+
+                                <p>Yavuz Abadan</p>
+
+
+                        </div>
+
+
+                    </div>
+                    <div style="width:100%" align="center">
+
+                        <ui:include src="#{request.contextPath}/insession/main/fragment/racesAndScores.xhtml" />
+
+                    </div>
+                    <hr class="end-bar c1-background" />
+                </div>
+                <script>
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-51572429-1', 'aakosu.org');
+                    ga('require', 'displayfeatures');
+                    ga('send', 'pageview');
+
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

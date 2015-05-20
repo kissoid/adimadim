@@ -35,13 +35,13 @@ public class ContactMessageService {
     public List<ContactMessage> getUnreadMessages() throws Exception{
         Map map = new HashMap();
         map.put("unread", "E");
-        return contactMessageFacade.findRangeByNamedQuery(new int[]{0,50}, "ContactMessage.findUnreadMessages", map, null);
+        return contactMessageFacade.findRangeByNamedQuery(new int[]{0,50}, "ContactMessage.findUnreadMessages", map);
     }
     
     public List<ContactMessage> getReadMessages() throws Exception{
         Map map = new HashMap();
-        map.put("unread", "N");
-        return contactMessageFacade.findRangeByNamedQuery(new int[]{0,50}, "ContactMessage.findReadMessages", map, null);
+        map.put("unread", "H");
+        return contactMessageFacade.findRangeByNamedQuery(new int[]{0,50}, "ContactMessage.findReadMessages", map);
     }
     
     public void markMessageAsRead(Integer messageId) throws Exception{

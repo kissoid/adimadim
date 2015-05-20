@@ -31,13 +31,13 @@ public class RacePictureService {
     }
 
     public List<RaceAlbum> retrieveAllRaceAlbums() throws Exception{
-        return raceAlbumFacade.findAllByNamedQuery("RaceAlbum.findAllByAlbumIdOrderDesc", null);
+        return raceAlbumFacade.findAllByNamedQuery("RaceAlbum.findAllByAlbumIdOrderDesc");
     }   
     
     public List<RaceAlbumPicture> getRaceAlbumPictureByAlbumId(Integer albumId) throws Exception{
         Map map = new HashMap();
         map.put("albumId", albumId);
-        return raceAlbumPictureFacade.findAllByNamedQuery("RaceAlbumPicture.findByAlbumId", map, null);
+        return raceAlbumPictureFacade.findAllByNamedQuery("RaceAlbumPicture.findByAlbumId", map);
     }
     
     public void saveRaceAlbumPicture(RaceAlbumPicture raceAlbumPicture) throws Exception{

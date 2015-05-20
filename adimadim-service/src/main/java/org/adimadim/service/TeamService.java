@@ -25,7 +25,7 @@ public class TeamService {
     public List<Team> retrieveAllTeamsByRaceId(Integer raceId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
-        return teamFacade.findAllByNamedQuery("Team.findAllByAceId", map, null);
+        return teamFacade.findAllByNamedQuery("Team.findAllByAceId", map);
     }
     
 }

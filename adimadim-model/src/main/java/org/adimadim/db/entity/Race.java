@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(catalog = "adimadim", schema = "")
@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Race.findByRaceId", query = "SELECT r FROM Race r WHERE r.raceId = :raceId"),
     @NamedQuery(name = "Race.findByRaceName", query = "SELECT r FROM Race r WHERE r.raceName = :raceName"),
     @NamedQuery(name = "Race.findByRaceDate", query = "SELECT r FROM Race r WHERE r.raceDate = :raceDate"),
-    @NamedQuery(name = "Race.findByActive", query = "SELECT r FROM Race r WHERE r.active = :active")})
+    @NamedQuery(name = "Race.findByActive", query = "SELECT r FROM Race r WHERE r.active = :active"),
+    @NamedQuery(name = "Race.findAllOrderByIdDesc", query = "SELECT new org.adimadim.db.entity.Race(r.raceId,r.raceName,r.raceDate,r.active) FROM Race r where r.active='E' order by r.raceId desc")})
 public class Race implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,6 +61,7 @@ public class Race implements Serializable {
     @Size(min = 1, max = 1)
     @Column(nullable = false, length = 1)
     private String active;
+    @XmlTransient
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<RaceScore> raceScoreList;
 
@@ -132,15 +134,12 @@ public class Race implements Serializable {
             return false;
         }
         Race other = (Race) object;
-        if ((this.raceId == null && other.raceId != null) || (this.raceId != null && !this.raceId.equals(other.raceId))) {
-            return false;
-        }
-        return true;
+        return (this.raceId != null || other.raceId == null) && (this.raceId == null || this.raceId.equals(other.raceId));
     }
 
     @Override
     public String toString() {
-        return "org.adimadim.entity.Race[ raceId=" + raceId + " ]";
+        return "org.adimadim.db.entity.Race[ raceId=" + raceId + " ]";
     }
     
 }

@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.RaceScore;
@@ -20,6 +24,8 @@ import org.adimadim.facade.RaceScoreFacade;
  * @author Adem
  */
 @Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class RacerService {
 
     @Inject
@@ -30,18 +36,18 @@ public class RacerService {
     private RaceScoreFacade raceScoreFacade;
 
     public List<Account> retrieveAllRacers() throws Exception {
-        return accountFacade.findAllByNamedQuery("Account.findAllByIdOrder", null);
+        return accountFacade.findAllByNamedQuery("Account.findAllByIdOrder");
     }
     
     public List<Account> retrieveAllRacersHasNoPassword() throws Exception {
-        return accountFacade.findAllByNamedQuery("Account.findAll", null);
-        //return accountFacade.findAllByNamedQuery("Account.findAllHasNoPasswordByIdOrder", null);
+        return accountFacade.findAllByNamedQuery("Account.findAll");
     }
 
     public List<RaceScore> getRacerScoresByAccountId(Integer accountId) throws Exception {
         Map map = new HashMap();
         map.put("accountId", accountId);
-        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByAccountId", map, null);
+        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByAccountId", map);
     }
+
     
 }

@@ -28,35 +28,39 @@ public class RaceService {
     @Inject private RaceFacade raceFacade;
     @Inject private RaceScoreFacade raceScoreFacade;
     @Inject private TeamFacade teamFacade;
+
+    public Race retrieveRace(Integer raceId) throws Exception{
+        return raceFacade.find(raceId);
+    } 
     
     public List<Race> retrieveAllRaces() throws Exception{
-        return raceFacade.findAllByNamedQuery("Race.findAllByDateOrderDesc", null);
+        return raceFacade.findAllByNamedQuery("Race.findAllOrderByIdDesc");
     } 
     
     public List<RaceScore> retrieveRaceScoreByRaceId(Integer raceId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
-        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByRaceIdByTimeOrder", map, null);
+        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByRaceIdByTimeOrder", map);
     }    
     
     public List<Team> retrieveTeamsByRaceId(Integer raceId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
-        return teamFacade.findAllByNamedQuery("Team.findAllByRaceId", map, null);
+        return teamFacade.findAllByNamedQuery("Team.findAllByRaceId", map);
     }    
     
     public List<RaceScore> retrieveRaceScoreByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
         map.put("teamId", teamId);
-        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByRaceIdAndTeamId", map, null);
+        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByRaceIdAndTeamId", map);
     }
     
     public List<RaceScore> retrieveTeamMembersByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
         map.put("teamId", teamId);
-        return raceScoreFacade.findAllByNamedQuery("TeamMember.findByRaceIdAndTeamId", map, null);
+        return raceScoreFacade.findAllByNamedQuery("TeamMember.findByRaceIdAndTeamId", map);
     }
     
     private Integer raceScoreCountByRaceId(Integer raceId) throws Exception{

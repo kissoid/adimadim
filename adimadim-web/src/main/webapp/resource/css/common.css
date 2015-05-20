@@ -10,36 +10,8 @@ root {
     display: block;
 }
 
-body{ 
-    margin: 0;
-    padding: 0;
-    font-size: 11px;
-    line-height: 1.6em; 
-    font-family: Tahoma,Geneva,Kalimati,sans-serif;
-    background-color: #E2E2E2;
-}
-
-.ui-corner-all {
-    border-radius: 0px 0px 0px 0px !important;
-}
-
-.standartFontColor{
-    color:#707070;
-}
-
-.coloredCell{
-    background-color: #F4F4F4;
-}
-
-.boldFont{
-    font-weight: bold;
-}
-
-#main{
-    width: 970px; 
-    margin: 0 auto; 
-    margin-top: 100px;
-    margin-bottom: 30px;
+.ui-menu{
+    background-color: white;
 }
 
 .ui-panelgrid tr, .ui-panelgrid td{
@@ -50,61 +22,38 @@ body{
     background-color: inherit;
 }
 
+table{
+    border:none !important;
+}
+
+td{
+    background: white !important;
+}
+
+.ui-dialog{
+    height:auto;
+    width:auto;
+}
+
 img {  
     border-style: none;
 }
-
-a, a:link, a:visited { color: #336699; font-weight: normal; text-decoration: none }
-a:hover { color: #FF6; text-decoration: none; }
 
 ul, li {
     padding:0;
     margin:0;
     list-style:none;
 }
-
-#header{
-    background-color:#000000;
-    position:fixed;
-    top:0px;
-    left:0px; 
-    background-color:#336699;
-    height:60px; 
-    width:100%;
-    z-index: 1000;
-}
-
 .shadowed-box{
-    border: 1px solid #eee; 
-    -webkit-box-shadow: 0px 10px 3px 3px #B0B0B0;
-    -moz-box-shadow: 0px 10px 3px 5px #B0B0B0;
-    box-shadow: 0px 3px 10px 5px #B0B0B0;
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135, Color='#B0B0B0');
+    border: 1px solid #eee;
+    -webkit-box-shadow: #eee 3px 3px 3px;
+    -moz-box-shadow: #eee 3px 3px 3px;
+    box-shadow: #eee 3px 3px 3px;
 }
-
-.no_mr { 
-    margin-right: 0 
-}
-
-.nav-container{ background: transparent;}
-.f-nav{ z-index: 9999; position: fixed; top: 0; width: 100%;} 
-
-.nav { height: 35px;}
-.nav ul { list-style: none; }
-.nav ul li{float: left;margin-left: 2px;}
-.nav ul li:first-child{ padding-left: 0;}
-.nav ul li a { }
-.nav ul li a:hover{ text-decoration: underline;}
 
 .menuitem{
     vertical-align: middle;
     text-align: center;
-    color: #FFFFFF;    
-    float: left; 
-    height: 15px;
-    padding: 0px 0px 0px 15px;
-}
-
-.imagebox a{
-    margin-left:10px;
+    color: #FFFFFF; 
+    padding-top: 5px;
 }

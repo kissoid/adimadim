@@ -9,8 +9,10 @@ package org.adimadim.db.entity;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -22,51 +24,57 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "account_property", catalog = "adimadim", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "AccountProperty.findAll", query = "SELECT a FROM AccountProperty a"),
-    @NamedQuery(name = "AccountProperty.findByAccountId", query = "SELECT a FROM AccountProperty a WHERE a.accountPropertyPK.accountId = :accountId"),
-    @NamedQuery(name = "AccountProperty.findByPropertyId", query = "SELECT a FROM AccountProperty a WHERE a.accountPropertyPK.propertyId = :propertyId"),
-    @NamedQuery(name = "AccountProperty.findByPropertyValue", query = "SELECT a FROM AccountProperty a WHERE a.propertyValue = :propertyValue")})
+    @NamedQuery(name = "AccountProperty.findByPropertyId", query = "SELECT a FROM AccountProperty a WHERE a.propertyId = :propertyId"),
+    @NamedQuery(name = "AccountProperty.findByPropertyValue", query = "SELECT a FROM AccountProperty a WHERE a.propertyValue = :propertyValue"),
+    @NamedQuery(name = "AccountProperty.findByAccountPropertyId", query = "SELECT a FROM AccountProperty a WHERE a.accountPropertyId = :accountPropertyId"),
+    @NamedQuery(name = "AccountProperty.findByAccountId", query = "SELECT a FROM AccountProperty a WHERE a.account.accountId = :accountId")
+})
 public class AccountProperty implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AccountPropertyPK accountPropertyPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "account_property_id", nullable = false)
+    private Integer accountPropertyId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "property_id", nullable = false)
+    private int propertyId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "property_value", nullable = false, length = 255)
     private String propertyValue;
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @ManyToOne(optional = false)
     private Account account;
 
     public AccountProperty() {
     }
 
-    public AccountProperty(AccountPropertyPK accountPropertyPK) {
-        this.accountPropertyPK = accountPropertyPK;
+    public AccountProperty(Integer accountPropertyId) {
+        this.accountPropertyId = accountPropertyId;
     }
 
-    public AccountProperty(AccountPropertyPK accountPropertyPK, String propertyValue) {
-        this.accountPropertyPK = accountPropertyPK;
+    public AccountProperty(Integer accountPropertyId, int propertyId, String propertyValue) {
+        this.accountPropertyId = accountPropertyId;
+        this.propertyId = propertyId;
         this.propertyValue = propertyValue;
     }
 
-    public AccountProperty(int accountId, int propertyId) {
-        this.accountPropertyPK = new AccountPropertyPK(accountId, propertyId);
+    public int getPropertyId() {
+        return propertyId;
     }
 
-    public AccountPropertyPK getAccountPropertyPK() {
-        return accountPropertyPK;
-    }
-
-    public void setAccountPropertyPK(AccountPropertyPK accountPropertyPK) {
-        this.accountPropertyPK = accountPropertyPK;
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getPropertyValue() {
@@ -75,6 +83,14 @@ public class AccountProperty implements Serializable {
 
     public void setPropertyValue(String propertyValue) {
         this.propertyValue = propertyValue;
+    }
+
+    public Integer getAccountPropertyId() {
+        return accountPropertyId;
+    }
+
+    public void setAccountPropertyId(Integer accountPropertyId) {
+        this.accountPropertyId = accountPropertyId;
     }
 
     public Account getAccount() {
@@ -88,7 +104,7 @@ public class AccountProperty implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (accountPropertyPK != null ? accountPropertyPK.hashCode() : 0);
+        hash += (accountPropertyId != null ? accountPropertyId.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +115,7 @@ public class AccountProperty implements Serializable {
             return false;
         }
         AccountProperty other = (AccountProperty) object;
-        if ((this.accountPropertyPK == null && other.accountPropertyPK != null) || (this.accountPropertyPK != null && !this.accountPropertyPK.equals(other.accountPropertyPK))) {
+        if ((this.accountPropertyId == null && other.accountPropertyId != null) || (this.accountPropertyId != null && !this.accountPropertyId.equals(other.accountPropertyId))) {
             return false;
         }
         return true;
@@ -107,7 +123,7 @@ public class AccountProperty implements Serializable {
 
     @Override
     public String toString() {
-        return "com.test.AccountProperty[ accountPropertyPK=" + accountPropertyPK + " ]";
+        return "org.adimadim.db.entity.AccountProperty[ accountPropertyId=" + accountPropertyId + " ]";
     }
     
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="org.adimadim_adimadim-model_jar_1.0PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>org.adimadim.db.entity.ContactMessage</class>
+    <class>org.adimadim.db.entity.Property</class>
+    <class>org.adimadim.db.entity.TempDonation</class>
+    <class>org.adimadim.db.entity.AccountParent</class>
+    <class>org.adimadim.db.entity.AccountProperty</class>
+    <class>org.adimadim.db.entity.AccountAlbumPicture</class>
+    <class>org.adimadim.db.entity.RaceScore</class>
+    <class>org.adimadim.db.entity.Account</class>
+    <class>org.adimadim.db.entity.OldDonation</class>
+    <class>org.adimadim.db.entity.Activity</class>
+    <class>org.adimadim.db.entity.EmergencyCall</class>
+    <class>org.adimadim.db.entity.AccountAlbum</class>
+    <class>org.adimadim.db.entity.Association</class>
+    <class>org.adimadim.db.entity.Announcement</class>
+    <class>org.adimadim.db.entity.RaceAlbumPicture</class>
+    <class>org.adimadim.db.entity.RaceAlbum</class>
+    <class>org.adimadim.db.entity.TeamMember</class>
+    <class>org.adimadim.db.entity.Donation</class>
+    <class>org.adimadim.db.entity.Team</class>
+    <class>org.adimadim.db.entity.Race</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/adimadim?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value="9901"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="kissoid"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="${request.contextPath}/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                <!-- 3-Nedir? -->
+
+                <div id="about" class="row page" >
+                    <img src="${request.contextPath}/resource/image/about-icon.png" class="page-icon" />
+                    <div class="large-10 large-centered columns">
+                        <h4 class="page-header c3-text">Adım Adım Koşu Yarışı</h4>
+                        <p>
+                            Adım Adım Oluşumu’nun uzun yıllardır 6 kilometrelik Belgrad Ormanı Neşet Suyu parkurunda dü-zenlediği haftalık koşu antrenmanlarına 1 Ocak 2011 tarihinden farklı bir heyecan katıldı; her ayın ilk Cumartesi günü sabah saat 8:30'ta bu buluşmalarımızı saatli bir eğlence yarışına dönüştürdük.
+                        </p>
+
+                        <p>
+                            Sadece <a href="http://www.adimadim.org" class="c3-link" target="blank">Adım Adım</a> üyelerine değil tüm bireysel ve takım koşucularına açık olan bu amatör organizasyonun amacı, ormana gelen tüm koşucu ve yürüyüşçülerini dostane bir yarış ortamında buluşturmak, ADIM ADIM'ı tanıtmak ve yardımseverlik koşu kültürünün yaygınlaşmasına katkıda bulunmaktır.
+                        </p>
+
+                        <p>
+                            Adım Adım Koşu yarışı çerçevesinde ayrıca yılda 3 kez ‘Takım Maratonu’ düzenliyoruz. Şirketler, Okul/Üniversite/STK ve Bağımsız kategorilerinde yarışan 7'şer kişilik takımların 6k süreleri toplanarak her grupta sıralama açıklanıyor. 
+                        </p>
+
+                        <p>
+                            <ul>
+                                <li>Yarış kuralları:</li>
+                                <li>Azami süre sınırı 60 dakikadır.</li>
+                                <li>Parkurda kestirme yapılması diskalifiye nedenidir.</li>
+                                <li>Barkodlu göğüs numarası kişiye özeldir, başkası tarafından kullanılamaz.</li>
+                                <li>Barkodlu göğüs numarası olmayan koşucular yarışa katılabilir ancak sonuçları yayınlanamaz.</li>
+                                <li>Parkurda başka koşuculara veya yürüyüşcülere saygılı olalım, çevreyi temiz tutalım. </li>
+                                <li>Bitiş çizgisinde göğüs numarası mutlaka görünür olmalı.  </li>
+                                <li>Bitişte verilen sıra numarası ve göğüs numarası kayıt masasına teslim edilmeli/okutulmalı.  </li>
+                                <li>Parkurda başka koşuculara veya yürüyüşcülere saygılı olalım, çevreyi temiz tutalım</li>
+                            </ul>
+                        </p>
+                    </div>
+                    <hr class="end-bar c3-background" />  
+                </div>
+                <script>
+                    (function(i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function() {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-51572429-1', 'aakosu.org');
+                    ga('require', 'displayfeatures');
+                    ga('send', 'pageview');
+
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,7 +1,9 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Adem
+ * @author Ergo
  */
 @Entity
 @Table(name = "contact_message", catalog = "adimadim", schema = "")
@@ -31,15 +35,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ContactMessage.findAll", query = "SELECT c FROM ContactMessage c"),
     @NamedQuery(name = "ContactMessage.findByMessageId", query = "SELECT c FROM ContactMessage c WHERE c.messageId = :messageId"),
-    @NamedQuery(name = "ContactMessage.findByAccountId", query = "SELECT c FROM ContactMessage c WHERE c.accountId = :accountId"),
     @NamedQuery(name = "ContactMessage.findByTitle", query = "SELECT c FROM ContactMessage c WHERE c.title = :title"),
     @NamedQuery(name = "ContactMessage.findByMessage", query = "SELECT c FROM ContactMessage c WHERE c.message = :message"),
     @NamedQuery(name = "ContactMessage.findByContactInfo", query = "SELECT c FROM ContactMessage c WHERE c.contactInfo = :contactInfo"),
     @NamedQuery(name = "ContactMessage.findByCreateDate", query = "SELECT c FROM ContactMessage c WHERE c.createDate = :createDate"),
-    @NamedQuery(name = "ContactMessage.findByUnread", query = "SELECT c FROM ContactMessage c WHERE c.unread = :unread"),
-    @NamedQuery(name = "ContactMessage.findUnreadMessages", query = "SELECT m FROM ContactMessage m WHERE m.unread = :unread order by m.messageId"),
-    @NamedQuery(name = "ContactMessage.findReadMessages", query = "SELECT m FROM ContactMessage m WHERE m.unread = :unread order by m.messageId desc")
-})
+    @NamedQuery(name = "ContactMessage.findByUnread", query = "SELECT c FROM ContactMessage c WHERE c.unread = :unread")})
 public class ContactMessage implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,8 +47,6 @@ public class ContactMessage implements Serializable {
     @Basic(optional = false)
     @Column(name = "message_id", nullable = false)
     private Integer messageId;
-    @Column(name = "account_id")
-    private Integer accountId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -74,6 +72,9 @@ public class ContactMessage implements Serializable {
     @Size(min = 1, max = 1)
     @Column(nullable = false, length = 1)
     private String unread;
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    @ManyToOne
+    private Account account;
 
     public ContactMessage() {
     }
@@ -97,14 +98,6 @@ public class ContactMessage implements Serializable {
 
     public void setMessageId(Integer messageId) {
         this.messageId = messageId;
-    }
-
-    public Integer getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
     }
 
     public String getTitle() {
@@ -145,6 +138,14 @@ public class ContactMessage implements Serializable {
 
     public void setUnread(String unread) {
         this.unread = unread;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

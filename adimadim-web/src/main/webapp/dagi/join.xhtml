@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="${request.contextPath}/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                <!-- 6 - Kayıt Ol -->
+                <div id="join" class="row page">
+                    <img src="${request.contextPath}/resource/image/join-icon.png" class="page-icon" />
+                    <div class="large-10 large-centered columns">
+
+                        <h4 class="page-header c6-text text-center">Adım Adım Koşu Yarışı Kayıt Formu</h4>
+                        <h:form id="mainForm">
+                            <div class="row">
+                                <p:growl autoUpdate="true" showDetail="true" />
+                                <div class="large-12 columns">
+                                    <br/>
+                                    <p class="c6-text">Kullanıcı Bilgileri &mdash; <em>Log In Information</em></p>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>E-posta &mdash; <em>E-mail</em>
+                                        <p:inputText id="accountEmail" value="#{registerBean.account.email}" required="true" requiredMessage="Lütfen e-mail alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns end">
+                                    <label>E-posta (tekrar) &mdash; <em>E-mail (confirm)</em>
+                                        <p:inputText id="accountReEmail" value="#{registerBean.account.reEmail}"  required="true" requiredMessage="Lütfen e-mail tekrar alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" listener="#{registerBean.checkEmail}" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Kullanıcı Adı &mdash; <em>User name</em>
+                                        <p:inputText id="accountUserName" value="#{registerBean.account.userName}" required="true" requiredMessage="Lütfen kullanıcı adı alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns end">
+                                    <label>Kullanıcı Adı (tekrar) &mdash; <em>User Name (confirm)</em>
+                                        <p:inputText id="accountReUserName" value="#{registerBean.account.reUserName}"  required="true" requiredMessage="Lütfen kullanıcı adı tekrar alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Şifre &mdash; <em>Password</em>
+                                        <p:password id="accountPassword" value="#{registerBean.account.password}" required="true" requiredMessage="Lütfen şifre alanını boş bırakmayınız."/>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns end">
+                                    <label>Şifre (tekrar) &mdash; <em>Password (confirm)</em>
+                                        <p:password id="accountRePassword" value="#{registerBean.account.rePassword}" required="true" requiredMessage="Lütfen şifre tekrar alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:password>
+                                    </label>
+                                </div>
+                                <div class="large-12 columns">
+                                    <p class="c6-text">Kişisel Bilgiler &mdash; <em>Personal Information</em></p>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Ad &mdash; <em>Name</em>
+                                        <p:inputText id="accountName" value="#{registerBean.account.name}" required="true" requiredMessage="Lütfen ad alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Soyad &mdash; <em>Surname</em>
+                                        <p:inputText id="accountSurname" value="#{registerBean.account.surname}" required="true" requiredMessage="Lütfen soyad alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Doğum Tarihi &mdash; <em>Date of Birth</em>
+                                        <p:inputMask id="accountBirthDate" value="#{registerBean.account.tempBirthDate}" mask="99.99.9999"> 
+                                            <p:ajax event="blur" update="accountParentName" oncomplete="document.getElementById('mainForm:accountParentName').focus();"/> 
+                                        </p:inputMask>
+                                        <p:watermark for="accountBirthDate" value="#{text['registerBean.dateFormatForScreen']}" />
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Veli &mdash; <em>Parent</em>
+                                        <p:inputText id="accountParentName" value="#{registerBean.accountProperties['1']}" disabled="#{registerBean.olderThanEighteen?'true':'false'}" required="#{registerBean.olderThanEighteen?'false':'true'}" requiredMessage="Lütfen velinizin adını giriniz.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                        <p:watermark for="accountParentName" value="#{text['registerBean.littleThanEighteen']}" />
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Telefon &mdash; <em>Telephone</em>
+                                        <p:inputMask id="phoneNumber" value="#{registerBean.account.phoneNumber}" mask="(999) 999-9999">
+                                            <p:ajax event="blur" />
+                                        </p:inputMask>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Cinsiyet &mdash; <em>Gender</em></label>
+                                    <p:selectOneRadio id="accountGender" value="#{registerBean.account.gender}" required="true" requiredMessage="Lütfen cinsiyet alanını boş bırakmayınız." style="width:385px;padding: 0px;border: none;">
+                                        <p:ajax event="change" />
+                                        <f:selectItem itemLabel="Kadın (Female)" itemValue="K" />
+                                        <f:selectItem itemLabel="Erkek (Male)" itemValue="E" />
+                                    </p:selectOneRadio>
+
+                                </div>
+                                <div class="large-12 columns">
+                                    <br/>
+                                    <p class="c6-text">Acil durumda aranacak kişi &mdash; <em>Who to call in case of emergency</em></p>
+                                </div>
+                                <div class="large-6 columns">
+                                    <label>Ad &mdash; <em>Name</em>
+                                        <p:inputText id="emergencyName" value="#{registerBean.accountProperties['2']}"  required="true" requiredMessage="Lütfen acil durum için ad alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputText>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns end">
+                                    <label>Cep Telefonu &mdash; <em>Mobile</em>
+                                        <p:inputMask id="emergencyPhoneNumber" value="#{registerBean.accountProperties['3']}" size="20" maxlength="15" mask="(999) 999-9999" required="true" requiredMessage="Lütfen acil durum telefon numarası alanını boş bırakmayınız.">
+                                            <p:ajax event="blur" />
+                                        </p:inputMask>
+                                    </label>
+                                </div>
+                                <div class="large-12 columns">
+                                    <br/>
+                                    <table style="border:none;">
+                                        <tr>
+                                            <td style="padding: 0px; margin: 0px;">
+                                                <p:selectBooleanCheckbox value="#{registerBean.raceRulesAccepted}" style="border:none;padding: 0px; margin: 0px;" />
+                                            </td>
+                                            <td style="padding: 0px; margin: 0px;">
+                                                <p:commandLink styleClass="c6-link" value="Yarış Kuralları" onclick="detailDialogTr.show();"/>'nı kabul ediyorum. &mdash;
+                                                I accept the <p:commandLink styleClass="c6-link" value="Races Rules" onclick="detailDialogEn.show();" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <p:dialog id="detailModalTr"  width="1000" widgetVar="detailDialogTr">                        
+                                        <p class="lead c6-text">Adım Adım Koşu Yarış Kuralları</p>
+                                        <p>AA Koşu yarışları Adım Adım gönüllüleri tarafından organize edilen ücretsiz eğlence yarışlarıdır. Amacı Adım Adım yardımseverlik koşu grubunu tanıtmak, koşucuların yarış deneyimi kazanmasına ve performans artışına destek olmaktır. Birbirimizle değil, kendimizle yarışırız. Kazananlara herhangi bir ödül, madalya, sertifika verilmez. Zaman zaman belirlik kategorilerde düzenli katılımı ve performans artışını teşvik edecek ödüller verilebilir.</p>
+                                        <ul>
+                                            <li>Göğüs numaraları kişiye aittir, başkasına devredilemez.</li>
+                                            <li>Organizasyon tarafından tayin edilen barkodlu göğüs numarasını bitişte göstermeyen ve barkodlu sıra numarası ile birlikte teslim etmeyenlerin sonuçları tutulmaz.</li>
+                                            <li>Yarış parkurun dışına çıkmak veya kestirme yapanlar diskalifiye olurlar.</li>
+                                            <li>Başlangıç/start alanı ve yarış parkurunda bulunan diğer koşucu ve yürüyüşcüleri rahatsız edecek veya zarar verecek hareket ve davranışlarda bulunmak, çevreyi kirletmek organizasyonun ruhuna aykırıdır ve kesinlikle yasaktır.</li>
+                                            <li>Yarışı söz konusu yarış parkuru için organizasyon komitesi tarafından belirtilen yer ve saatte başlar. Belirtilen maksimum süre içinde bitiremeyenlerin sonuçları genel sonuçlarda yer almaz.</li>
+                                            <li>16 yaşından küçük olanlar velisi / öğretmeni eşliğinde yarışa katılabilirler.</li>
+                                            <li>Kişisel eşyalar start alanında bırakılmaz, bırakılırsa kişinin sorumluluğundadır.</li>
+                                            <li>Bu yarışlarda ilk yardım hizmeti verilmediği bilinciyle hareket ediniz.</li>
+                                        </ul>
+                                    </p:dialog>
+                                    <p:dialog id="detailModalEn"  width="1000" widgetVar="detailDialogEn">
+                                        <p class="lead c6-text">Race Rules for Adim Adim Fun Run</p>
+                                        <p>The Adım Adım Fun Run is a free-of-charge fun run organised by Adım Adım volunteers. Its aim is to introduce the Adım Adım charity running group to other runners/walkers, and to help participants gain race experience and improve their running performance. We compete with ourselves, not with each other. There are no medals, certificates or other prizes for winners. From time to time, there may be surprise prizes to motivate regular participation and performance improvement.</p>
+                                        <ul>
+                                            <li>Barcoded bib numbers are personal to you and not transferable to others.</li>
+                                            <li>You must hand in your barcoded bib number and barcoded place number at the end of the race to the race officials otherwise your results will not be listed.</li>
+                                            <li>You must follow the designated race course announced by the organisers. Getting off the track or making shortcuts will disqualify you from the race.</li>
+                                            <li>You must be respectful of other runners/walkers in the start/finishing area and the race course and must not leave any litter behind.</li>
+                                            <li>Each race is held at the course and place announced by the race organisers. Finishing results later than the maximum cut-off time will not be be listed in the race results.</li>
+                                            <li>Persons under the age of 16 must be accompanied by guardians / teachers.</li>
+                                            <li>Do not leave any personal belongings in the start/finish area. If you do so, it will be at your own risk.</li>
+                                            <li>Be aware that no first aid services are provided during these races.</li>
+                                        </ul>
+                                    </p:dialog>
+                                    <table style="border:none;">
+                                        <tr>
+                                            <td style="padding: 0px; margin: 0px;">
+                                                <p:selectBooleanCheckbox value="#{registerBean.riskAccepted}" style="border:none;padding: 0px;margin: 0px;" />
+                                            </td>
+                                            <td style="padding: 0px; margin: 0px;">
+                                                <p:commandLink onclick="riskDialogTr.show()" styleClass="c6-link" value="Risk Kabul Beyannamesi" />'ni kabul ediyorum. &mdash;
+                                                <em>I have read and accept the <p:commandLink onclick="riskDialogEn.show()" styleClass="c6-link" value="Legal Waiver" />.</em>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <p:dialog id="riskDialogTr" width="1000" widgetVar="riskDialogTr">                        
+                                        <p class="lead c6-text">Risk Kabul Beyannamesi</p>
+                                        <p>Katılımcı olarak, doğa sporlarında risklerin tamamen yok edilemeyeceğini, herhangi bir ilkyardım hizmetinin bulundurulmadığını, güvenliğinin maksimum olabilmesi için yarışma organizasyonunun aktardığı ve duyurduğu kurallara tamamen uymam gerektiğini kabul ediyorum. 2. Yarış halka açık alanlarda yapılacağı için katılımcı olarak genel toplum kurallarına uymakla yükümlü olduğumu kabul ediyorum. 3. Organizasyon kuralları dışında davranmak, parkur dışı araziye girmek, yarış sırasında 3. şahısların veya kurumların can ve mal güvenliğine zarar vermek yasaklanmıştır ve tamamen benim sorumluluğumdadır, kurallara uymamam halinde yarış organizasyon komitesi ve sponsorlar sorumlu olamaz. Yarış organizasyonunda, parkur içinde veya yakınında herhangi bir sağlık hizmeti, sağlık kuruluşu, doktor, ambulans, hastane bulunmadığını biliyorum. 4. Adım Adım Koşu yarışları arazi koşullarında yapılan fiziksel aktivitelerdir. Doktor tarafından fiziksel aktivite kısıtlaması getirilmiş kişilerin doktorlarına danışması önerilir. Aerobik efor harcamasında sakınca olan, sürekli gözetim altında olması gereken, sara rahatsızlığı olan kişilerin katılması kendi sağlıkları açısından sakıncalıdır. 3 aydan az hamile olan kadınların kontrollü ilerlemek şartı ile katılması mümkündür. 3 aydan fazla hamile olan kadınların katılması sakıncalıdır. Bu yarışa katılmam için tıbbi bakımdan hiçbir engelim, rahatsızlığım (kalp, solunum yetmezliği, astım, kas eklem rahatsızlıkları vs.) olmadığını, bu koşu için fiziki olarak yeterli olduğumu beyan ederim. 5. İmzaladığım bu belge ile ben, kendi adıma ve varislerim, yöneticilerim, şahsi ve hukuki temsilcilerim adına; Adım Adım Koşu yarışları sırasında, yarış öncesi ve sonrası aktiviteler esnasında başıma gelebilecek herhangi bir sakatlık, kayıp veya hasar durumunda organizatörlerin, organizasyonda görevli kişilerin, sponsorların, organizasyon temsilcilerinin sorumlu tutulmayacağını, her türlü sorumluluğun şahsıma ait olduğunu; Yarışma Katılım Koşulları’nı okuyup kabul ettiğimi; bu yarışa katılmam için tıbbi bakımdan hiçbir engelim olmadığını, bu koşu için fiziki olarak yeterli olduğumu, Kabul ve Beyan ederim.<br/>
+                                            (Kayıt sırasında 18 yaşından küçük olanların, yasal velisi bu formu imzalaması gerekmektedir)</p>
+                                    </p:dialog>
+                                    <p:dialog id="riskDialogEn" width="1000" widgetVar="riskDialogEn">                          
+                                        <p class="lead c6-text">Legal Waiver and Release Form</p>
+                                        <p>I am fully aware of and appreciate that training for and running or speed walking may result in accidents or serious injury. I am voluntarily participating in the Adım Adım Fun Run with complete knowledge of the associated risks, and I agree to accept responsibility for all risks of injury. By signing this Waiver and Release, I declare that I am medically able and capable of participating in a run or speed walk up to 10k. I agree to independently consult my physician in the event of any injuries or medical questions arising from or related to my participation in the Adım Adım Fun Run. I also acknowledge that Adım Adım does not provide any medical assistance or first aid help in case of injury or illness and that I assume full and sole responsibility for my own medical expenses and that I am responsible for any and all medical expenses on my behalf. I have carefully read this Waiver and Release and fully understand its contents. I agree to comply fully with the Adım Adım Fun Run rules, and understand that it is forbidden to disturb or otherwise harm any other participants or others during the race, and to abide by any general rules of conduct on the race course.  If I am under 18 years of age at the time of registration, my parents or legal guardians have fully read, understand, and consented to the terms of this Waiver and Release and by signature below authorize my participation. By signing this waiver, I have indicated that I have read, understand and agree to the conditions and commitment of the Waiver and Release above.</p>
+                                    </p:dialog>
+                                </div>
+                                <div class="large-12 columns">
+                                    <br/>
+                                    <p class="text-center">
+                                        <strong>Not:</strong> Buraya kayıt olmakla birlikte sadece Adım Adım Koşu'ya kayıt oluyorsunuz.<br/>
+                                        Yardımseverlik koşu grubu Adım Adım’a üye olmak için <a href="http://adimadim.org/uyelik-formu/" target="blank" class="c6-link">burayı</a> tıklayınız.<br/>
+                                        &mdash;<br/>
+                                        <em><strong>PS:</strong> By registering here, you only register for Adım Adım Fun Run.<br/>
+                                            If you would like to join charity runners Adım Adım, you should click <a href="http://adimadim.org/uyelik-formu/" target="blank" class="c6-link">here</a>.
+                                        </em>
+                                    </p>
+                                </div>
+                                <div class="large-12 columns">
+                                    <br/><br/>
+                                    <p:commandButton id="saveButton" value="Gönder - Submit" actionListener="#{registerBean.startSignUpOperation}" update=":mainForm" styleClass="small" ></p:commandButton>
+                                </div>
+                            </div>
+                            <p:dialog header="Bilgi" id="alreadyRegisteredDialog" closable="true" widgetVar="alreadyRegisteredDialog" width="700" height="250">
+                                Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
+                                <br/><br/>
+                                Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden kayıt yaptırmış ve şifre oluşturmuş olduğunuzu gördük.
+                                <br/>
+                                Göğüs numarası almak için tekrardan kayıt yaptırmanıza gerek yok. Aynı göğüs numarasını kullanmaya devam edebilirsiniz.
+                                <br/>
+                                Göğüs numarasını bastırmak istiyorsanız, lütfen <a href="#{request.contextPath}/dagi/barcode.jsf" style="font-weight: bold;" class="c6-link">tıklayınız</a>
+                                <br/><br/>
+                                Teşekkürler
+                            </p:dialog>
+                            <p:dialog header="Bilgi" id="completeRegistrationDialog" closable="true" widgetVar="completeRegistrationDialog" width="700" height="250">
+                                Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
+                                <br/><br/>
+                                Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden adım adım koşuya kayıt yaptırdığınızı gördük.
+                                <br/>Yarış sistemimizi daha iyi bir hale getirmek için bu siteyi ve kayıt sistemini oluşturduk.
+                                <br/>Lütfen daha önceki yarış bilgilerinize ulaşabilmek ve istediğiniz zaman kendi göğüs numaranızı
+                                <br/>sistemde otomatik olarak oluşturabilmek için, sadece bu mail adresini kullanarak bilgilerinizi tamamlayınız ve kendinize şifre oluşturunuz.
+                                <br/><br/>Teşekkürler
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                    <hr class="end-bar c6-background" />
+                </div>
+                <script>
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-51572429-1', 'aakosu.org');
+                    ga('require', 'displayfeatures');
+                    ga('send', 'pageview');
+
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

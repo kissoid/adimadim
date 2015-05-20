@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="${request.contextPath}/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+                <!-- 7 - Sorular -->
+                <div id="faq" class="row page">
+                    <img src="#{request.contextPath}/resource/image/faq-icon.png" class="page-icon" />
+                    <div class="large-10 large-centered columns">
+                        <h4 class="page-header c7-text">Sıkça Sorulan Sorular</h4>
+                        <dl>
+                            <dd>
+                                <h5 style="color: #F58026">Kayıt</h5>
+                                <div id="faq1" class="content">
+                                    <p class="c7-text">İlk kez kayıt olacaksanız:</p>
+                                    <p><a href="#{request.contextPath}/dagi/join.jsf" class="c7-link">Kayıt ol</a> bölümüne gidin, kayıt ve kullanıcı bilgilerinizi girin, şifrenizi belirleyin. Belirttiğiniz e-posta adresine aktivasyon maili gelecek. Ana sayfadaki <a href="#{request.contextPath}/dagi/barcode.jsf" class="c7-link">Göğüs No Al</a> bölümünden barkodlu göğüs numaranızı indirip bastırın. (Kendiniz basamıyorsanız bir arkadaşınıza iletebilirsiniz basması için. Göğüs numaranızı mutlaka her yarışa getirmelisiniz. Barkodlu göğüs numaranız yok ise sonuçlarınız yayınlanamayacaktır. Bir kere kayıt olduktan sonra her ay sadece göğüs numaranızı tekrar basıp getirmeniz yeterli olacak; yeniden kayıt olmanıza gerek yok! 
+                                    </p>
+                                    <p class="c7-text">Daha önce kayıt olduysanız:</p>
+                                    <p>Kayıt bölümünden sistemdeki mevcut kayıt bilgilerinizi kontrol edip güncelleyiniz. E-posta adresi kullanıcı adı olacağı için kişisel e-posta adresinizi belirtiniz. Kullanıcı bilgilerinizi girip şifre belirledikten sonra göğüs numaranızı indirip basınız. Barkodlu göğüs numaranızı yarışa getirmeyi unutmayın! 
+                                    </p>
+                                    <p>DİKKAT: Daha önce göğüs numaranız başka bir kişinin eposta adresine geliyor idiyse, yeniden kayıt olmanız gerekecek. </p>
+                                    <p>DİKKAT: Daha önce birkaç kez kayıt olup farklı göğüs numaraları aldıysanız, sistemde sadece en son göğüs numaranız görünecek.</p>
+                                    <p class="c7-text">Takım maratonuna kayıdınızı yaptıracaksanız: </p>
+                                    <p><a href="mailto:takimmaratonu@gmail.com" class="c7-link">takimmaratonu@gmail.com</a> adresinden bize ulaşınız.</p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Ulaşım</h5>
+                                <div id="faq2" class="content">
+                                    <p class="c7-text">Belgrad Ormanı’na nasıl gelebilirim?</p>
+                                    <p>Yarış alanına kendi imkanlarınızla gelmeniz gerekecek. Ancak Adım Adım’ın Cumartesi antrenmanlarında oldugu gibi aracı olan Adım Adımcılar sabah saat 7:30'ta 4 Levent Sabancı Kuleleri otoparkı karşısındaki sokakta buluşup aracı olmayanları imkanları dahilinde ormana götürüyor. <a href="#{request.contextPath}/dagi/location.jsf" class="c7-link">Harita için tıklayınız.</a>
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Ücret</h5>
+                                <div id="faq3" class="content">
+                                    <p class="c7-text">Herhangi bir ücret ödenmesi gerekir mi?</p>
+                                    <p>Hayır, Adım Adım Koşu yarışı herkese açık ve ücretsizdir. Ancak Belgrad Ormanı'na giriş ücretlidir. (Otomobil 11 TL)
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Sıralama ve derece</h5>
+                                <div id="faq4" class="content">
+                                    <p class="c7-text">Sıralama ve derecelendirme nasıl yapılıyor?</p>
+                                    <p>Sonuçlar yaş grubu ayırımı yapmaksızın kadın ve erkekler için ayrı ayrı sıralanıyor. Yarış sonuçları web sitesinde duyurulur, ayrıca her yarışmacının kendi sonucu mail adresine gönderilir. 
+                                    </p>
+                                    <p>Takım Maratonları’nda ‘Şirket’, ‘Kurum’ ve ‘Bağımsız’ kategorilerinde sıralama yapılır.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Yarış Kuralları</h5>
+                                <div id="faq5" class="content">
+                                    <p class="c7-text">Yarış kuralları nedir?</p>
+                                    <p>
+                                        Azami süre sınırı 60 dakikadır.<br/>
+                                        Parkurda kestirme veya geri dönüş yapılması diskalifiye nedenidir.<br/>
+                                        Barkodlu göğüs numarası kişiye özeldir, başkası tarafından kullanılamaz.<br/>
+                                        Barkodlu göğüs numarası olmayan koşucular yarışa katılabilir ancak sonuçları yayınlanamaz.<br/>
+                                        Bitiş çizgisinde göğüs numarası mutlaka görünür olmalı.<br/>
+                                        Bitişte verilen sıra numarası ve göğüs numarası kayıt masasına teslim edilmeli/okutulmalı.<br/>
+                                        Parkurda başka koşuculara veya yürüyüşcülere saygılı olalım, çevreyi temiz tutalım.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Ödül/Madalya</h5>
+                                <div id="faq6" class="content">
+                                    <p>Adım Adım Koşu, Adım Adım Oluşumu’nun gönüllü ekipleri tarafından organize edilen ve yürütülen bir eğlence yarışıdır, herhangi bir ödül veya madalya verilmez. Zaman zaman sponsorlarımızın katkısıyla çeşitli kategorilerde sürpriz ödüllerimiz olabilir.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Adım Adım Oluşumu</h5>
+                                <div id="faq7" class="content">
+                                    <p class="c7-text">Adım Adım Oluşumu ile Adım Adım Koşu ilişkisi nedir?</p>
+                                    <p>Adım Adım Koşu, Türkiye’nin ilk ve en yaygın yardımseverlik koşu grubu olan Adım Adım Oluşumu'nun bir organizasyonudur. Adım Adım Oluşumu’na <a href="http://www.adimadim.org/uyelik-formu/" class="c7-link">üye olun</a>, bizlerle “İyilik Peşinde Koş”un!
+                                    </p>
+                                    <p class="c7-text">Adım Adım’ın başka organizasyonları da var mı?</p>
+                                    <p>Evet. Adım Adım üyeleri her cumartesi günü Belgrad Ormanı’nda toplu antrenman için toplanıyorlar. Adım Adım her yıl, İstanbul Maratonu ve Runtalya Maraton organizasyonlarında toplu yardımseverlik koşusu düzenler, desteklediği STKlar için bağış kampanyası düzenler. Ayrıca zaman zaman bilgilendirme veya sosyalleşme amacıyla zaman zaman buluşmalar ve partiler düzenler. 
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Çaylak Programı</h5>
+                                <div id="faq8" class="content">
+                                    <p class="c7-text">Çaylak Programı nedir?</p>
+                                    <p>Uzun mesafe koşu deneyimi olmayan ve Adım Adım ile birlikte İstanbul Maratonu veya Antalya’daki Runtalya Maratonu organizasyonları çerçevesinde yardımseverlik koşusu yapmak isteyenler için Adım Adım üyelerinin gönüllü koçluk programıdır. Çaylaklar programına dahil olan koşucular her hafta cumartesi günü gönüllü antrenörler ve koçlar eşliğinde antrenman yapar. Çarşamba akşamları Anadolu yakasında antrenman buluşmaları da var. Bilgi için: <a href="mailto:caylaklar@adimadim.org" class="c7-link">caylaklar@adimadim.org</a>
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Bağış</h5>
+                                <div id="faq9" class="content">
+                                    <p class="c7-text">AA Koşu yarışlarında bağış toplanıyor mu?</p>
+                                    <p>Hayır; şimdilik Adım Adım Oluşumu sadece İstanbul Maratonu ve Antalya Maratonu organizasyonlarında toplu bağış kampanyası düzenlemektedir.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Takım Maratonu</h5>
+                                <div id="faq10" class="content">
+                                    <p>2012'den beri belirli aralıklarda AA Koşu dahilinde "Takım Maratonu" düzenleniyor. 7 kişilik şirket, üniversite, okul, STK, kulüp veya bağımsız takımlar kuruluyor, her takım üyesi Belgrad Ormanı Neşet Suyu parkurundaki 6 kilometrelik parkurunu koşuyor, daha sonra 7x6k=42k, yani yaklaşık maraton mesafesi için toplam süreler ilan ediliyor, "Şirket Takımları", “STK/Okul Takımları", "Bağımsız Takımlar" kategorilerinde sıralamalar ilan ediliyor. Bireysel koşularda olduğu gibi herhangi bir madalya, ödül verilmiyor. Amaç, takım olarak birlikte yarışmayı öğrenmek. - Yarış sabahı takım üyeleri tamamlanamaz ise, geri kalanlar bireysel olarak yarışabilir. Takımın üyelerinin her biri 6 kilometrelik parkuru azami 60 dakikalık süre içinde bitirmek zorundadır.
+                                    </p>
+                                    <p>Dikkat: Her takım üyesi bireysel kayıdını yapması ve göğüs numarasını alması gerekir! Takım sonucunun alınabilmesi için 7 takım üyesinin mutlaka start alması ve yarışı azami 60  dakika içinde bitirmesi gerekir.
+                                    </p>
+                                    <p>Takım maratonu takım kayıdı “takım kaptanı” tarafından yapılır. Takım kaptanı aşağıdaki mail adresine takım listesini gönderir: 
+                                        <br/>
+                                        <ul class="indented">
+                                            <li>Takımın Adı,</li>
+                                            <li>Klasman (Şirket - STK/Okul - Bağımsız),</li>
+                                            <li>7 Takım Üyesinin Adı/Soyadı, Göğüs Numarası</li>
+                                        </ul>
+                                    </p>
+                                    <p>
+                                        <a href="mailto:takimmaratonu@gmail.com" class="c7-link">takimmaratonu@gmail.com</a>
+                                    </p>
+                                    <p>Takım kayıtları yarıştan önceki cuma öğlen saat 12’e  kadar tamamlanmak zorunda!
+                                    </p>
+                                    <p class="c7-text">Takım Maratonu hangi yarışlarda düzenleniyor?</p>
+                                    <p>Takım Maratonu; Şubat, Haziran ve Ekim aylarında AA Koşu yarışlarının bir parçası olarak 4 ayda bir düzenleniyor.
+                                    </p>
+                                    <p class="c7-text">Takım Maratonu düzenlenen aylarda bireysel olarak da katılabilir miyim?</p>
+                                    <p>Evet.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">İlk Yardım</h5>
+                                <div id="faq11" class="content">
+                                    <p class="c7-text">İlk yardım hizmeti var mı?</p>
+                                    <p>Hayır, dünyadaki tüm benzer kısa mesafe eğlence koşularında olduğu gibi AA Koşu'da da ilk yardım hizmeti verilmemektedir. Her katılımcı gerekli doktor muayenesini yaptırmaktan kendi sorumludur.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Güvenlik</h5>
+                                <div id="faq12" class="content">
+                                    <p class="c7-text">Kişisel eşyalarımı start alanına bırakabilir miyim?</p>
+                                    <p>Hayır, lütfen start alanına çantalarınızı veya herhangi bir değerli eşyanızı bırakmayınız. Hırsızlık olabiliyor.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Çevreye Saygı</h5>
+                                <div id="faq13" class="content">
+                                    <p class="c7-text">Başka nelere dikkat etmeliyim?</p>
+                                    <p>Yarış öncesi, sırası ve sonrasında ormandaki diğer kişilere saygılı davranalım, onların da ormandan bizim kadar keyif alma hakları var! Ayrıca ormanın doğal çevresine zarar vermemek ve kirletmemek görevimizdir.
+                                    </p>
+                                </div>
+                            </dd>
+                            <dd>
+                                <h5 style="color: #F58026">Destek</h5>
+                                <div id="faq14" class="content">
+                                    <p class="c7-text">Ben de gönüllü olarak destek verebilir miyim?</p>
+                                    <p>Tabii, çok memnun oluruz. Yarış, kayıt, fotoğraf, web, ikram, ilkyardım, tanıtım alanlarında arasıra veya düzenli destek vermek istiyorsanız lütfen bize yazın: <a href="mailto:aakosu@adimadim.org" class="c7-link">aakosu@adimadim.org</a>
+                                    </p>
+                                    <p class="c7-text">Sponsor olarak AA Koşu’ya destek olabilir miyim?</p>
+                                    <p>Evet, çeşitli sponsorluk kategorilerimiz var. Bilgi için lütfen bize yazın: <a href="mailto:info@adimadim.org" class="c7-link">info@adimadim.org</a>
+                                    </p>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <hr class="end-bar c7-background"/>
+                </div>
+                <script>
+                    (function(i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function() {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-51572429-1', 'aakosu.org');
+                    ga('require', 'displayfeatures');
+                    ga('send', 'pageview');
+
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

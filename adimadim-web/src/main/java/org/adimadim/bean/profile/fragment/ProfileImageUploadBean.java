@@ -209,7 +209,7 @@ public class ProfileImageUploadBean implements Serializable {
         accountService.saveAccount(account);
         AccountAlbum accountAlbum = accountPictureService.getProfileAlbumByAccountId(account.getAccountId());
         AccountAlbumPicture accountAlbumPicture = new AccountAlbumPicture();
-        accountAlbumPicture.getAlbum().setAlbumId(accountAlbum.getAlbumId());
+        //accountAlbumPicture.getAlbum().setAlbumId(accountAlbum.getAlbumId());
         accountAlbumPicture.setPictureName(fileName);
         accountPictureService.saveAccountAlbumPicture(accountAlbumPicture);
         accountBean.setAccount(account);

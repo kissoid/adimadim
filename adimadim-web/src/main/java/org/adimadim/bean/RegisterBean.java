@@ -4,10 +4,6 @@
  */
 package org.adimadim.bean;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.DocumentException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -17,34 +13,33 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
 import org.adimadim.bean.temp.AccountUpdateBean;
+import org.adimadim.bean.validator.RegisterBeanValidator;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountAlbum;
 import org.adimadim.db.entity.AccountProperty;
-import org.adimadim.db.entity.AccountPropertyPK;
-import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
+import org.adimadim.service.exception.AccountException;
 import org.adimadim.util.ConvertionUtil;
-import org.adimadim.bean.validator.RegisterBeanValidator;
-import org.adimadim.util.ChestNumberUtil;
 import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author Adem
  */
 @Named(value = "registerBean")
-@ConversationScoped
+@SessionScoped
 public class RegisterBean implements Serializable {
 
     @Inject
@@ -52,13 +47,13 @@ public class RegisterBean implements Serializable {
     @Inject
     private AccountBean accountBean;
     private boolean riskAccepted = false;
+    private boolean raceRulesAccepted = false;
     private Account account = new Account();
     private Map accountProperties = new HashMap();
     private boolean olderThanEighteen = true;
-    private List<AccountAlbum> accountAlbumList  = new ArrayList<>();
+    private List<AccountAlbum> accountAlbumList = new ArrayList<>();
     @Inject
     private AccountUpdateBean accountUpdateBean;
-
 
     public RegisterBean() {
         AccountAlbum accountAlbum = new AccountAlbum();
@@ -68,21 +63,36 @@ public class RegisterBean implements Serializable {
         accountAlbumList.add(accountAlbum);
     }
 
-    public void checkEmail(AjaxBehaviorEvent event){
+    private void listToPropertyMap(Account account) {
+        accountProperties.clear();
+        if (account.getAccountPropertyList() == null) {
+            return;
+        }
+        for (AccountProperty accountProperty : account.getAccountPropertyList()) {
+            accountProperties.put(accountProperty.getPropertyId(), accountProperty.getPropertyValue());
+        }
+    }
+
+    public void checkEmail(AjaxBehaviorEvent event) {
         try {
-            if(account.getEmail().trim().equals("")){
+            if (account.getEmail() == null || account.getEmail().trim().equals("")) {
                 return;
             }
-            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
-            if(tempAccount != null/* && tempAccount.getPassword().trim().equals("")*/){
-                accountUpdateBean.setAccount(tempAccount);
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/temp/accountUpdate.jsf");
+            if (!account.getEmail().equals(account.getReEmail())) {
+                FacesMessageUtil.createFacesMessage("Uyarı", "Girilen mailler birbirinden farklı", FacesMessage.SEVERITY_ERROR);
+                return;
+            }
+            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+            if (tempAccount != null) {
+                RequestContext.getCurrentInstance().update("mainForm");
+                RequestContext.getCurrentInstance().execute("alreadyRegisteredDialog.show();");
+                account = new Account();
             }
         } catch (Exception ex) {
             Logger.getLogger(RegisterBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public boolean isOlderThanEighteen() {
         try {
             if (account.getTempBirthDate() == null) {
@@ -101,58 +111,66 @@ public class RegisterBean implements Serializable {
         boolean registerCompleted = false;
         try {
             if (riskAccepted == false) {
-                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.riskKabulMessage"));
+                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.raceRulesAcceptMessage"));
             }
-            if(account.getTempBirthDate() == null){
-                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.birthDateMessage"));
+            if (raceRulesAccepted == false) {
+                throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
             RegisterBeanValidator.validateAccountForSignUp(account);
-            account.setName(ConvertionUtil.firstCharUpperCase(account.getName()));
-            account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
-            account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.dateFormat")));
-            account.setAccountPropertyList(propertyMapToList());
-            account.setAccountAlbumList(accountAlbumList);
-            account.setChestNumber(accountService.getNextChestNumber());
+            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+            if (tempAccount != null) {
+                String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
+                throw new AccountException(message);
+            }
+            prepareAccount();
             accountService.signUp(account);
             registerCompleted = true;
-            accountBean.setAccount(account);
-            sendChestNumber(account);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
-            //FacesMessageUtil.createFacesMessage(ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCreatedMessage"), null, FacesMessage.SEVERITY_INFO);
-            /*accountBean.setAccount(account);
-            accountBean.startSignInOperation();*/
+            //accountBean.setAccount(account);
+            sendActivationLink(account);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Kayıt işleminiz tamamlanmıştır", FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Aktivasyon linkiniz mail adresinize gönderilmiştir.", FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Bilgi", "Lütfen spam klasörünü de kontrol etmeyi unutmayınız.", FacesMessage.SEVERITY_INFO);
+            account = new Account();
+            //sendChestNumber(account);
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
         } catch (AccountException ex) {
-            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCouldNotCreateMessage");
-            FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
+            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
-            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.accountCouldNotCreateMessage");
-            if(registerCompleted){
-                message = ResourceBundle.getBundle("org.adimadim.bean/i18n/text").getString("registerBean.mailCouldNotSentMessage");
+            String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.accountCouldNotCreateMessage");
+            if (registerCompleted) {
+                message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.mailCouldNotSentMessage");
             }
-            FacesMessageUtil.createFacesMessage(message, null, FacesMessage.SEVERITY_ERROR);
+            FacesMessageUtil.createFacesMessage("Hata", message, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
-    private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException{
-        Integer chestNumber = account.getChestNumber();
-        String name = (account.getName() + " " +account.getSurname());
-        String receiver = account.getEmail();
-        String subject = "AdimAdim Kosu Gogus Numarasi";
-        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
-        String fileName = "GogusNo.pdf";
-        String fileFormat = "application/pdf";
-        ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);
-        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
+
+    private void prepareAccount() throws Exception {
+        account.setSecretKey(UUID.randomUUID().toString());
+        account.setName(ConvertionUtil.firstCharUpperCase(account.getName()));
+        account.setSurname(ConvertionUtil.firstCharUpperCase(account.getSurname()));
+        account.setBirthDate(ConvertionUtil.stringToDate(account.getTempBirthDate(), ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.dateFormat")));
+        account.setAccountPropertyList(propertyMapToList());
+        if (account.getAccountAlbumList() == null) {
+            account.setAccountAlbumList(accountAlbumList);
+        }
     }
-    
+
+    private void sendActivationLink(Account account) throws MessagingException {
+        String receiver = account.getEmail();
+        String subject = "Adimadim kosu aktivasyon linki";
+        String link = "http://www.aakosu.org/ActivationServlet?key=" + account.getSecretKey();
+        String content = "Kaydınızı aktive etmek için lütfen aşağıdaki linke tklayınız<br/>";
+        content += "<a href='" + link + "' >" + link + "</a>";
+        EmailUtil.sendMail(EmailUtil.SENDER_INFO, receiver, subject, content);
+    }
+
     private List<AccountProperty> propertyMapToList() {
         List<AccountProperty> accountPropertyList = new ArrayList<AccountProperty>();
         Iterator iterator = accountProperties.entrySet().iterator();
         while (iterator.hasNext()) {
             AccountProperty accountProperty = new AccountProperty();
-            accountProperty.setAccountPropertyPK(new AccountPropertyPK());
             Map.Entry entry = (Map.Entry) iterator.next();
-            accountProperty.getAccountPropertyPK().setPropertyId(Integer.parseInt(entry.getKey().toString()));
+            accountProperty.setPropertyId(Integer.parseInt(entry.getKey().toString()));
             accountProperty.setPropertyValue(entry.getValue().toString());
             accountPropertyList.add(accountProperty);
         }
@@ -166,11 +184,11 @@ public class RegisterBean implements Serializable {
     public void setAccountAlbumList(List<AccountAlbum> accountAlbumList) {
         this.accountAlbumList = accountAlbumList;
     }
-    
+
     public void setOlderThanEighteen(boolean olderThanEighteen) {
         this.olderThanEighteen = olderThanEighteen;
     }
-    
+
     public Account getAccount() {
         return account;
     }
@@ -194,4 +212,13 @@ public class RegisterBean implements Serializable {
     public void setAccountProperties(Map accountProperties) {
         this.accountProperties = accountProperties;
     }
+
+    public boolean isRaceRulesAccepted() {
+        return raceRulesAccepted;
+    }
+
+    public void setRaceRulesAccepted(boolean raceRulesAccepted) {
+        this.raceRulesAccepted = raceRulesAccepted;
+    }
+
 }

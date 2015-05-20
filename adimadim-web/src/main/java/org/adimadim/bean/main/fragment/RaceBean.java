@@ -34,20 +34,25 @@ public class RaceBean implements Serializable {
     private RaceService raceService;
     private Race selectedRace;
     private Race newRace = new Race();
-    private List<Race> raceList = new ArrayList<Race>();
-    private List<RaceScore> raceScoreList = new ArrayList<RaceScore>();
+    private List<Race> raceList;
+    private List<RaceScore> raceScoreList;
+    private List<RaceScore> raceScoreWomenList;
+    private List<RaceScore> raceScoreMenList;
     private Team selectedTeam;
-    private Team newTeam = new Team();
-    private List<Team> teamList = new ArrayList<Team>();
-    private List<RaceScore> teamScoreList = new ArrayList<RaceScore>();
-    private List<TeamMember> teamMemberList = new ArrayList<TeamMember>();
+    private Team newTeam;
+    private List<Team> teamList;
+    private List<RaceScore> teamScoreList;
+    private List<TeamMember> teamMemberList;
 
     public RaceBean() {
     }
 
     @PostConstruct
     private void init() {
+        raceScoreWomenList = new ArrayList<RaceScore>();
+        raceScoreMenList = new ArrayList<RaceScore>();
         retrieveAllRaces();
+        //retriveRaceScoreByRaceIdTemp();
     }
 
     public void retrieveAllRaces() {
@@ -57,13 +62,23 @@ public class RaceBean implements Serializable {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
     }
-
-    public void retriveRaceScoreByRaceId() {
+    
+    public void retriveSelectedRaceScores() {
         try {
             if (selectedRace == null) {
                 throw new Exception("Lütfen bir yarış seçiniz.");
             }
             raceScoreList = raceService.retrieveRaceScoreByRaceId(selectedRace.getRaceId());
+            raceScoreWomenList.clear();
+            raceScoreMenList.clear();
+            for (RaceScore score : raceScoreList) {
+                if (score.getAccount().getGender().equals("E")) {
+                    raceScoreMenList.add(score);
+                }
+                if (score.getAccount().getGender().equals("K")) {
+                    raceScoreWomenList.add(score);
+                }
+            }
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -269,4 +284,22 @@ public class RaceBean implements Serializable {
     public void setTeamMemberList(List<TeamMember> teamMemberList) {
         this.teamMemberList = teamMemberList;
     }
+
+    public List<RaceScore> getRaceScoreWomenList() {
+        return raceScoreWomenList;
+    }
+
+    public void setRaceScoreWomenList(List<RaceScore> raceScoreWomenList) {
+        this.raceScoreWomenList = raceScoreWomenList;
+    }
+
+    public List<RaceScore> getRaceScoreMenList() {
+        return raceScoreMenList;
+    }
+
+    public void setRaceScoreMenList(List<RaceScore> raceScoreMenList) {
+        this.raceScoreMenList = raceScoreMenList;
+    }
+    
+    
 }
