@@ -7,11 +7,12 @@
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
     @NamedQuery(name = "Team.findByTeamId", query = "SELECT t FROM Team t WHERE t.teamPK.teamId = :teamId"),
     @NamedQuery(name = "Team.findByRaceId", query = "SELECT t FROM Team t WHERE t.teamPK.raceId = :raceId"),
-    @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")})
+    @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")
+})
 public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -37,6 +39,9 @@ public class Team implements Serializable {
     @Size(max = 50)
     @Column(name = "team_name", length = 50)
     private String teamName;
+    @ManyToOne(optional=false)
+    @JoinColumn(name = "team_type_id", referencedColumnName = "team_type_id", insertable = false, updatable = false)
+    private TeamType teamType;
 
     public Team() {
     }
@@ -63,6 +68,14 @@ public class Team implements Serializable {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public TeamType getTeamType() {
+        return teamType;
+    }
+
+    public void setTeamType(TeamType teamType) {
+        this.teamType = teamType;
     }
 
     @Override

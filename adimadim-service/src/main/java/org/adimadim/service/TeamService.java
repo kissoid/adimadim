@@ -22,7 +22,7 @@ public class TeamService {
     @Inject 
     private TeamFacade teamFacade;
 
-    public List<Team> retrieveAllTeamsByRaceId(Integer raceId) throws Exception {
+    public List<Team> retrieveTeamsByRaceId(Integer raceId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
         return teamFacade.findAllByNamedQuery("Team.findAllByAceId", map);
