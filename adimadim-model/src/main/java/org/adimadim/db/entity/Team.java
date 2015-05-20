@@ -6,6 +6,7 @@ package org.adimadim.db.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -83,19 +84,21 @@ public class Team implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (teamPK != null ? teamPK.hashCode() : 0);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.teamPK);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Team)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Team other = (Team) object;
-        if ((this.teamPK == null && other.teamPK != null) || (this.teamPK != null && !this.teamPK.equals(other.teamPK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Team other = (Team) obj;
+        if (!Objects.equals(this.teamPK, other.teamPK)) {
             return false;
         }
         return true;
@@ -103,7 +106,9 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.Team[ teamPK=" + teamPK + " ]";
+        return "Team{" + "teamPK=" + teamPK + '}';
     }
+
+
     
 }

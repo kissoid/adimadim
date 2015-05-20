@@ -7,7 +7,6 @@ package org.adimadim.db.entity;
 import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -34,13 +33,13 @@ public class TeamMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TeamMemberPK teamMemberPK;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     @JoinColumns({
         @JoinColumn(name = "race_id", referencedColumnName = "race_id", insertable = false, updatable = false),
         @JoinColumn(name = "team_id", referencedColumnName = "team_id", insertable = false, updatable = false)
     })
     private Team team;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", insertable = false, updatable = false)
     private Account account;
     
@@ -51,7 +50,7 @@ public class TeamMember implements Serializable {
         this.teamMemberPK = teamMemberPK;
     }
 
-    public TeamMember(int teamId, int raceId, String accountId) {
+    public TeamMember(Integer teamId, Integer raceId, Integer accountId) {
         this.teamMemberPK = new TeamMemberPK(teamId, raceId, accountId);
     }
 
