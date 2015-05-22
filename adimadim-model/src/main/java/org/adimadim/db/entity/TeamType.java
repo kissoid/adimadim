@@ -16,8 +16,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,15 +34,12 @@ public class TeamType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "team_type_id", nullable = false)
     private Integer teamTypeId;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(nullable = false, length = 50)
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamTypeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teamType")
     private List<Team> teamList;
 
     public TeamType() {
@@ -106,7 +101,7 @@ public class TeamType implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.TeamType[ teamTypeId=" + teamTypeId + " ]";
+        return "com.raven.otodialog.mavenproject1.TeamType[ teamTypeId=" + teamTypeId + " ]";
     }
     
 }

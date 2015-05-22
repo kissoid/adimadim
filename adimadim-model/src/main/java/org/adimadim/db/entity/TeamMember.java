@@ -6,14 +6,13 @@
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,16 +26,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TeamMember.findAll", query = "SELECT t FROM TeamMember t"),
     @NamedQuery(name = "TeamMember.findByTeamId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.teamId = :teamId"),
     @NamedQuery(name = "TeamMember.findByRaceId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.raceId = :raceId"),
-    @NamedQuery(name = "TeamMember.findByAccountId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.accountId = :accountId"),
-    @NamedQuery(name = "TeamMember.findByAccountId1", query = "SELECT t FROM TeamMember t WHERE t.accountId1 = :accountId1")})
+    @NamedQuery(name = "TeamMember.findByAccountId", query = "SELECT t FROM TeamMember t WHERE t.teamMemberPK.accountId = :accountId")})
 public class TeamMember implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TeamMemberPK teamMemberPK;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "account_id", nullable = false)
-    private int accountId1;
+    @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Team team;
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Account account;
+    @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Race race;
 
     public TeamMember() {
     }
@@ -45,12 +48,7 @@ public class TeamMember implements Serializable {
         this.teamMemberPK = teamMemberPK;
     }
 
-    public TeamMember(TeamMemberPK teamMemberPK, int accountId1) {
-        this.teamMemberPK = teamMemberPK;
-        this.accountId1 = accountId1;
-    }
-
-    public TeamMember(int teamId, int raceId, int accountId) {
+    public TeamMember(Integer teamId, Integer raceId, Integer accountId) {
         this.teamMemberPK = new TeamMemberPK(teamId, raceId, accountId);
     }
 
@@ -62,12 +60,28 @@ public class TeamMember implements Serializable {
         this.teamMemberPK = teamMemberPK;
     }
 
-    public int getAccountId1() {
-        return accountId1;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setAccountId1(int accountId1) {
-        this.accountId1 = accountId1;
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 
     @Override
@@ -92,7 +106,7 @@ public class TeamMember implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.TeamMember[ teamMemberPK=" + teamMemberPK + " ]";
+        return "TeamMember[ teamMemberPK=" + teamMemberPK + " ]";
     }
     
 }

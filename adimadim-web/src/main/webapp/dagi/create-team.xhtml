@@ -55,7 +55,7 @@
                                 </p:panelGrid>
                             </p:tab>
                             <p:tab id="teamMembers" title="Takım Üyeleri">
-                                <p:pickList id="teamMembersPickList" value="#{teamBean.selectedTeam.}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" />
+                                <p:pickList  id="teamMembersPickList" showCheckbox="true" value="#{teamBean.teamMemberList}" var="member" itemLabel="#{member.account.name} #{member.account.surname}" itemValue="#{member}" converter="commonConverter" />
                             </p:tab>
                         </p:wizard>
 

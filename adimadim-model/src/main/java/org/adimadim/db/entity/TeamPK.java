@@ -6,10 +6,10 @@
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,31 +18,29 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class TeamPK implements Serializable {
     @Basic(optional = false)
-    @NotNull
     @Column(name = "team_id", nullable = false)
-    private int teamId;
+    private Integer teamId;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "race_id", nullable = false)
-    private int raceId;
+    private Integer raceId;
 
     public TeamPK() {
     }
 
-    public TeamPK(int teamId, int raceId) {
+    public TeamPK(Integer teamId, Integer raceId) {
         this.teamId = teamId;
         this.raceId = raceId;
     }
 
-    public int getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(int teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 
-    public int getRaceId() {
+    public Integer getRaceId() {
         return raceId;
     }
 
@@ -52,23 +50,25 @@ public class TeamPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (int) teamId;
-        hash += (int) raceId;
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.teamId);
+        hash = 79 * hash + Objects.hashCode(this.raceId);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TeamPK)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        TeamPK other = (TeamPK) object;
-        if (this.teamId != other.teamId) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        if (this.raceId != other.raceId) {
+        final TeamPK other = (TeamPK) obj;
+        if (!Objects.equals(this.teamId, other.teamId)) {
+            return false;
+        }
+        if (!Objects.equals(this.raceId, other.raceId)) {
             return false;
         }
         return true;
@@ -76,7 +76,7 @@ public class TeamPK implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.TeamPK[ teamId=" + teamId + ", raceId=" + raceId + " ]";
+        return "TeamPK{" + "teamId=" + teamId + ", raceId=" + raceId + '}';
     }
     
 }

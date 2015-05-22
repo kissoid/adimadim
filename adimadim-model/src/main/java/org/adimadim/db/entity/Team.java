@@ -6,6 +6,8 @@
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,9 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,12 +36,13 @@ public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TeamPK teamPK;
-    @Size(max = 50)
     @Column(name = "team_name", length = 50)
     private String teamName;
     @JoinColumn(name = "team_type_id", referencedColumnName = "team_type_id", nullable = false)
     @ManyToOne(optional = false)
-    private TeamType teamTypeId;
+    private TeamType teamType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    private List<TeamMember> teamMemberList;
 
     public Team() {
     }
@@ -47,7 +51,7 @@ public class Team implements Serializable {
         this.teamPK = teamPK;
     }
 
-    public Team(int teamId, int raceId) {
+    public Team(Integer teamId, Integer raceId) {
         this.teamPK = new TeamPK(teamId, raceId);
     }
 
@@ -67,12 +71,21 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
 
-    public TeamType getTeamTypeId() {
-        return teamTypeId;
+    public TeamType getTeamType() {
+        return teamType;
     }
 
-    public void setTeamTypeId(TeamType teamTypeId) {
-        this.teamTypeId = teamTypeId;
+    public void setTeamType(TeamType teamType) {
+        this.teamType = teamType;
+    }
+
+    @XmlTransient
+    public List<TeamMember> getTeamMemberList() {
+        return teamMemberList;
+    }
+
+    public void setTeamMemberList(List<TeamMember> teamMemberList) {
+        this.teamMemberList = teamMemberList;
     }
 
     @Override
@@ -97,7 +110,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "org.adimadim.db.entity.Team[ teamPK=" + teamPK + " ]";
+        return "Team[ teamPK=" + teamPK + " ]";
     }
     
 }

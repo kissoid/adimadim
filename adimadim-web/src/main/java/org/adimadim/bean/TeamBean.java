@@ -9,6 +9,7 @@ package org.adimadim.bean;
  * @author Adem
  */
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,8 +19,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.Team;
+import org.adimadim.db.entity.TeamMember;
 import org.adimadim.db.entity.TeamType;
 import org.adimadim.service.TeamService;
+import org.primefaces.model.DualListModel;
 
 
 
@@ -31,6 +34,7 @@ public class TeamBean implements Serializable{
     private Account selectedAccount;
     private List<Team> teamList;
     private List<TeamType> teamTypeList;
+    private DualListModel<TeamMember> teamMemberList;
     @Inject
     private TeamService teamService;
     
@@ -38,6 +42,7 @@ public class TeamBean implements Serializable{
         selectedAccount = new Account();
         selectedTeam = new Team();
         selectedTeam.setTeamType(new TeamType());
+        teamMemberList = new DualListModel<TeamMember>(new ArrayList<TeamMember>(), new ArrayList<TeamMember>());
     }
     
     @PostConstruct
@@ -80,6 +85,14 @@ public class TeamBean implements Serializable{
 
     public void setTeamTypeList(List<TeamType> teamTypeList) {
         this.teamTypeList = teamTypeList;
+    }
+
+    public DualListModel<TeamMember> getTeamMemberList() {
+        return teamMemberList;
+    }
+
+    public void setTeamMemberList(DualListModel<TeamMember> teamMemberList) {
+        this.teamMemberList = teamMemberList;
     }
 
     
