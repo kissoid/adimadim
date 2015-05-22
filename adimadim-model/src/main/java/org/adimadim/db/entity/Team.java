@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -21,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Ergo
+ * @author Mehmet Adem ŞENGÜL
  */
 @Entity
 @Table(catalog = "adimadim", schema = "")
@@ -30,8 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
     @NamedQuery(name = "Team.findByTeamId", query = "SELECT t FROM Team t WHERE t.teamPK.teamId = :teamId"),
     @NamedQuery(name = "Team.findByRaceId", query = "SELECT t FROM Team t WHERE t.teamPK.raceId = :raceId"),
-    @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")
-})
+    @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")})
 public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -39,9 +36,9 @@ public class Team implements Serializable {
     @Size(max = 50)
     @Column(name = "team_name", length = 50)
     private String teamName;
-    @ManyToOne(optional=false)
-    @JoinColumn(name = "team_type_id", referencedColumnName = "team_type_id", insertable = false, updatable = false)
-    private TeamType teamType;
+    @JoinColumn(name = "team_type_id", referencedColumnName = "team_type_id", nullable = false)
+    @ManyToOne(optional = false)
+    private TeamType teamTypeId;
 
     public Team() {
     }
@@ -70,31 +67,29 @@ public class Team implements Serializable {
         this.teamName = teamName;
     }
 
-    public TeamType getTeamType() {
-        return teamType;
+    public TeamType getTeamTypeId() {
+        return teamTypeId;
     }
 
-    public void setTeamType(TeamType teamType) {
-        this.teamType = teamType;
+    public void setTeamTypeId(TeamType teamTypeId) {
+        this.teamTypeId = teamTypeId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.teamPK);
+        int hash = 0;
+        hash += (teamPK != null ? teamPK.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Team)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Team other = (Team) obj;
-        if (!Objects.equals(this.teamPK, other.teamPK)) {
+        Team other = (Team) object;
+        if ((this.teamPK == null && other.teamPK != null) || (this.teamPK != null && !this.teamPK.equals(other.teamPK))) {
             return false;
         }
         return true;
@@ -102,9 +97,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "Team{" + "teamPK=" + teamPK + '}';
+        return "org.adimadim.db.entity.Team[ teamPK=" + teamPK + " ]";
     }
-
-
     
 }

@@ -22,6 +22,7 @@
     <class>org.adimadim.db.entity.Donation</class>
     <class>org.adimadim.db.entity.Team</class>
     <class>org.adimadim.db.entity.Race</class>
+    <class>org.adimadim.db.entity.TeamType</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/adimadim?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="9901"/>

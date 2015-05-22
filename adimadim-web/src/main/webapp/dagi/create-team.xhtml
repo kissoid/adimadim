@@ -55,7 +55,7 @@
                                 </p:panelGrid>
                             </p:tab>
                             <p:tab id="teamMembers" title="Takım Üyeleri">
-
+                                <p:pickList id="teamMembersPickList" value="#{teamBean.selectedTeam.}" var="cities" itemLabel="#{cities}" itemValue="#{cities}" />
                             </p:tab>
                         </p:wizard>
 

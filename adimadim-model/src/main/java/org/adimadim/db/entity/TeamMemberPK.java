@@ -3,40 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.adimadim.db.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
- * @author Ergo
+ * @author Mehmet Adem ŞENGÜL
  */
 @Embeddable
 public class TeamMemberPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "team_id", nullable = false)
-    private Integer teamId;
+    private int teamId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "race_id", nullable = false)
-    private Integer raceId;
+    private int raceId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "account_id", nullable = false)
-    private Integer accountId;
+    private int accountId;
 
     public TeamMemberPK() {
     }
 
-    public TeamMemberPK(Integer teamId, Integer raceId, Integer accountId) {
+    public TeamMemberPK(int teamId, int raceId, int accountId) {
         this.teamId = teamId;
         this.raceId = raceId;
         this.accountId = accountId;
@@ -58,39 +55,37 @@ public class TeamMemberPK implements Serializable {
         this.raceId = raceId;
     }
 
-    public Integer getAccountId() {
+    public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Integer accountId) {
+    public void setAccountId(int accountId) {
         this.accountId = accountId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.teamId);
-        hash = 97 * hash + Objects.hashCode(this.raceId);
-        hash = 97 * hash + Objects.hashCode(this.accountId);
+        int hash = 0;
+        hash += (int) teamId;
+        hash += (int) raceId;
+        hash += (int) accountId;
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TeamMemberPK)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        TeamMemberPK other = (TeamMemberPK) object;
+        if (this.teamId != other.teamId) {
             return false;
         }
-        final TeamMemberPK other = (TeamMemberPK) obj;
-        if (!Objects.equals(this.teamId, other.teamId)) {
+        if (this.raceId != other.raceId) {
             return false;
         }
-        if (!Objects.equals(this.raceId, other.raceId)) {
-            return false;
-        }
-        if (!Objects.equals(this.accountId, other.accountId)) {
+        if (this.accountId != other.accountId) {
             return false;
         }
         return true;
@@ -98,8 +93,7 @@ public class TeamMemberPK implements Serializable {
 
     @Override
     public String toString() {
-        return "TeamMemberPK{" + "teamId=" + teamId + ", raceId=" + raceId + ", accountId=" + accountId + '}';
+        return "org.adimadim.db.entity.TeamMemberPK[ teamId=" + teamId + ", raceId=" + raceId + ", accountId=" + accountId + " ]";
     }
-
-
+    
 }
