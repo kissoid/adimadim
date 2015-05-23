@@ -21,7 +21,8 @@
                         <h4 class="page-header c5-text ">Takım Oluşturma</h4>
 
 
-                        <h:form>
+                        <h:form id="teamCreateForm">
+                            <p:growl id="growl" showDetail="true" autoUpdate="true" />
                             <p:wizard showStepStatus="false" >
                                 <p:tab id="teamInfo" title="Takım Bilgileri">
                                     <div class="row">
@@ -47,22 +48,46 @@
                                     </div>
                                 </p:tab>
                                 <p:tab id="teamMembers" title="Takım Üyeleri">
-                                    <p:inputText id="memberSearch" />
+                                    <p:inputText id="memberSearch" value="#{teamBean.searchText}">
+                                        <p:ajax event="keyup" listener="#{teamBean.searchAccount()}" update="sourceTable" />
+                                    </p:inputText>
                                     <p:watermark for="memberSearch" value="Lütfen aramak istediğiniz ismi giriniz" />
-                                    <p:pickList id="teamMembersPickList" showCheckbox="true" value="#{teamBean.teamMemberList}" var="member" itemLabel="#{member.account.name} #{member.account.surname}" itemValue="#{member}" converter="commonConverter" style="margin: 0 auto;" >
-                                        <f:facet name="sourceCaption">Arama Sonucu</f:facet>
-                                        <f:facet name="targetCaption">Seçilenler</f:facet>
-                                        <p:column style="width:25%">
-                                            <h:outputText styleClass="ui-theme ui-theme-#{theme.name}" />
-                                        </p:column>
+                                    <p:panelGrid style="width:100%;">
+                                        <p:row>
+                                            <p:column style="vertical-align: top;">
+                                                <p:dataTable id="sourceTable" var="account" value="#{teamBean.teamMemberList.source}" emptyMessage="Lütfen arama yapınız.">
+                                                    <f:facet name="header">
+                                                        Arama Sonucu
+                                                    </f:facet>
+                                                    <p:column headerText="Yarışcı Adı" style="text-align: left">
+                                                        <h:outputText value="#{account.name} #{account.surname}" />
+                                                    </p:column>
 
-                                        <p:column style="width:75%;">
-                                            <h:outputText value="#{member.account.name} #{member.account.surname}" />
-                                        </p:column>                                    
-                                    </p:pickList>
+                                                    <p:column headerText="İşlemler" style="width:20%">
+                                                        <p:commandButton value="Seç" actionListener="#{teamBean.addSelectedAccount(account)}" title="Seç" update=":teamCreateForm:sourceTable,:teamCreateForm:targetTable"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:column>
+                                            <p:column style="vertical-align: top;">
+                                                <p:dataTable var="account" id="targetTable" value="#{teamBean.teamMemberList.target}" emptyMessage="Lütfen arama yapınız.">
+                                                    <f:facet name="header">
+                                                        Seçilenler
+                                                    </f:facet>
+                                                    <p:column headerText="Yarışcı Adı">
+                                                        <h:outputText value="#{account.name} #{account.surname}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="İşlemler" style="width:20%">
+                                                        <p:commandButton value="Çıkar" title="Çıkar" actionListener="#{teamBean.removeSelectedAccount(account)}" update=":teamCreateForm:sourceTable,:teamCreateForm:targetTable" />
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+
                                 </p:tab>
                                 <p:tab>
-                                    <p:commandButton value="Takımı Kaydet" />
+                                    <p:commandButton value="Takımı Kaydet" actionListener="#{teamBean.saveTeam()}" />
                                 </p:tab>
                             </p:wizard>
                         </h:form>

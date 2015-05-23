@@ -28,7 +28,7 @@ public class ContactMessageService {
     }
     
     public void saveMessage(ContactMessage message) throws ContactMessageException, Exception{
-        contactMessageFacade.create(message);
+        contactMessageFacade.save(message);
         //new MessageCreated().start();
     }
     
@@ -47,7 +47,7 @@ public class ContactMessageService {
     public void markMessageAsRead(Integer messageId) throws Exception{
         ContactMessage message = contactMessageFacade.find(messageId);
         message.setUnread("H");
-        contactMessageFacade.edit(message);
+        contactMessageFacade.update(message);
     }
     
 }

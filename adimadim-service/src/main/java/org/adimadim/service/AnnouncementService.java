@@ -21,7 +21,7 @@ public class AnnouncementService {
     private AnnouncementFacade announcementFacade;
 
     public List<Announcement> retrieveAllAnnouncements() throws Exception {
-        return announcementFacade.findAllByNamedQuery("Announcement.findAllByAnnounceIdOrderDesc", null);
+        return announcementFacade.findListByNamedQuery("Announcement.findAllByAnnounceIdOrderDesc", null);
     }
     
 }

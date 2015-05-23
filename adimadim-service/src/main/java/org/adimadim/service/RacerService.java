@@ -36,17 +36,17 @@ public class RacerService {
     private RaceScoreFacade raceScoreFacade;
 
     public List<Account> retrieveAllRacers() throws Exception {
-        return accountFacade.findAllByNamedQuery("Account.findAllByIdOrder");
+        return accountFacade.findListByNamedQuery("Account.findAllByIdOrder");
     }
     
     public List<Account> retrieveAllRacersHasNoPassword() throws Exception {
-        return accountFacade.findAllByNamedQuery("Account.findAll");
+        return accountFacade.findListByNamedQuery("Account.findAll");
     }
 
     public List<RaceScore> getRacerScoresByAccountId(Integer accountId) throws Exception {
         Map map = new HashMap();
         map.put("accountId", accountId);
-        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByAccountId", map);
+        return raceScoreFacade.findListByNamedQuery("RaceScore.findByAccountId", map);
     }
 
     

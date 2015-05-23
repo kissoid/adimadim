@@ -46,7 +46,7 @@ public class ActivationServlet extends HttpServlet {
                 Account tempAccount = null;
                 Context context = new InitialContext();
                 AccountService accountService = (AccountService) context.lookup("java:app/adimadim-service-1.0/accountService");
-                tempAccount = accountService.retrieveAccountBySecretKey(key);
+                tempAccount = accountService.findAccountBySecretKey(key);
 
                 if (tempAccount == null) {
                     out.write("Key not found");

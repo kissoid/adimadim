@@ -34,47 +34,47 @@ public class RaceService {
     } 
     
     public List<Race> retrieveAllRaces() throws Exception{
-        return raceFacade.findAllByNamedQuery("Race.findAllOrderByIdDesc");
+        return raceFacade.findListByNamedQuery("Race.findAllOrderByIdDesc");
     } 
     
     public List<RaceScore> retrieveRaceScoreByRaceId(Integer raceId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
-        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByRaceIdByTimeOrder", map);
+        return raceScoreFacade.findListByNamedQuery("RaceScore.findByRaceIdByTimeOrder", map);
     }    
     
     public List<Team> retrieveTeamsByRaceId(Integer raceId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
-        return teamFacade.findAllByNamedQuery("Team.findAllByRaceId", map);
+        return teamFacade.findListByNamedQuery("Team.findAllByRaceId", map);
     }    
     
     public List<RaceScore> retrieveRaceScoreByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
         map.put("teamId", teamId);
-        return raceScoreFacade.findAllByNamedQuery("RaceScore.findByRaceIdAndTeamId", map);
+        return raceScoreFacade.findListByNamedQuery("RaceScore.findByRaceIdAndTeamId", map);
     }
     
     public List<RaceScore> retrieveTeamMembersByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
         map.put("teamId", teamId);
-        return raceScoreFacade.findAllByNamedQuery("TeamMember.findByRaceIdAndTeamId", map);
+        return raceScoreFacade.findListByNamedQuery("TeamMember.findByRaceIdAndTeamId", map);
     }
     
     private Integer raceScoreCountByRaceId(Integer raceId) throws Exception{
         Map map = new HashMap();
         map.put("raceId", raceId);
         String jpqlString = "select count(r) from RaceScore r where r.raceScorePK.raceId=:raceId";
-        Long raceScoreCount = (Long)raceFacade.findByQuery(jpqlString, map, null);
+        Long raceScoreCount = (Long)raceFacade.findValueByQuery(jpqlString, map, null);
         raceScoreCount = (raceScoreCount == null ? 0 : raceScoreCount);
         return raceScoreCount.intValue();
     }
     
     public void createRace(Race race) throws RaceException,Exception{
         race.setRaceId(getNextRaceId());
-        raceFacade.create(race);
+        raceFacade.save(race);
     }
 
     public void deleteRace(Race race) throws RaceException,Exception{
@@ -85,12 +85,12 @@ public class RaceService {
     }
     
     public void updateRace(Race race) throws RaceException,Exception{
-        raceFacade.edit(race);
+        raceFacade.update(race);
     }
              
     private Integer getNextRaceId() throws Exception{
         String jpqlString = "select max(a.raceId) from Race a";
-        Integer raceId = (Integer)raceFacade.findByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
+        Integer raceId = (Integer)raceFacade.findValueByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
         raceId = (raceId == null ? 0 : raceId) + 1;
         return raceId;
     }
@@ -98,11 +98,11 @@ public class RaceService {
     public void createTeam(Team team) throws RaceException,Exception{
         Integer raceId = team.getRace().getRaceId();
         team.setTeamId(getNextTeamId(raceId));
-        teamFacade.create(team);
+        teamFacade.save(team);
     }
 
     public void updateTeam(Team team) throws RaceException,Exception{
-        teamFacade.edit(team);
+        teamFacade.update(team);
     }
     
     public void deleteTeam(Team team) throws RaceException,Exception{
@@ -116,7 +116,7 @@ public class RaceService {
         Map map = new HashMap();
         map.put("raceId", raceId);
         String jpqlString = "select max(a.teamPK.teamId) from Team a where a.teamPK.raceId = :raceId";
-        Integer teamId = (Integer)raceFacade.findByQuery(jpqlString, map, LockModeType.PESSIMISTIC_READ);
+        Integer teamId = (Integer)raceFacade.findValueByQuery(jpqlString, map, LockModeType.PESSIMISTIC_READ);
         teamId = (teamId == null ? 0 : teamId) + 1;
         return teamId;
     }
@@ -126,7 +126,7 @@ public class RaceService {
         map.put("raceId", raceId);
         map.put("teamId", teamId);
         String jpqlString = "SELECT count(t) FROM TeamMember t WHERE t.teamMemberPK.raceId = :raceId and t.teamMemberPK.teamId = :teamId";
-        Long count = (Long)raceFacade.findByQuery(jpqlString, map, null);
+        Long count = (Long)raceFacade.findValueByQuery(jpqlString, map, null);
         count = (count == null ? 0 : count);
         return count.intValue();
     }

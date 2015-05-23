@@ -31,21 +31,21 @@ public class RacePictureService {
     }
 
     public List<RaceAlbum> retrieveAllRaceAlbums() throws Exception{
-        return raceAlbumFacade.findAllByNamedQuery("RaceAlbum.findAllByAlbumIdOrderDesc");
+        return raceAlbumFacade.findListByNamedQuery("RaceAlbum.findAllByAlbumIdOrderDesc");
     }   
     
     public List<RaceAlbumPicture> getRaceAlbumPictureByAlbumId(Integer albumId) throws Exception{
         Map map = new HashMap();
         map.put("albumId", albumId);
-        return raceAlbumPictureFacade.findAllByNamedQuery("RaceAlbumPicture.findByAlbumId", map);
+        return raceAlbumPictureFacade.findListByNamedQuery("RaceAlbumPicture.findByAlbumId", map);
     }
     
     public void saveRaceAlbumPicture(RaceAlbumPicture raceAlbumPicture) throws Exception{
-        raceAlbumPictureFacade.create(raceAlbumPicture);
+        raceAlbumPictureFacade.save(raceAlbumPicture);
     }
     
     public void createRaceAlbum(RaceAlbum raceAlbum) throws Exception{
-        raceAlbumFacade.create(raceAlbum);
+        raceAlbumFacade.save(raceAlbum);
     }
 
     public void deleteRaceAlbum(RaceAlbum raceAlbum) throws Exception{
@@ -63,7 +63,7 @@ public class RacePictureService {
         Map map = new HashMap();
         map.put("albumId", albumId);
         String jpqlString = "select count(r) from RaceAlbumPicture r where r.albumId = :albumId";
-        Long raceScoreCount = (Long)raceAlbumPictureFacade.findByQuery(jpqlString, map, null);
+        Long raceScoreCount = (Long)raceAlbumPictureFacade.findValueByQuery(jpqlString, map, null);
         raceScoreCount = (raceScoreCount == null ? 0 : raceScoreCount);
         return raceScoreCount.intValue();
     }

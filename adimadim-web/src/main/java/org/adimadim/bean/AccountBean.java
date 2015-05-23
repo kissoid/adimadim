@@ -80,8 +80,8 @@ public class AccountBean implements Serializable {
                 throw new AccountException("Hesabınız henüz aktifleştirilmediği için göğüs numarası alamazsınız.");
             }
             changeProfileAccount(account);
-            sendChestNumber(account);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
+            /*sendChestNumber(account);*/
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/index.jsp");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage("Hata", ex.getMessage(), FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
@@ -92,7 +92,7 @@ public class AccountBean implements Serializable {
     public void updateAccount() {
         try {
             accountService.saveAccount(account);
-            account = accountService.retrieveAccount(account.getAccountId());
+            account = accountService.findAccount(account.getAccountId());
             FacesMessageUtil.createFacesMessage("Hesap bilgileriniz değiştirildi", null, FacesMessage.SEVERITY_INFO);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu", null, FacesMessage.SEVERITY_ERROR);
@@ -105,7 +105,7 @@ public class AccountBean implements Serializable {
                 throw new AccountException("İki şifre birbirinden farklı olamaz.");
             }
             accountService.saveAccount(account);
-            account = accountService.retrieveAccount(account.getAccountId());
+            account = accountService.findAccount(account.getAccountId());
             FacesMessageUtil.createFacesMessage("Şifreniz değiştirildi", null, FacesMessage.SEVERITY_INFO);
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
@@ -130,7 +130,7 @@ public class AccountBean implements Serializable {
         try {
             accountService.saveAccountProperties(propertyMapToList());
             accountService.saveAccount(profileAccount);
-            account = accountService.retrieveAccount(account.getAccountId());
+            account = accountService.findAccount(account.getAccountId());
             changeProfileAccount(account);
             FacesMessageUtil.createFacesMessage("Değişilik kayıt edildi.", null, FacesMessage.SEVERITY_INFO);
         } catch (Exception ex) {
@@ -140,7 +140,7 @@ public class AccountBean implements Serializable {
 
     public void sendPassword() {
         try {
-            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
             if (tempAccount == null) {
                 throw new AccountException("Email adresi bulunamadı.");
             }

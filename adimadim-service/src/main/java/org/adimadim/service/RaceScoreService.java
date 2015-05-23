@@ -36,7 +36,7 @@ public class RaceScoreService {
             if(tempRaceScore != null){
                 raceScore.setRaceScoreId(tempRaceScore.getRaceScoreId());
             }
-            raceScoreFacade.edit(raceScore);
+            raceScoreFacade.update(raceScore);
         }
     }
 

@@ -37,9 +37,9 @@ public class AccountPictureService {
     
     public void saveAccountAlbumPicture(AccountAlbumPicture accountAlbumPicture){
         if(accountAlbumPicture.getPictureId() == null){
-            accountAlbumPictureFacade.create(accountAlbumPicture);
+            accountAlbumPictureFacade.save(accountAlbumPicture);
         } else {
-            accountAlbumPictureFacade.edit(accountAlbumPicture);
+            accountAlbumPictureFacade.update(accountAlbumPicture);
         }
     }
     

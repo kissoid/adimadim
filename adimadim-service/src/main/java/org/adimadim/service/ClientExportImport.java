@@ -48,7 +48,7 @@ public class ClientExportImport {
                 RaceScore raceScore = new RaceScore();
                 raceScore.setRaceScoreId(raceScoreDto.getRaceScoreId());
                 raceScore.setDuration(raceScoreDto.getDuration());
-                raceScore.setAccount(accountService.retrieveAccount(raceScoreDto.getAccountId()));
+                raceScore.setAccount(accountService.findAccount(raceScoreDto.getAccountId()));
                 raceScore.setRace(raceService.retrieveRace(raceScoreDto.getRaceId()));
                 raceScore.setOrderNo(raceScoreDto.getOrderNo());
                 raceScoreList.add(raceScore);
@@ -85,7 +85,7 @@ public class ClientExportImport {
     @WebMethod(operationName = "retrieveAccounts")
     public List<Account> retrieveAccounts(@WebParam(name = "startAccountId") Integer startAccountId, @WebParam(name = "count") Integer count) {
         try {
-            return accountService.retrieveAccountRangeStartByAccountId(startAccountId, count);
+            return accountService.findAccountRangeStartByAccountId(startAccountId, count);
         } catch (Exception ex) {
             Logger.getLogger(ClientExportImport.class.getName()).log(Level.SEVERE, null, ex);
         }

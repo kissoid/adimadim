@@ -23,14 +23,12 @@
                         <h:form>
                             <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok">
 
-                                <p:column headerText="Takım Adı">
+                                <p:column headerText="Takım Adı" style="text-align: left;">
                                     <h:outputText value="#{team.teamName}" />
                                 </p:column>
 
                                 <p:column headerText="İşlemler" style="width:20%">
-                                    <p:commandButton oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="Düzenle">
-                                        <f:setPropertyActionListener value="#{team}" target="#{teamBean.selectedTeam}" />
-                                    </p:commandButton>
+                                    <p:commandButton value="Düzenle" title="Düzenle" actionListener="#{teamBean.editSelectedTeam(team)}" />
                                 </p:column>
                             </p:dataTable>
 

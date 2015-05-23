@@ -82,7 +82,7 @@ public class RegisterBean implements Serializable {
                 FacesMessageUtil.createFacesMessage("Uyarı", "Girilen mailler birbirinden farklı", FacesMessage.SEVERITY_ERROR);
                 return;
             }
-            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
             if (tempAccount != null) {
                 RequestContext.getCurrentInstance().update("mainForm");
                 RequestContext.getCurrentInstance().execute("alreadyRegisteredDialog.show();");
@@ -117,7 +117,7 @@ public class RegisterBean implements Serializable {
                 throw new AccountException(ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.riskAcceptMessage"));
             }
             RegisterBeanValidator.validateAccountForSignUp(account);
-            Account tempAccount = accountService.retrieveAccountByEmail(account.getEmail());
+            Account tempAccount = accountService.findAccountByEmail(account.getEmail());
             if (tempAccount != null) {
                 String message = ResourceBundle.getBundle("org.adimadim.bean/i18n/messages").getString("registerBean.emailAlreadyExists");
                 throw new AccountException(message);

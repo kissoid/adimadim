@@ -29,7 +29,7 @@ import org.eclipse.persistence.annotations.ObjectTypeConverter;
  */
 @Entity
 @Table(name = "team_member", catalog = "adimadim", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"team_id", "race_id", "account_id"})})
+    @UniqueConstraint(columnNames = {"team_id", "account_id"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TeamMember.findAll", query = "SELECT t FROM TeamMember t"),
@@ -52,9 +52,6 @@ public class TeamMember implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_approved", nullable = false)
     private Boolean isApproved;
-    @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false)
-    @ManyToOne(optional = false)
-    private Race race;
     @JoinColumn(name = "team_id", referencedColumnName = "team_id", nullable = false)
     @ManyToOne(optional = false)
     private Team team;
@@ -88,14 +85,6 @@ public class TeamMember implements Serializable {
 
     public void setIsApproved(Boolean isApproved) {
         this.isApproved = isApproved;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public void setRace(Race race) {
-        this.race = race;
     }
 
     public Team getTeam() {
