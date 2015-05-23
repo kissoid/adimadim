@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="${request.contextPath}/template/template.xhtml">
+            <ui:define name="head">  
+
+            </ui:define>
+            <ui:define name="content">
+
+                <div id="location" class="row page">
+                    <img src="${request.contextPath}/resource/image/location-icon.png" class="page-icon" />
+                    <div class="large-10 large-centered columns text-center">
+                        <h4 class="page-header c5-text ">Takım Listesi</h4>
+
+
+                        <h:form>
+                            <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok">
+
+                                <p:column headerText="Takım Adı">
+                                    <h:outputText value="#{team.teamName}" />
+                                </p:column>
+
+                                <p:column headerText="İşlemler" style="width:20%">
+                                    <p:commandButton oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="Düzenle">
+                                        <f:setPropertyActionListener value="#{team}" target="#{teamBean.selectedTeam}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:form>
+                    </div>
+                </div>
+                <hr class="end-bar c5-background" />
+
+                <script>
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', 'UA-51572429-1', 'aakosu.org');
+                    ga('require', 'displayfeatures');
+                    ga('send', 'pageview');
+
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

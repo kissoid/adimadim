@@ -96,8 +96,8 @@ public class RaceService {
     }
 
     public void createTeam(Team team) throws RaceException,Exception{
-        Integer raceId = team.getTeamPK().getRaceId();
-        team.getTeamPK().setTeamId(getNextTeamId(raceId));
+        Integer raceId = team.getRace().getRaceId();
+        team.setTeamId(getNextTeamId(raceId));
         teamFacade.create(team);
     }
 
@@ -106,7 +106,7 @@ public class RaceService {
     }
     
     public void deleteTeam(Team team) throws RaceException,Exception{
-        if(getTeamMemberCountByRaceIdAndTeamId(team.getTeamPK().getRaceId(), team.getTeamPK().getTeamId()) > 0){
+        if(getTeamMemberCountByRaceIdAndTeamId(team.getRace().getRaceId(), team.getTeamId()) > 0){
             throw new RaceException("Bu takıma ait üyeler olduğu için silinemez.");
         }
         teamFacade.remove(team);

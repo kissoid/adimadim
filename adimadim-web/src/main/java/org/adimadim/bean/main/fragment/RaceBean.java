@@ -18,7 +18,6 @@ import org.adimadim.db.entity.Race;
 import org.adimadim.db.entity.RaceScore;
 import org.adimadim.db.entity.Team;
 import org.adimadim.db.entity.TeamMember;
-import org.adimadim.db.entity.TeamPK;
 import org.adimadim.service.RaceService;
 import org.adimadim.util.FacesMessageUtil;
 
@@ -115,7 +114,7 @@ public class RaceBean implements Serializable {
             if (selectedTeam == null) {
                 throw new Exception("Lütfen bir takım seçiniz.");
             }
-            teamScoreList = raceService.retrieveRaceScoreByRaceIdAndTeamId(selectedRace.getRaceId(), selectedTeam.getTeamPK().getTeamId());
+            teamScoreList = raceService.retrieveRaceScoreByRaceIdAndTeamId(selectedRace.getRaceId(), selectedTeam.getTeamId());
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -129,7 +128,7 @@ public class RaceBean implements Serializable {
             if (selectedTeam == null) {
                 throw new Exception("Lütfen bir takım seçiniz.");
             }
-            teamScoreList = raceService.retrieveTeamMembersByRaceIdAndTeamId(selectedRace.getRaceId(), selectedTeam.getTeamPK().getTeamId());
+            teamScoreList = raceService.retrieveTeamMembersByRaceIdAndTeamId(selectedRace.getRaceId(), selectedTeam.getTeamId());
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -177,8 +176,7 @@ public class RaceBean implements Serializable {
             if (selectedRace == null) {
                 throw new Exception("Lütfen bir yarış seçiniz");
             }
-            newTeam.setTeamPK(new TeamPK());
-            newTeam.getTeamPK().setRaceId(selectedRace.getRaceId());
+            newTeam.getRace().setRaceId(selectedRace.getRaceId());
             raceService.createTeam(newTeam);
             retriveTeamsByRaceId();
             FacesMessageUtil.createFacesMessage("Yarış oluşturuldu.", null, FacesMessage.SEVERITY_INFO);

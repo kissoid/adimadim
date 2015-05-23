@@ -7,10 +7,13 @@ package org.adimadim.db.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -29,15 +32,23 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
-    @NamedQuery(name = "Team.findByTeamId", query = "SELECT t FROM Team t WHERE t.teamPK.teamId = :teamId"),
-    @NamedQuery(name = "Team.findByRaceId", query = "SELECT t FROM Team t WHERE t.teamPK.raceId = :raceId"),
+    @NamedQuery(name = "Team.findByTeamId", query = "SELECT t FROM Team t WHERE t.teamId = :teamId"),
     @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")})
 public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TeamPK teamPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "team_id", nullable = false)
+    private Integer teamId;
     @Column(name = "team_name", length = 50)
     private String teamName;
+    @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false)
+    @ManyToOne(optional = false)
+    private Race race;
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
+    @ManyToOne(optional = false)
+    private Account account;
     @JoinColumn(name = "team_type_id", referencedColumnName = "team_type_id", nullable = false)
     @ManyToOne(optional = false)
     private TeamType teamType;
@@ -47,20 +58,16 @@ public class Team implements Serializable {
     public Team() {
     }
 
-    public Team(TeamPK teamPK) {
-        this.teamPK = teamPK;
+    public Team(Integer teamId) {
+        this.teamId = teamId;
     }
 
-    public Team(Integer teamId, Integer raceId) {
-        this.teamPK = new TeamPK(teamId, raceId);
+    public Integer getTeamId() {
+        return teamId;
     }
 
-    public TeamPK getTeamPK() {
-        return teamPK;
-    }
-
-    public void setTeamPK(TeamPK teamPK) {
-        this.teamPK = teamPK;
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
     }
 
     public String getTeamName() {
@@ -69,6 +76,22 @@ public class Team implements Serializable {
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public TeamType getTeamType() {
@@ -91,7 +114,7 @@ public class Team implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (teamPK != null ? teamPK.hashCode() : 0);
+        hash += (teamId != null ? teamId.hashCode() : 0);
         return hash;
     }
 
@@ -102,7 +125,7 @@ public class Team implements Serializable {
             return false;
         }
         Team other = (Team) object;
-        if ((this.teamPK == null && other.teamPK != null) || (this.teamPK != null && !this.teamPK.equals(other.teamPK))) {
+        if ((this.teamId == null && other.teamId != null) || (this.teamId != null && !this.teamId.equals(other.teamId))) {
             return false;
         }
         return true;
@@ -110,7 +133,7 @@ public class Team implements Serializable {
 
     @Override
     public String toString() {
-        return "Team[ teamPK=" + teamPK + " ]";
+        return "org.adimadim.db.entity.Team[ teamId=" + teamId + " ]";
     }
     
 }
