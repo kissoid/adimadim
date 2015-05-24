@@ -12,49 +12,44 @@
 
             </ui:define>
             <ui:define name="content">
-                <!-- 2 - Göğüs Numarası Al -->
-
-                <div id="barcode" class="row page">
-                    <img src="${request.contextPath}/resource/image/barcode-icon.png" class="page-icon" />
+                  <div id="barcode" class="row page">
                     <div class="large-8 large-centered columns">
-                        <h4 class="page-header c2-text text-center">Göğüs Numaranı Al</h4>
                         <div>
-                            <p class="c2-text text-center">Eğer şifreniz yoksa, <a href="${request.contextPath}/dagi/join.jsf" class="c7-link">Kayıt Ol</a> sayfasından kayıt işleminizi tamamlayınız.<br/>Her yarışa barkodlu göğüs numaranızı basıp getirmeyi unutmayın!</p>
+                            <p class="c2-text text-center">Eğer şifreniz yoksa, <a href="${request.contextPath}/outsession/dagi/join.jsf" class="c7-link">Kayıt Ol</a> sayfasından kayıt işleminizi tamamlayınız.<br/>Her yarışa barkodlu göğüs numaranızı basıp getirmeyi unutmayın!</p>
                         </div>
                         <div class="custom-panel">
                             <h:form id="mainForm">
                                 <p:messages autoUpdate="true" showSummary="false" showDetail="true" escape="false" />
                                 <label>E-posta &mdash; <em>E-mail</em> veya <em>or</em> Kullanıcı adı <em>E-User Name</em>
-                                    <p:inputText id="signIn_email" value="#{accountBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz" >
+                                    <p:inputText id="signIn_email" value="#{loginBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz" >
                                         <p:ajax event="blur" update=":sendPasswordForm:lostPasswordEmail" />
                                     </p:inputText>
                                 </label>
                                 <label>Şifre &mdash; <em>Password</em>
-                                    <p:password id="signIn_password" value="#{accountBean.account.password}" required="true" requiredMessage="Şifrenizi giriniz" />               
+                                    <p:password id="signIn_password" value="#{loginBean.account.password}" required="true" requiredMessage="Şifrenizi giriniz" />               
                                 </label>
                                 <p>
                                     <a href="#" class="c2-link" onclick="lostPassword.show();" data-reveal-id="lost-password">Şifremi unuttum &mdash; <em>Forgotten Password</em></a>
                                 </p>
                                 <br/>
-                                <p:commandButton id="signInButton" value="Gönder - Submit" actionListener="#{accountBean.startSignInOperation}" styleClass="small" /> 
+                                <p:commandButton id="signInButton" value="Gönder - Submit" actionListener="#{loginBean.startLogInOperation}" styleClass="small" /> 
                                 <p:messages autoUpdate="true" showSummary="false" showDetail="true" escape="false" />
                             </h:form>    
                             <h:form id="sendPasswordForm">
                                 <p:dialog id="lostPassword" header="Tekrar Gönder - Recover" widgetVar="lostPassword" style="width: 200px;height: 150;">
                                     <label>E-posta &mdash; <em>E-mail</em>
-                                        <p:inputText id="lostPasswordEmail" value="#{accountBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz">
+                                        <p:inputText id="lostPasswordEmail" value="#{loginBean.account.email}" required="true" requiredMessage="Kullanıcı adınızı giriniz">
                                             <p:ajax event="keyup" />
                                         </p:inputText>
                                     </label>
                                     <br/>
                                     <p:messages autoUpdate="true" showSummary="false" showDetail="true" />
                                     <br/>
-                                    <p:commandButton value="Gönder - Submit" actionListener="#{accountBean.sendPassword()}" style="margin-bottom:0;"/>    
+                                    <p:commandButton value="Gönder - Submit" actionListener="#{loginBean.sendPassword()}" style="margin-bottom:0;"/>    
                                 </p:dialog>
                             </h:form>
                         </div>
                     </div>
-                    <hr class="end-bar c2-background" />
                 </div>
                 <script>
                     (function(i, s, o, g, r, a, m) {

@@ -18,7 +18,7 @@
         <p:menu id="accountSettingsMenu" overlay="true" trigger="accountSettings" style="font-size:13px " my="left top" at="left bottom">  
             <p:menuitem value="Hesap Bilgileri" oncomplete="accountEditorDialog.show();" />  
             <p:menuitem value="Şifre Değiştir"  oncomplete="passwordEditorDialog.show();" />  
-            <p:menuitem value="Oturumu Kapat" actionListener="#{accountBean.startSignOutOperation}"  />   
+            <p:menuitem value="Oturumu Kapat" actionListener="#{loginBean.startLogOutOperation}"  />   
         </p:menu> 
     </ui:fragment>
 </html>

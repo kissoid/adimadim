@@ -4,6 +4,7 @@
  */
 package org.adimadim.servlet;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.DocumentException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,20 +12,23 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.adimadim.bean.AccountBean;
-import org.adimadim.util.ChestNumberUtil;
+import org.adimadim.db.entity.Account;
+import org.adimadim.util.BipNumberUtil;
+import org.adimadim.util.EmailUtil;
 
 /**
  *
  * @author Adem
  */
-@WebServlet(name = "ChestNumberServlet", urlPatterns = {"/ChestNumberServlet"})
-public class ChestNumberServlet extends HttpServlet {
+@WebServlet(name = "BipNumberServlet", urlPatterns = {"/insession/BipNumberServlet"})
+public class BipNumberServlet extends HttpServlet {
 
     @Inject
     private AccountBean accountBean;
@@ -41,11 +45,11 @@ public class ChestNumberServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-          OutputStream os = response.getOutputStream();
+        OutputStream os = response.getOutputStream();
         try {
             Integer chestNumber = accountBean.getAccount().getChestNumber();
             String name = (accountBean.getAccount().getName() + " - " + accountBean.getAccount().getSurname());
-            ByteArrayOutputStream baos = ChestNumberUtil.createChestNumberDocument(chestNumber, name);
+            ByteArrayOutputStream baos = BipNumberUtil.createBipNumberDocument(chestNumber, name);
 
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
@@ -55,16 +59,31 @@ public class ChestNumberServlet extends HttpServlet {
 
             baos.writeTo(os);
             os.flush();
-        }catch (DocumentException ex){
-            Logger.getLogger(ChestNumberServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ChestNumberServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(BipNumberServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             os.close();
         }
 
+        try {
+            sendBipNumber(accountBean.getAccount());
+        } catch (Exception ex) {
+            Logger.getLogger(BipNumberServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
+    private void sendBipNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException {
+        Integer bipNumber = account.getChestNumber();
+        String name = (account.getName() + " " + account.getSurname());
+        String receiver = account.getEmail();
+        String subject = "Gogus Numarasi";
+        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
+        String fileName = "GogusNo.pdf";
+        String fileFormat = "application/pdf";
+        ByteArrayOutputStream file = BipNumberUtil.createBipNumberDocument(bipNumber, name);
+        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

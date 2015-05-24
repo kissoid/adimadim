@@ -75,18 +75,18 @@ public class AccountService {
         }
     }
 
-    public Account signIn(Account account) throws AccountException, Exception {
+    public Account loginIn(Account account) throws AccountException, Exception {
         Map map = new HashMap();
         map.put("searchText", account.getEmail());
         List<Account> existsAccounts = accountFacade.findListByNamedQuery("Account.findByEmailOrUserName", map);
         if (existsAccounts.isEmpty()) {
             String notFoundMessage = "Sistemimizde böyle bir kayıt bulunamadı. Lütfen bilgilerinizi kontrol ediniz veya aşağıdaki linkten kayıt oluşturun.";
-            notFoundMessage += "<a href='http://www.aakosu.org/dagi/join.jsf' class='c7-link'>Kayıt ol</a>";;
+            notFoundMessage += "<a href='http://www.aakosu.org/outsession/dagi/join.jsf' class='c7-link'>Kayıt ol</a>";;
             throw new AccountException(notFoundMessage);
         }
         Account tempAccount = existsAccounts.get(0);
         if (tempAccount.getPassword() == null || tempAccount.getPassword().trim().equals("")) {
-            String notUpdatedAccountMessage = "Şifre tanımlamadiginiz anlasilmistir. Lütfen <a href='http://www.aakosu.org/dagi/join.jsf' class='c7-link'>Kayıt ol</a> ";
+            String notUpdatedAccountMessage = "Şifre tanımlamadiginiz anlasilmistir. Lütfen <a href='http://www.aakosu.org/outsession/dagi/join.jsf' class='c7-link'>Kayıt ol</a> ";
             notUpdatedAccountMessage += "sayfasına giderek kayit bilgilerinizi güncelleyiniz ve sifrenizi belirleyiniz.<br/>";
             throw new AccountException(notUpdatedAccountMessage);
         }

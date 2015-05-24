@@ -139,7 +139,7 @@ public class TeamBean implements Serializable {
     public void editSelectedTeam(Team team) {
         try {
             selectedTeam = team;
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/dagi/team-create.jsf");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/dagi/team-create.jsf");
         } catch (IOException ex) {
             Logger.getLogger(TeamBean.class.getName()).log(Level.SEVERE, null, ex);
         }

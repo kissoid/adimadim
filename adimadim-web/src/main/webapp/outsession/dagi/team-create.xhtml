@@ -23,7 +23,7 @@
 
                         <h:form id="teamCreateForm">
                             <p:growl id="growl" showDetail="true" autoUpdate="true" />
-                            <p:wizard showStepStatus="false" >
+                            <p:wizard nextLabel="İleri" backLabel="Geri" showStepStatus="false" style="border: red 1px solid;padding: 30px;">
                                 <p:tab id="teamInfo" title="Takım Bilgileri">
                                     <div class="row">
                                         <p:growl autoUpdate="true" showDetail="true" />
@@ -33,14 +33,14 @@
                                         </div>
                                         <div class="large-12 columns">
                                             <label>Team name &mdash; <em>Takım adı</em>
-                                                <p:inputText id="teamNameInput" value="#{teamBean.selectedTeam.teamName}" />
+                                                <p:inputText id="teamNameInput" value="#{teamBean.selectedTeam.teamName}" required="true" requiredMessage="Lütfen takım adını giriniz" />
                                             </label>
                                         </div>
                                         <div class="large-12 columns">
                                             <label>Team type &mdash; <em>Takım türü</em>
 
                                             </label>
-                                            <p:selectOneMenu converter="commonConverter" value="#{teamBean.selectedTeam.teamType}" style="width:300px; height: 40px;">
+                                            <p:selectOneMenu converter="commonConverter" value="#{teamBean.selectedTeam.teamType}" style="width:300px; height: 40px;" required="true" requiredMessage="Lütfen takım türünü seçiniz">
                                                 <f:selectItem itemLabel="Lütfen seçiniz" itemValue="" />
                                                 <f:selectItems var="type" value="#{teamBean.teamTypeList}" itemLabel="#{type.description}" itemValue="#{type}" />
                                             </p:selectOneMenu>
@@ -87,7 +87,9 @@
 
                                 </p:tab>
                                 <p:tab>
-                                    <p:commandButton value="Takımı Kaydet" actionListener="#{teamBean.saveTeam()}" />
+                                    <p:commandButton value="Takımı Kaydet" actionListener="#{teamBean.saveTeam()}" style="width: 200px; height:60px;" />
+                                    <p/>
+                                    <p:commandButton value="Takım Listesine Git" oncomplete="window.location.href='team-list.jsf'" />
                                 </p:tab>
                             </p:wizard>
                         </h:form>

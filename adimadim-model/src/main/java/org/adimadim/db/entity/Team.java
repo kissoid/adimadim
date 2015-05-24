@@ -22,6 +22,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.ConversionValue;
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.ObjectTypeConverter;
 
 /**
  *
@@ -33,7 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t"),
     @NamedQuery(name = "Team.findByTeamId", query = "SELECT t FROM Team t WHERE t.teamId = :teamId"),
-    @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")})
+    @NamedQuery(name = "Team.findByTeamName", query = "SELECT t FROM Team t WHERE t.teamName = :teamName")
+})
+@ObjectTypeConverter(name = "BooleanToShort", objectType = Boolean.class, dataType = Short.class, conversionValues = {
+    @ConversionValue(objectValue = "True", dataValue = "1"),
+    @ConversionValue(objectValue = "False", dataValue = "0")
+})
 public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +51,10 @@ public class Team implements Serializable {
     private Integer teamId;
     @Column(name = "team_name", length = 50)
     private String teamName;
+    @Convert("BooleanToShort")
+    @Basic(optional = false)
+    @Column(name = "is_team_race", nullable = false)
+    private Boolean isTeamRace;
     @JoinColumn(name = "race_id", referencedColumnName = "race_id", nullable = false)
     @ManyToOne(optional = false)
     private Race race;
@@ -100,6 +112,14 @@ public class Team implements Serializable {
 
     public void setTeamType(TeamType teamType) {
         this.teamType = teamType;
+    }
+
+    public Boolean getIsTeamRace() {
+        return isTeamRace;
+    }
+
+    public void setIsTeamRace(Boolean isTeamRace) {
+        this.isTeamRace = isTeamRace;
     }
 
     @XmlTransient

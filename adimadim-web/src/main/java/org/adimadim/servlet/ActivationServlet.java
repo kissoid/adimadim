@@ -55,7 +55,7 @@ public class ActivationServlet extends HttpServlet {
                 tempAccount.setActive("E");
                 accountService.updateAccount(tempAccount);
                 //FacesContext.getCurrentInstance().
-                response.sendRedirect("/dagi/account_activated.jsf");
+                response.sendRedirect("/outsession/dagi/account_activated.jsf");
             } catch (Exception ex) {
                 out.write("Hata oluştu");
             }

@@ -33,7 +33,7 @@ import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
 import org.adimadim.util.ConvertionUtil;
 import org.adimadim.bean.validator.RegisterBeanValidator;
-import org.adimadim.util.ChestNumberUtil;
+import org.adimadim.util.BipNumberUtil;
 import org.adimadim.util.EmailUtil;
 import org.adimadim.util.FacesMessageUtil;
 
@@ -106,7 +106,7 @@ public class AccountUpdateBean implements Serializable {
             accountService.updateAccount(account);
             accountBean.setAccount(account);
             sendChestNumber(account);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/BipNumberServlet");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
@@ -124,7 +124,7 @@ public class AccountUpdateBean implements Serializable {
         String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
         String fileName = "GogusNo.pdf";
         String fileFormat = "application/pdf";
-        ByteArrayOutputStream file = ChestNumberUtil.createChestNumberDocument(chestNumber, name);
+        ByteArrayOutputStream file = BipNumberUtil.createBipNumberDocument(chestNumber, name);
         EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
     }
     

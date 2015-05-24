@@ -37,8 +37,8 @@ import org.eclipse.persistence.annotations.ObjectTypeConverter;
     @NamedQuery(name = "TeamMember.findByIsApproved", query = "SELECT t FROM TeamMember t WHERE t.isApproved = :isApproved")
 })
 @ObjectTypeConverter(name = "BooleanToShort", objectType = Boolean.class, dataType = Short.class, conversionValues = {
-	@ConversionValue(objectValue = "True", dataValue = "1"),
-	@ConversionValue(objectValue = "False", dataValue = "0")
+    @ConversionValue(objectValue = "True", dataValue = "1"),
+    @ConversionValue(objectValue = "False", dataValue = "0")
 })
 public class TeamMember implements Serializable {
 

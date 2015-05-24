@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html" 
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
     </h:head>
     <h:body>
@@ -11,21 +12,24 @@
 
             </ui:define>
             <ui:define name="content">
-                <!-- 3-Nedir? -->
+                <!-- 2 - Göğüs Numarası Al -->
 
-                <div id="about" class="row page" >
-                    <div class="large-10 large-centered columns">
-                        <h4 class="page-header c3-text">Hesabınız Aktifleştirilmiştir</h4>
-                        <p>
-                            <h4 class="page-header c3-text"><a href="${request.contextPath}/dagi/barcode.jsf" >Göğüs numarasını almak için tıklayınız</a></h4>
-                        </p>
+                <div id="barcode" class="row page">
+                    <img src="${request.contextPath}/resource/image/barcode-icon.png" class="page-icon" />
+                    <div class="large-8 large-centered columns">
+                        <h4 class="page-header c2-text text-center">Göğüs Numaranı Al</h4>
+                        <div class="custom-panel">
+                            <h:form>
+                                <p:commandButton id="signInButton" value="Göğüs numarası al" onclick="window.location.href = '/insession/BipNumberServlet';" styleClass="small" /> 
+                            </h:form>    
+                        </div>
                     </div>
-                    <hr class="end-bar c3-background" />  
+                    <hr class="end-bar c2-background" />
                 </div>
                 <script>
-                    (function(i, s, o, g, r, a, m) {
+                    (function (i, s, o, g, r, a, m) {
                         i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function() {
+                        i[r] = i[r] || function () {
                             (i[r].q = i[r].q || []).push(arguments)
                         }, i[r].l = 1 * new Date();
                         a = s.createElement(o),

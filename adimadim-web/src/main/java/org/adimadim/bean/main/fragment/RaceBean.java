@@ -171,46 +171,6 @@ public class RaceBean implements Serializable {
         }
     }
 
-    public void createTeam() {
-        try {
-            if (selectedRace == null) {
-                throw new Exception("Lütfen bir yarış seçiniz");
-            }
-            newTeam.getRace().setRaceId(selectedRace.getRaceId());
-            raceService.createTeam(newTeam);
-            retriveTeamsByRaceId();
-            FacesMessageUtil.createFacesMessage("Yarış oluşturuldu.", null, FacesMessage.SEVERITY_INFO);
-        } catch (Exception ex) {
-            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
-        }
-    }
-
-    public void updateTeam() {
-        try {
-            if (selectedTeam == null) {
-                throw new Exception("Lütfen güncellemek istediğiniz takımı seçiniz.");
-            }
-            raceService.updateTeam(selectedTeam);
-            retriveTeamsByRaceId();
-            FacesMessageUtil.createFacesMessage("Takım güncellendi.", null, FacesMessage.SEVERITY_INFO);
-        } catch (Exception ex) {
-            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
-        }
-    }
-
-    public void deleteTeam() {
-        try {
-            if (selectedTeam == null) {
-                throw new Exception("Lütfen silmek istediğiniz takımı seçiniz.");
-            }
-            raceService.deleteTeam(selectedTeam);
-            retriveTeamsByRaceId();
-            FacesMessageUtil.createFacesMessage("Takım silindi.", null, FacesMessage.SEVERITY_INFO);
-        } catch (Exception ex) {
-            FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
-        }
-    }
-
     public List<Race> getRaceList() {
         return raceList;
     }

@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.adimadim.bean.AccountBean;
+import org.adimadim.bean.LoginBean;
 
 /**
  *
@@ -29,7 +30,10 @@ import org.adimadim.bean.AccountBean;
 public class SessionControlFilter implements Filter {
 
     private FilterConfig filterConfig = null;
-    @Inject private AccountBean accountBean;
+    @Inject
+    private AccountBean accountBean;
+    @Inject
+    private LoginBean loginBean;
     
     public SessionControlFilter() {
     }
@@ -62,7 +66,8 @@ public class SessionControlFilter implements Filter {
                     chain.doFilter(request, response);
                 }
             } else {
-                ((HttpServletResponse) response).sendRedirect("/");
+                loginBean.setTargetURI(((HttpServletRequest) request).getRequestURI());
+                ((HttpServletResponse) response).sendRedirect("/outsession/dagi/login.jsf");
             }
         } catch (Throwable t) {
             problem = t;

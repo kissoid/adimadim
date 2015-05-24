@@ -132,7 +132,7 @@ public class RegisterBean implements Serializable {
             FacesMessageUtil.createFacesMessage("Bilgi", "Lütfen spam klasörünü de kontrol etmeyi unutmayınız.", FacesMessage.SEVERITY_INFO);
             account = new Account();
             //sendChestNumber(account);
-            //FacesContext.getCurrentInstance().getExternalContext().redirect("/ChestNumberServlet");
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/BipNumberServlet");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {

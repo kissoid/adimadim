@@ -46,31 +46,31 @@
 
         <nav class="cover">
             <div class="midway">
-                <a href="/dagi/next-run.jsf">
+                <a href="/outsession/dagi/next-run.jsf">
                     <img src="/resource/image/run-icon.png" />
                     <span>Yarışlar</span>
                 </a>
-                <a href="/dagi/barcode.jsf">
+                <a href="/outsession/dagi/barcode.jsf">
                     <img src="/resource/image/barcode-icon.png" />
                     <span>Göğüs No</span>
                 </a>
-                <a href="/dagi/about.jsf">
+                <a href="/outsession/dagi/about.jsf">
                     <img src="/resource/image/about-icon.png" />
                     <span>Nedir?</span>
                 </a>
-                <a href="/dagi/adimadim.jsf">
+                <a href="/outsession/dagi/adimadim.jsf">
                     <img src="/resource/image/aa-icon2.png" class="aa" />
                     <span>Adım Adım</span>
                 </a>
-                <a href="/dagi/location.jsf">
+                <a href="/outsession/dagi/location.jsf">
                     <img src="/resource/image/location-icon.png" />
                     <span>Nerede?</span>
                 </a>
-                <a href="/dagi/join.jsf">
+                <a href="/outsession/dagi/join.jsf">
                     <img src="/resource/image/join-icon.png" />
                     <span>Kayıt Ol</span>
                 </a>
-                <a href="/dagi/faq.jsf">
+                <a href="/outsession/dagi/faq.jsf">
                     <img src="/resource/image/faq-icon.png" />
                     <span>Sorular</span>    
                 </a>    

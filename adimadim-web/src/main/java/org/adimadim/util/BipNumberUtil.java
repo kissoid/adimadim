@@ -27,9 +27,9 @@ import java.net.MalformedURLException;
  *
  * @author Adem
  */
-public class ChestNumberUtil {
+public class BipNumberUtil {
     
-    public static ByteArrayOutputStream createChestNumberDocument(Integer chestNumber, String name) throws DocumentException, BadElementException, IOException {
+    public static ByteArrayOutputStream createBipNumberDocument(Integer bipNumber, String name) throws DocumentException, BadElementException, IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(/*PageSize.LETTER.rotate()*/);
         document.setPageSize(PageSize.A4);
@@ -37,9 +37,9 @@ public class ChestNumberUtil {
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         document.open();
 
-        document.add(createTable(writer, chestNumber, name));
+        document.add(createTable(writer, bipNumber, name));
         document.add(createSeparatorTable());
-        document.add(createTable(writer, chestNumber, name));
+        document.add(createTable(writer, bipNumber, name));
 
         document.close();
 
@@ -58,7 +58,7 @@ public class ChestNumberUtil {
     }
 
     private static PdfPCell createMakas() throws BadElementException, MalformedURLException, IOException {
-        Image makas = Image.getInstance(ChestNumberUtil.class.getResource("/org/adimadim/image/makas.png"));
+        Image makas = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/makas.png"));
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setPaddingBottom(15);
@@ -89,7 +89,7 @@ public class ChestNumberUtil {
         return cell;
     }
 
-    private static PdfPTable createTable(PdfWriter writer,Integer chestNumber, String name) throws BadElementException, MalformedURLException, IOException, DocumentException {
+    private static PdfPTable createTable(PdfWriter writer,Integer bipNumber, String name) throws BadElementException, MalformedURLException, IOException, DocumentException {
         PdfPTable table = new PdfPTable(3);
         table.setWidthPercentage(100f);
         table.setWidths(new int[]{50, 100, 100});
@@ -97,16 +97,16 @@ public class ChestNumberUtil {
         table.addCell(createAdimAdimKosuLogo());
         table.addCell(createAdimAdimLogo());
         table.addCell(createAsicsLogo());
-        table.addCell(createNumber(chestNumber));
-        table.addCell(createBarcode(writer, chestNumber));
+        table.addCell(createNumber(bipNumber));
+        table.addCell(createBarcode(writer, bipNumber));
         table.addCell(createRunnerName(name));
-        table.addCell(createBarcode(writer, chestNumber));
+        table.addCell(createBarcode(writer, bipNumber));
 
         return table;
     }
 
     private static PdfPCell createAdimAdimKosuLogo() throws BadElementException, MalformedURLException, IOException {
-        Image adimAdimKosuLogo = Image.getInstance(ChestNumberUtil.class.getResource("/org/adimadim/image/adimadimkosu-logo.png"));
+        Image adimAdimKosuLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/adimadimkosu-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
@@ -121,7 +121,7 @@ public class ChestNumberUtil {
     }
 
     private static PdfPCell createAdimAdimLogo() throws BadElementException, MalformedURLException, IOException {
-        Image adimAdimLogo = Image.getInstance(ChestNumberUtil.class.getResource("/org/adimadim/image/adimadim-logo.png"));
+        Image adimAdimLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/adimadim-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
@@ -135,7 +135,7 @@ public class ChestNumberUtil {
     }
 
     private static PdfPCell createAsicsLogo() throws BadElementException, MalformedURLException, IOException {
-        Image nbLogo = Image.getInstance(ChestNumberUtil.class.getResource("/org/adimadim/image/nb-logo.png"));
+        Image nbLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/nb-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
@@ -148,8 +148,8 @@ public class ChestNumberUtil {
         return cell;
     }
 
-    private static PdfPCell createNumber(Integer chestNumber) throws BadElementException, MalformedURLException, IOException {
-        PdfPCell cell = new PdfPCell(new Phrase(chestNumber.toString(), FontFactory.getFont(FontFactory.HELVETICA, 170)));
+    private static PdfPCell createNumber(Integer bipNumber) throws BadElementException, MalformedURLException, IOException {
+        PdfPCell cell = new PdfPCell(new Phrase(bipNumber.toString(), FontFactory.getFont(FontFactory.HELVETICA, 170)));
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setVerticalAlignment(Element.ALIGN_CENTER);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -170,10 +170,10 @@ public class ChestNumberUtil {
         return cell;
     }
 
-    private static PdfPCell createBarcode(PdfWriter writer, Integer chestNumber) throws BadElementException, MalformedURLException, IOException {
+    private static PdfPCell createBarcode(PdfWriter writer, Integer bipNumber) throws BadElementException, MalformedURLException, IOException {
         Barcode128 barcode128 = new Barcode128();
         barcode128.setCodeType(Barcode128.EAN8);
-        String strChestBumber = chestNumber.toString();
+        String strChestBumber = bipNumber.toString();
         while (strChestBumber.length() < 3) {
             strChestBumber = "0" + strChestBumber;
         }

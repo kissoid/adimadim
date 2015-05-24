@@ -21,15 +21,32 @@
 
 
                         <h:form>
+                            <p>
+                                <p:commandButton value="Takım Oluştur" style="width:200px; height:60px;" oncomplete="window.location.href='team-create.jsf'" />
+                            </p>
                             <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok">
-
+                                <p:column style="width:20px;">
+                                    <p:rowToggler/>
+                                </p:column>
                                 <p:column headerText="Takım Adı" style="text-align: left;">
                                     <h:outputText value="#{team.teamName}" />
                                 </p:column>
-
-                                <p:column headerText="İşlemler" style="width:20%">
+                                <p:column style="width:120px">
                                     <p:commandButton value="Düzenle" title="Düzenle" actionListener="#{teamBean.editSelectedTeam(team)}" />
                                 </p:column>
+                                <p:rowExpansion>
+                                    <p:dataTable value="#{team.teamMemberList}" var="member">
+                                        <p:column headerText="Ad" style="text-align: left; width: 150px;">
+                                            <h:outputText value="#{member.account.name}" />
+                                        </p:column>
+                                        <p:column headerText="Soyad" style="text-align: left;">
+                                            <h:outputText value="#{member.account.surname}" />
+                                        </p:column>
+                                        <p:column style="width:50px;">
+                                            <p:graphicImage value="/resource/image/#{member.isApproved ? 'ok.png':'waiting.png'}" title="#{member.isApproved ? 'Yarışçı onayladı':'Yarışçıdan onay bekleniyor'}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:rowExpansion>
                             </p:dataTable>
 
                         </h:form>

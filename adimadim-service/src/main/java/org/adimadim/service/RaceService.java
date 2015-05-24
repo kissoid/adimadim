@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.LockModeType;
 import org.adimadim.db.entity.Race;
@@ -22,7 +26,9 @@ import org.adimadim.service.exception.RaceException;
  *
  * @author Adem
  */
-@Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+@Stateless(name = "raceService")
 public class RaceService {
     
     @Inject private RaceFacade raceFacade;
@@ -72,11 +78,13 @@ public class RaceService {
         return raceScoreCount.intValue();
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void createRace(Race race) throws RaceException,Exception{
         race.setRaceId(getNextRaceId());
         raceFacade.save(race);
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteRace(Race race) throws RaceException,Exception{
         if(raceScoreCountByRaceId(race.getRaceId()) > 0){
             throw new RaceException("Bu yarış tamamlandığı için silinemez.");
@@ -84,6 +92,7 @@ public class RaceService {
         raceFacade.remove(race);
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void updateRace(Race race) throws RaceException,Exception{
         raceFacade.update(race);
     }
@@ -93,42 +102,5 @@ public class RaceService {
         Integer raceId = (Integer)raceFacade.findValueByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
         raceId = (raceId == null ? 0 : raceId) + 1;
         return raceId;
-    }
-
-    public void createTeam(Team team) throws RaceException,Exception{
-        Integer raceId = team.getRace().getRaceId();
-        team.setTeamId(getNextTeamId(raceId));
-        teamFacade.save(team);
-    }
-
-    public void updateTeam(Team team) throws RaceException,Exception{
-        teamFacade.update(team);
-    }
-    
-    public void deleteTeam(Team team) throws RaceException,Exception{
-        if(getTeamMemberCountByRaceIdAndTeamId(team.getRace().getRaceId(), team.getTeamId()) > 0){
-            throw new RaceException("Bu takıma ait üyeler olduğu için silinemez.");
-        }
-        teamFacade.remove(team);
-    }
-    
-    private Integer getNextTeamId(Integer raceId) throws Exception{
-        Map map = new HashMap();
-        map.put("raceId", raceId);
-        String jpqlString = "select max(a.teamPK.teamId) from Team a where a.teamPK.raceId = :raceId";
-        Integer teamId = (Integer)raceFacade.findValueByQuery(jpqlString, map, LockModeType.PESSIMISTIC_READ);
-        teamId = (teamId == null ? 0 : teamId) + 1;
-        return teamId;
-    }
-
-    private int getTeamMemberCountByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
-        Map map = new HashMap();
-        map.put("raceId", raceId);
-        map.put("teamId", teamId);
-        String jpqlString = "SELECT count(t) FROM TeamMember t WHERE t.teamMemberPK.raceId = :raceId and t.teamMemberPK.teamId = :teamId";
-        Long count = (Long)raceFacade.findValueByQuery(jpqlString, map, null);
-        count = (count == null ? 0 : count);
-        return count.intValue();
-    }
-    
+    }    
 }
