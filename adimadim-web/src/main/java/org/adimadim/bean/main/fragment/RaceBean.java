@@ -56,7 +56,7 @@ public class RaceBean implements Serializable {
 
     public void retrieveAllRaces() {
         try {
-            raceList = raceService.retrieveAllRaces();
+            raceList = raceService.retrieveAllActiveRaces();
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }

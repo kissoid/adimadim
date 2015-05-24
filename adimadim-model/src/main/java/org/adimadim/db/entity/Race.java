@@ -24,6 +24,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.ConversionValue;
+import org.eclipse.persistence.annotations.Convert;
+import org.eclipse.persistence.annotations.ObjectTypeConverter;
 
 /**
  *
@@ -38,7 +41,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Race.findByRaceName", query = "SELECT r FROM Race r WHERE r.raceName = :raceName"),
     @NamedQuery(name = "Race.findByRaceDate", query = "SELECT r FROM Race r WHERE r.raceDate = :raceDate"),
     @NamedQuery(name = "Race.findByActive", query = "SELECT r FROM Race r WHERE r.active = :active"),
-    @NamedQuery(name = "Race.findAllOrderByIdDesc", query = "SELECT new org.adimadim.db.entity.Race(r.raceId,r.raceName,r.raceDate,r.active) FROM Race r where r.active='E' order by r.raceId desc")})
+    @NamedQuery(name = "Race.findAllActiveOrderByIdDesc", query = "SELECT new org.adimadim.db.entity.Race(r.raceId,r.raceName,r.raceDate,r.active) FROM Race r where r.active='E' order by r.raceId desc"),
+    @NamedQuery(name = "Race.findAllOrderByIdDesc", query = "SELECT new org.adimadim.db.entity.Race(r.raceId,r.raceName,r.raceDate,r.active) FROM Race r order by r.raceId desc")
+})
+@ObjectTypeConverter(name = "BooleanToShort", objectType = Boolean.class, dataType = Short.class, conversionValues = {
+    @ConversionValue(objectValue = "True", dataValue = "1"),
+    @ConversionValue(objectValue = "False", dataValue = "0")
+})
 public class Race implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +65,10 @@ public class Race implements Serializable {
     @Column(name = "race_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date raceDate;
+    @Convert("BooleanToShort")
+    @Basic(optional = false)
+    @Column(name = "is_team_race", nullable = false)
+    private Boolean isTeamRace;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -118,6 +131,14 @@ public class Race implements Serializable {
 
     public void setRaceScoreList(List<RaceScore> raceScoreList) {
         this.raceScoreList = raceScoreList;
+    }
+
+    public Boolean getIsTeamRace() {
+        return isTeamRace;
+    }
+
+    public void setIsTeamRace(Boolean isTeamRace) {
+        this.isTeamRace = isTeamRace;
     }
 
     @Override

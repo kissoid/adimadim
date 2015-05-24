@@ -69,5 +69,30 @@ public class TeamService {
         parameters.put("raceId", raceId);
         return teamMemberFacade.findByQuery(jpql, parameters); 
     }
-    
+
+    public TeamMember findTeamMember(Integer teamId, Integer raceId, Integer accountId) throws Exception {
+        String jpql = "select r from TeamMember r where ";
+        jpql += " r.team.teamId = :teamId ";
+        jpql += " and r.race.raceId = :raceId ";
+        jpql += " and r.account.accountId = :accountId ";
+        Map map = new HashMap();
+        map.put("teamId", teamId);
+        map.put("raceId", raceId);
+        map.put("accountId", accountId);
+        return teamMemberFacade.findByQuery(jpql, map);
+    }
+
+    public void deleteTeamMember(TeamMember teamMember) throws Exception {
+        teamMemberFacade.remove(teamMember);
+    }
+
+    public TeamMember saveTeamMember(TeamMember teamMember) throws Exception {
+        if (teamMember.getTeamMemberId() == null) {
+            return teamMemberFacade.saveAndReturn(teamMember);
+        } else {
+            teamMemberFacade.update(teamMember);
+        }
+        return teamMember;
+    }
+
 }

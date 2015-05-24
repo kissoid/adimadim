@@ -50,7 +50,7 @@
                     <img src="/resource/image/run-icon.png" />
                     <span>Yarışlar</span>
                 </a>
-                <a href="/outsession/dagi/barcode.jsf">
+                <a href="/insession/BipNumberServlet">
                     <img src="/resource/image/barcode-icon.png" />
                     <span>Göğüs No</span>
                 </a>

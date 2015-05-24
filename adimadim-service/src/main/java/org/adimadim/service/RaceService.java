@@ -4,6 +4,7 @@
  */
 package org.adimadim.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.adimadim.db.entity.Team;
 import org.adimadim.facade.RaceFacade;
 import org.adimadim.facade.RaceScoreFacade;
 import org.adimadim.facade.TeamFacade;
+import org.adimadim.facade.TeamMemberFacade;
 import org.adimadim.service.exception.RaceException;
 
 /**
@@ -30,77 +32,95 @@ import org.adimadim.service.exception.RaceException;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 @Stateless(name = "raceService")
 public class RaceService {
-    
-    @Inject private RaceFacade raceFacade;
-    @Inject private RaceScoreFacade raceScoreFacade;
-    @Inject private TeamFacade teamFacade;
 
-    public Race retrieveRace(Integer raceId) throws Exception{
+    @Inject
+    private RaceFacade raceFacade;
+    @Inject
+    private RaceScoreFacade raceScoreFacade;
+    @Inject
+    private TeamFacade teamFacade;
+    @Inject
+    private TeamMemberFacade teamMemberFacade;
+
+    public Race retrieveRace(Integer raceId) throws Exception {
         return raceFacade.find(raceId);
-    } 
-    
-    public List<Race> retrieveAllRaces() throws Exception{
+    }
+
+    public List<Race> retrieveAllRaces() throws Exception {
         return raceFacade.findListByNamedQuery("Race.findAllOrderByIdDesc");
-    } 
-    
-    public List<RaceScore> retrieveRaceScoreByRaceId(Integer raceId) throws Exception{
+    }
+
+    public List<Race> retrieveAllActiveRaces() throws Exception {
+        return raceFacade.findListByNamedQuery("Race.findAllActiveOrderByIdDesc");
+    }
+
+    public List<RaceScore> retrieveRaceScoreByRaceId(Integer raceId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
         return raceScoreFacade.findListByNamedQuery("RaceScore.findByRaceIdByTimeOrder", map);
-    }    
-    
-    public List<Team> retrieveTeamsByRaceId(Integer raceId) throws Exception{
+    }
+
+    public List<Team> retrieveTeamsByRaceId(Integer raceId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
         return teamFacade.findListByNamedQuery("Team.findAllByRaceId", map);
-    }    
-    
-    public List<RaceScore> retrieveRaceScoreByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
+    }
+
+    public List<RaceScore> retrieveRaceScoreByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
         map.put("teamId", teamId);
         return raceScoreFacade.findListByNamedQuery("RaceScore.findByRaceIdAndTeamId", map);
     }
-    
-    public List<RaceScore> retrieveTeamMembersByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception{
+
+    public List<RaceScore> retrieveTeamMembersByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
         map.put("teamId", teamId);
         return raceScoreFacade.findListByNamedQuery("TeamMember.findByRaceIdAndTeamId", map);
     }
-    
-    private Integer raceScoreCountByRaceId(Integer raceId) throws Exception{
+
+    private Integer raceScoreCountByRaceId(Integer raceId) throws Exception {
         Map map = new HashMap();
         map.put("raceId", raceId);
         String jpqlString = "select count(r) from RaceScore r where r.raceScorePK.raceId=:raceId";
-        Long raceScoreCount = (Long)raceFacade.findValueByQuery(jpqlString, map, null);
+        Long raceScoreCount = (Long) raceFacade.findValueByQuery(jpqlString, map, null);
         raceScoreCount = (raceScoreCount == null ? 0 : raceScoreCount);
         return raceScoreCount.intValue();
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void createRace(Race race) throws RaceException,Exception{
+    public void createRace(Race race) throws RaceException, Exception {
         race.setRaceId(getNextRaceId());
         raceFacade.save(race);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void deleteRace(Race race) throws RaceException,Exception{
-        if(raceScoreCountByRaceId(race.getRaceId()) > 0){
+    public void deleteRace(Race race) throws RaceException, Exception {
+        if (raceScoreCountByRaceId(race.getRaceId()) > 0) {
             throw new RaceException("Bu yarış tamamlandığı için silinemez.");
         }
         raceFacade.remove(race);
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public void updateRace(Race race) throws RaceException,Exception{
+    public void updateRace(Race race) throws RaceException, Exception {
         raceFacade.update(race);
     }
-             
-    private Integer getNextRaceId() throws Exception{
+
+    private Integer getNextRaceId() throws Exception {
         String jpqlString = "select max(a.raceId) from Race a";
-        Integer raceId = (Integer)raceFacade.findValueByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
+        Integer raceId = (Integer) raceFacade.findValueByQuery(jpqlString, LockModeType.PESSIMISTIC_WRITE);
         raceId = (raceId == null ? 0 : raceId) + 1;
         return raceId;
-    }    
+    }
+
+    public Race findNextTeamRace() throws Exception {
+        String jpql = "select r from Race r where r.isTeamRace = :isTeamRace and r.raceDate >= :date";
+        Map map = new HashMap();
+        map.put("isTeamRace", Boolean.TRUE);
+        map.put("date", new Date());
+        return raceFacade.findByQuery(jpql, map);
+    }
+
 }

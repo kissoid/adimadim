@@ -32,6 +32,7 @@ import org.adimadim.service.AccountService;
 import org.adimadim.service.RaceService;
 import org.adimadim.service.TeamService;
 import org.adimadim.util.FacesMessageUtil;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DualListModel;
 
 @Data
@@ -41,8 +42,8 @@ import org.primefaces.model.DualListModel;
 public class TeamBean implements Serializable {
 
     private String searchText;
+    private Race selectedRace;
     private Team selectedTeam;
-    private Account selectedAccount;
     private List<Team> teamList;
     private List<TeamType> teamTypeList;
     private DualListModel<Account> teamMemberList;
@@ -56,7 +57,6 @@ public class TeamBean implements Serializable {
     private AccountBean accountBean;
 
     public TeamBean() {
-        selectedAccount = new Account();
         selectedTeam = new Team();
         selectedTeam.setTeamType(new TeamType());
         selectedTeam.setTeamMemberList(new ArrayList<TeamMember>());
@@ -66,12 +66,14 @@ public class TeamBean implements Serializable {
     @PostConstruct
     private void init() {
         try {
-            if (accountBean.isUserSignedIn()) {
-                addSelectedAccount(accountBean.getAccount());
+            selectedRace = raceService.findNextTeamRace();
+            if (selectedRace == null) {
+                FacesMessageUtil.createFacesMessage("Uyarı", "Ayarlanmış bir takım yarışı yok.", FacesMessage.SEVERITY_ERROR);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/");
+                return;
             }
-            Race race = raceService.retrieveRace(1);
-            selectedTeam.setRace(race);
-            teamList = teamService.findTeamsByRaceId(1);
+            selectedTeam.setRace(selectedRace);
+            teamList = teamService.findTeamsByRaceId(selectedRace.getRaceId());
             teamTypeList = teamService.findTeamTypes();
         } catch (Exception ex) {
             Logger.getLogger(TeamBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,7 +109,7 @@ public class TeamBean implements Serializable {
                 FacesMessageUtil.createFacesMessage("Bilgi", "En fazla 7 kişi seçebilirsiniz", FacesMessage.SEVERITY_WARN);
                 return;
             }
-            
+
             TeamMember teamMember = teamService.findTeamMemberByAccountIdRaceId(account.getAccountId(), selectedTeam.getRace().getRaceId());
             if (teamMember != null) {
                 if (selectedTeam.getTeamId() == null) {
@@ -119,7 +121,7 @@ public class TeamBean implements Serializable {
                     return;
                 }
             }
-            
+
             teamMemberList.getTarget().add(account);
             teamMemberList.getSource().remove(account);
         } catch (Exception exception) {
@@ -139,7 +141,13 @@ public class TeamBean implements Serializable {
     public void editSelectedTeam(Team team) {
         try {
             selectedTeam = team;
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/outsession/dagi/team-create.jsf");
+            searchText = "";
+            teamMemberList.getSource().clear();
+            teamMemberList.getTarget().clear();
+            for (TeamMember teamMember : selectedTeam.getTeamMemberList()) {
+                teamMemberList.getTarget().add(teamMember.getAccount());
+            }
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/dagi/team-create.jsf");
         } catch (IOException ex) {
             Logger.getLogger(TeamBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -156,7 +164,8 @@ public class TeamBean implements Serializable {
 
             selectedTeam = teamService.saveTeam(selectedTeam);
             FacesMessageUtil.createFacesMessage("Bilgi", "Takım kayıt edildi", FacesMessage.SEVERITY_INFO);
-            teamList = teamService.findTeamsByRaceId(1);
+            teamList = teamService.findTeamsByRaceId(selectedRace.getRaceId());
+            //new TeamInvitationThread(selectedTeam, accountBean.getAccount()).start();
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Bilgi", "Takım kayıt edilirken hata oluştu", FacesMessage.SEVERITY_ERROR);
         }
@@ -169,11 +178,11 @@ public class TeamBean implements Serializable {
             TeamMember teamMember = new TeamMember();
             teamMember.setAccount(account);
             teamMember.setTeam(selectedTeam);
-            teamMember.setIsApproved(false);
+            teamMember.setIsApproved(accountBean.getAccount().getAccountId().equals(account.getAccountId()));
             tempMemberList.add(teamMember);
         }
         return tempMemberList;
-    }
+   }
 
     private Team combineMembers(Team team, List<TeamMember> tempMemberList) {
         for (TeamMember newTeamMember : tempMemberList) {
@@ -205,6 +214,21 @@ public class TeamBean implements Serializable {
             }
         }
         return false;
+    }
+
+    public String onFlowProcess(FlowEvent event) {
+        if (event.getOldStep().equals("teamInfo") && event.getNewStep().equals("teamMembers")) {
+            if (selectedTeam.getTeamId() == null && selectedTeam.getTeamMemberList().isEmpty()) {
+                teamMemberList.getTarget().add(accountBean.getAccount());
+            }
+        }
+        if (event.getOldStep().equals("teamMembers") && event.getNewStep().equals("teamSave")) {
+            if (teamMemberList.getTarget().size() < 7) {
+                FacesMessageUtil.createFacesMessage("Bilgi", "7'den az kişiyle takım oluşturamazsınız.", FacesMessage.SEVERITY_WARN);
+                return event.getOldStep();
+            }
+        }
+        return event.getNewStep();
     }
 
 }
