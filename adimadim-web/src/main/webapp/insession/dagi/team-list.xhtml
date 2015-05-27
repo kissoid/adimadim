@@ -17,14 +17,15 @@
                 <div id="location" class="row page">
                     <img src="${request.contextPath}/resource/image/location-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns text-center">
-                        <h4 class="page-header c5-text ">Takım Listesi</h4>
-
-
+                        <h4 class="page-header c5-text "><h:outputText value="#{teamBean.selectedRace.raceDate}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText> AA Koşu Takım Maratonu'nda yer alacak takımlar</h4>
                         <h:form>
+                            <p:growl id="growl" showDetail="true" autoUpdate="true" />
                             <p>
-                                <p:commandButton value="Takım Oluştur" style="width:200px; height:60px;" oncomplete="window.location.href='team-create.jsf'" />
+                                <p:commandButton value="Takım Oluştur" actionListener="#{teamBean.createNewTeam()}" style="width:200px; height:60px;" />
                             </p>
-                            <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok">
+                            <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok" >
                                 <p:column style="width:20px;">
                                     <p:rowToggler/>
                                 </p:column>
@@ -32,24 +33,24 @@
                                     <h:outputText value="#{team.teamName}" />
                                 </p:column>
                                 <p:column style="width:120px">
-                                    <p:commandButton value="Düzenle" title="Düzenle" actionListener="#{teamBean.editSelectedTeam(team)}" rendered="#{accountBean.account.accountId eq team.account.accountId}" />
+                                    <p:commandButton value="Düzenle" title="Düzenle" actionListener="#{teamBean.editSelectedTeam(team)}" rendered="#{accountBean.account.accountId == team.account.accountId}" />
                                 </p:column>
+                                        <p:column style="width:50px;">
+                                            <p:graphicImage value="/resource/image/#{(team.teamMemberList.size() == 7) ? 'ok.png':'subtraction.png'}" title="#{team.teamMemberList.size() == 7 ? 'Takım tamamlandı':'Takım eksik'}" />
+                                        </p:column>
                                 <p:rowExpansion>
-                                    <p:dataTable value="#{team.teamMemberList}" var="member">
+                                    <p:dataTable value="#{team.teamMemberList}" var="member" rowStyleClass="#{team.account.accountId == member.account.accountId ? 'colored' : null}">
                                         <p:column headerText="Ad" style="text-align: left; width: 150px;">
                                             <h:outputText value="#{member.account.name}" />
                                         </p:column>
                                         <p:column headerText="Soyad" style="text-align: left;">
                                             <h:outputText value="#{member.account.surname}" />
                                         </p:column>
-                                        <p:column style="width:50px;">
-                                            <p:graphicImage value="/resource/image/#{member.isApproved ? 'ok.png':'waiting.png'}" title="#{member.isApproved ? 'Yarışçı onayladı':'Yarışçıdan onay bekleniyor'}" />
-                                        </p:column>
                                     </p:dataTable>
                                 </p:rowExpansion>
                             </p:dataTable>
-
                         </h:form>
+                        <b>Not :</b> Takımı kuran kişi Takım Kaptanıdır. Değişiklikler sadece takımı kuran ilgili Takım Kaptanı tarafından yapılabilir.
                     </div>
                 </div>
                 <hr class="end-bar c5-background" />

@@ -75,7 +75,7 @@ public class AccountService {
         }
     }
 
-    public Account loginIn(Account account) throws AccountException, Exception {
+    public Account login(Account account) throws AccountException, Exception {
         Map map = new HashMap();
         map.put("searchText", account.getEmail());
         List<Account> existsAccounts = accountFacade.findListByNamedQuery("Account.findByEmailOrUserName", map);
@@ -154,18 +154,29 @@ public class AccountService {
         return accountFacade.findRangeByQuery(new int[]{0, count}, jpql, map);
     }
 
-    public List<Account> findAccountRangeNotInListByName(String searchText, List<Integer> accountIdList) throws Exception {
-        String jpql = "select a from Account a where (a.name like :searchText or a.surname like :searchText) ";
+    public List<Account> findAccountRangeNotInListByName(String name, String surname, List<Integer> accountIdList) throws Exception {
+        String jpql = "select distinct a from Account a where 1=1 ";
+        if (name != null && !name.trim().equals("")) {
+            jpql += " and a.name like :name ";
+        }
+        if (surname != null && !surname.trim().equals("")) {
+            jpql += " and a.surname like :surname ";
+        }
         if (!accountIdList.isEmpty()) {
             jpql += " and a.accountId not in :accountIdList ";
         }
-        jpql += " order by a.name";
+        jpql += " order by a.name,a.surname";
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("searchText", "%" + searchText + "%");
+        if (name != null && !name.trim().equals("")) {
+            params.put("name", "%" + name + "%");
+        }
+        if (surname != null && !surname.trim().equals("")) {
+            params.put("surname", "%" + surname + "%");
+        }
         if (!accountIdList.isEmpty()) {
             params.put("accountIdList", accountIdList);
         }
-        return accountFacade.findRangeByQuery(new int[]{0, 20}, jpql, params);
+        return accountFacade.findRangeByQuery(new int[]{0, 100}, jpql, params);
     }
 
 }

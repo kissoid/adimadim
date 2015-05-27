@@ -44,7 +44,7 @@ public class LoginBean implements Serializable {
 
     public void startLogInOperation() {
         try {
-            account = accountService.loginIn(account);
+            account = accountService.login(account);
             accountBean.setAccount(account);
             if(account.getActive().equals("H")){
                 throw new AccountException("Hesabınız henüz aktifleştirilmediği için göğüs numarası alamazsınız.");
@@ -59,7 +59,6 @@ public class LoginBean implements Serializable {
 
     public void sendPassword() {
         try {
-            Account account = accountBean.getAccount();
             Account tempAccount = accountService.findAccountByEmail(account.getEmail());
             if (tempAccount == null) {
                 throw new AccountException("Email adresi bulunamadı.");

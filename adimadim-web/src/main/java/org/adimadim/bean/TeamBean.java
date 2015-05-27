@@ -41,7 +41,8 @@ import org.primefaces.model.DualListModel;
 @Named(value = "teamBean")
 public class TeamBean implements Serializable {
 
-    private String searchText;
+    private String name;
+    private String surname;
     private Race selectedRace;
     private Team selectedTeam;
     private List<Team> teamList;
@@ -57,22 +58,21 @@ public class TeamBean implements Serializable {
     private AccountBean accountBean;
 
     public TeamBean() {
-        selectedTeam = new Team();
-        selectedTeam.setTeamType(new TeamType());
-        selectedTeam.setTeamMemberList(new ArrayList<TeamMember>());
-        teamMemberList = new DualListModel<Account>(new ArrayList<Account>(), new ArrayList<Account>());
+
     }
 
     @PostConstruct
     private void init() {
         try {
+
+            teamMemberList = new DualListModel<Account>(new ArrayList<Account>(), new ArrayList<Account>());
             selectedRace = raceService.findNextTeamRace();
             if (selectedRace == null) {
                 FacesMessageUtil.createFacesMessage("Uyarı", "Ayarlanmış bir takım yarışı yok.", FacesMessage.SEVERITY_ERROR);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/");
                 return;
             }
-            selectedTeam.setRace(selectedRace);
+            selectedTeam = createEmptyTeam();
             teamList = teamService.findTeamsByRaceId(selectedRace.getRaceId());
             teamTypeList = teamService.findTeamTypes();
         } catch (Exception ex) {
@@ -80,13 +80,21 @@ public class TeamBean implements Serializable {
         }
     }
 
+    private Team createEmptyTeam() {
+        Team tempTeam = new Team();
+        tempTeam.setTeamType(new TeamType());
+        tempTeam.setTeamMemberList(new ArrayList<TeamMember>());
+        tempTeam.setRace(selectedRace);
+        return tempTeam;
+    }
+
     public void searchAccount() {
         try {
-            if (searchText.trim().equals("")) {
+            if (name != null && surname != null && name.trim().equals("") && surname.trim().equals("")) {
                 return;
             }
             List<Integer> idList = createIdListFromSelectedAccounts();
-            List<Account> accountList = accountService.findAccountRangeNotInListByName(searchText, idList);
+            List<Account> accountList = accountService.findAccountRangeNotInListByName(name, surname, idList);
             teamMemberList.setSource(accountList);
         } catch (Exception ex) {
             Logger.getLogger(TeamBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,11 +121,11 @@ public class TeamBean implements Serializable {
             TeamMember teamMember = teamService.findTeamMemberByAccountIdRaceId(account.getAccountId(), selectedTeam.getRace().getRaceId());
             if (teamMember != null) {
                 if (selectedTeam.getTeamId() == null) {
-                    FacesMessageUtil.createFacesMessage("Bilgi", "Seçtiğiniz kişi başka bir takımda yarışmaktadır.", FacesMessage.SEVERITY_WARN);
+                    FacesMessageUtil.createFacesMessage("Bilgi", "Seçtiğiniz kişi başka bir takımda yeralıyor. Listeden başka bir koşucu seçin.", FacesMessage.SEVERITY_WARN);
                     return;
                 }
                 if (selectedTeam.getTeamId() != null && !teamMember.getTeam().getTeamId().equals(selectedTeam.getTeamId())) {
-                    FacesMessageUtil.createFacesMessage("Bilgi", "Seçtiğiniz kişi başka bir takımda yarışmaktadır.", FacesMessage.SEVERITY_WARN);
+                    FacesMessageUtil.createFacesMessage("Bilgi", "Seçtiğiniz kişi başka bir takımda yeralıyor. Listeden başka bir koşucu seçin.", FacesMessage.SEVERITY_WARN);
                     return;
                 }
             }
@@ -139,9 +147,27 @@ public class TeamBean implements Serializable {
     }
 
     public void editSelectedTeam(Team team) {
+        selectedTeam = team;
+        prepareTeamCreateSectionAndGo();
+    }
+
+    public void createNewTeam() {
         try {
-            selectedTeam = team;
-            searchText = "";
+            selectedTeam = createEmptyTeam();
+            Team tempTeam = teamService.findTeamCreator(selectedRace.getRaceId(), accountBean.getAccount().getAccountId());
+            if (tempTeam != null) {
+                FacesMessageUtil.createFacesMessage("Bilgi", "Bir kişi aynı yarışta sadece bir takım kurabilir.", FacesMessage.SEVERITY_WARN);
+                return;
+            }
+            prepareTeamCreateSectionAndGo();
+        } catch (Exception exception) {
+        }
+    }
+
+    private void prepareTeamCreateSectionAndGo() {
+        try {
+            name = "";
+            surname = "";
             teamMemberList.getSource().clear();
             teamMemberList.getTarget().clear();
             for (TeamMember teamMember : selectedTeam.getTeamMemberList()) {
@@ -156,8 +182,7 @@ public class TeamBean implements Serializable {
     public void saveTeam() {
         try {
             if (selectedTeam.getAccount() == null) {
-                Account account = accountService.findAccount(664);
-                selectedTeam.setAccount(account);
+                selectedTeam.setAccount(accountBean.getAccount());
             }
             List<TeamMember> newTeamMemberList = createTeamMemberFromSelectedList();
             selectedTeam = combineMembers(selectedTeam, newTeamMemberList);
@@ -182,7 +207,7 @@ public class TeamBean implements Serializable {
             tempMemberList.add(teamMember);
         }
         return tempMemberList;
-   }
+    }
 
     private Team combineMembers(Team team, List<TeamMember> tempMemberList) {
         for (TeamMember newTeamMember : tempMemberList) {
@@ -224,8 +249,7 @@ public class TeamBean implements Serializable {
         }
         if (event.getOldStep().equals("teamMembers") && event.getNewStep().equals("teamSave")) {
             if (teamMemberList.getTarget().size() < 7) {
-                FacesMessageUtil.createFacesMessage("Bilgi", "7'den az kişiyle takım oluşturamazsınız.", FacesMessage.SEVERITY_WARN);
-                return event.getOldStep();
+                FacesMessageUtil.createFacesMessage("Bilgi", "Takım kayıdınızın sonuçlanması için 7 kişi gerekiyor.", FacesMessage.SEVERITY_WARN);
             }
         }
         return event.getNewStep();

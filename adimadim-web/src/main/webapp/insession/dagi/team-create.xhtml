@@ -48,14 +48,31 @@
                                     </div>
                                 </p:tab>
                                 <p:tab id="teamMembers" title="Takım Üyeleri">
-                                    <p:inputText id="memberSearch" value="#{teamBean.searchText}">
-                                        <p:ajax event="keyup" listener="#{teamBean.searchAccount()}" update="sourceTable" />
-                                    </p:inputText>
-                                    <p:watermark for="memberSearch" value="Lütfen aramak istediğiniz ismi giriniz" />
+                                    <div class="large-6 columns">
+                                        <label>Name &mdash; <em>İsim</em>
+                                            <p:inputText id="nameSearch" value="#{teamBean.name}">
+                                                <p:ajax event="keyup" listener="#{teamBean.searchAccount()}" update="sourceTable" />
+                                            </p:inputText>
+                                            <p:watermark for="nameSearch" value="İsimden ara" />
+                                        </label>
+                                    </div>
+                                    <div class="large-6 columns end">
+                                        <label>Surname &mdash; <em>Soyisim</em>
+                                            <p:inputText id="surnameSearch" value="#{teamBean.surname}">
+                                                <p:ajax event="keyup" listener="#{teamBean.searchAccount()}" update="sourceTable" />
+                                            </p:inputText>
+                                            <p:watermark for="surnameSearch" value="Soyisimden ara" />
+                                        </label>
+                                    </div>
                                     <p:panelGrid style="width:100%;">
                                         <p:row>
                                             <p:column style="vertical-align: top;">
-                                                <p:dataTable id="sourceTable" var="account" value="#{teamBean.teamMemberList.source}" emptyMessage="Lütfen arama yapınız.">
+                                                <p:dataTable id="sourceTable" var="account" value="#{teamBean.teamMemberList.source}" emptyMessage="Lütfen arama yapınız."
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+                                                             paginatorPosition="bottom"
+                                                             rowsPerPageTemplate="5,10,15">
                                                     <f:facet name="header">
                                                         Arama Sonucu
                                                     </f:facet>
@@ -69,7 +86,7 @@
                                                 </p:dataTable>
                                             </p:column>
                                             <p:column style="vertical-align: top;">
-                                                <p:dataTable var="account" id="targetTable" value="#{teamBean.teamMemberList.target}" emptyMessage="Lütfen arama yapınız." >
+                                                <p:dataTable var="account" id="targetTable" value="#{teamBean.teamMemberList.target}" emptyMessage="Lütfen arama yapınız." rowStyleClass="#{teamBean.selectedTeam.account.accountId == account.accountId ? 'colored' : null}">
                                                     <f:facet name="header">
                                                         Seçilenler
                                                     </f:facet>
@@ -78,7 +95,7 @@
                                                     </p:column>
 
                                                     <p:column headerText="İşlemler" style="width:20%">
-                                                        <p:commandButton value="Çıkar" title="Çıkar" actionListener="#{teamBean.removeSelectedAccount(account)}" update=":teamCreateForm:sourceTable,:teamCreateForm:targetTable" />
+                                                        <p:commandButton value="Çıkar" title="Çıkar" actionListener="#{teamBean.removeSelectedAccount(account)}" rendered="#{teamBean.selectedTeam.account.accountId != account.accountId}" update=":teamCreateForm:sourceTable,:teamCreateForm:targetTable" />
                                                     </p:column>
                                                 </p:dataTable>
                                             </p:column>

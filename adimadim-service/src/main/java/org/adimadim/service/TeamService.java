@@ -82,6 +82,16 @@ public class TeamService {
         return teamMemberFacade.findByQuery(jpql, map);
     }
 
+    public Team findTeamCreator(Integer raceId, Integer accountId) throws Exception {
+        String jpql = "select r from Team r where ";
+        jpql += " r.race.raceId = :raceId ";
+        jpql += " and r.account.accountId = :accountId ";
+        Map map = new HashMap();
+        map.put("raceId", raceId);
+        map.put("accountId", accountId);
+        return teamFacade.findByQuery(jpql, map);
+    }
+
     public void deleteTeamMember(TeamMember teamMember) throws Exception {
         teamMemberFacade.remove(teamMember);
     }
