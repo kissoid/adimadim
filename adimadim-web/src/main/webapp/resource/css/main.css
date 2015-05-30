@@ -325,9 +325,9 @@ header nav {
 header nav a {
 	display: inline-block;
 	zoom: 1;
-    *display: inline;
+        *display: inline;
 	color: #595959;
-	margin-left: 2rem;
+	margin-left: 1rem;
 }
 
 header nav a.logo {
@@ -348,6 +348,10 @@ header nav a.about:hover {
 	color: #BC1F5F;
 }
 
+header nav a.team:hover {
+	color: #F36525;
+}
+
 header nav a.location:hover {
 	color: #F04925;
 }
@@ -364,6 +368,7 @@ header nav a.faq:hover {
 header nav a.active.next-run { border-bottom: 3px solid #5800D6; }
 header nav a.active.about { border-bottom: 3px solid #BC1F5F; }
 header nav a.active.location { border-bottom: 3px solid #F04925; }
+header nav a.active.team { border-bottom: 3px solid #F58026; }
 header nav a.active.join { border-bottom: 3px solid #F36525; }
 header nav a.active.faq { border-bottom: 3px solid #F58026; }
 
