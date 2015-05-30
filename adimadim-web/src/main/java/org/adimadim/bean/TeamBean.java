@@ -31,6 +31,7 @@ import org.adimadim.db.entity.TeamType;
 import org.adimadim.service.AccountService;
 import org.adimadim.service.RaceService;
 import org.adimadim.service.TeamService;
+import org.adimadim.thread.TeamInvitationThread;
 import org.adimadim.util.FacesMessageUtil;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DualListModel;
@@ -190,7 +191,7 @@ public class TeamBean implements Serializable {
             selectedTeam = teamService.saveTeam(selectedTeam);
             FacesMessageUtil.createFacesMessage("Bilgi", "Takım kayıt edildi", FacesMessage.SEVERITY_INFO);
             teamList = teamService.findTeamsByRaceId(selectedRace.getRaceId());
-            //new TeamInvitationThread(selectedTeam, accountBean.getAccount()).start();
+            new TeamInvitationThread(selectedTeam, accountBean.getAccount()).start();
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Bilgi", "Takım kayıt edilirken hata oluştu", FacesMessage.SEVERITY_ERROR);
         }
@@ -244,7 +245,9 @@ public class TeamBean implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         if (event.getOldStep().equals("teamInfo") && event.getNewStep().equals("teamMembers")) {
             if (selectedTeam.getTeamId() == null && selectedTeam.getTeamMemberList().isEmpty()) {
-                teamMemberList.getTarget().add(accountBean.getAccount());
+                if (!teamMemberList.getTarget().contains(accountBean.getAccount())) {
+                    teamMemberList.getTarget().add(accountBean.getAccount());
+                }
             }
         }
         if (event.getOldStep().equals("teamMembers") && event.getNewStep().equals("teamSave")) {

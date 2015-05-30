@@ -76,8 +76,11 @@
                                                     <f:facet name="header">
                                                         Arama Sonucu
                                                     </f:facet>
+                                                    <p:column headerText="Yarışcı Adı">
+                                                        <h:outputText value="#{account.chestNumber}" style="font-size: 12px !important;" />
+                                                    </p:column>
                                                     <p:column headerText="Yarışcı Adı" style="text-align: left">
-                                                        <h:outputText value="#{account.name} #{account.surname}" />
+                                                        <h:outputText value="#{account.name} #{account.surname}"  style="font-size: 12px !important;"/>
                                                     </p:column>
 
                                                     <p:column headerText="İşlemler" style="width:20%">
@@ -91,7 +94,10 @@
                                                         Seçilenler
                                                     </f:facet>
                                                     <p:column headerText="Yarışcı Adı">
-                                                        <h:outputText value="#{account.name} #{account.surname}" />
+                                                        <h:outputText value="#{account.chestNumber}" style="font-size: 12px !important;" />
+                                                    </p:column>
+                                                    <p:column headerText="Yarışcı Adı">
+                                                        <h:outputText value="#{account.name} #{account.surname}" style="font-size: 12px !important;" />
                                                     </p:column>
 
                                                     <p:column headerText="İşlemler" style="width:20%">

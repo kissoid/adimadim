@@ -20,7 +20,9 @@
         <a href="" class="menu-toggle">
             <img src="/resource/image/hamburger.png" width="24" />    
         </a>
-
+        <a href="/outsession/dagi/adimadim.jsf">
+            <img src="/resource/image/aa-icon.png" class="aa-logo" />
+        </a>
         <img src="/resource/image/aakosu-big-logo.png" alt="Adım Adım Koşu" class="cover-logo" />
 
         <ul class="example-orbit" data-orbit="" data-options="animation: fade; circular: true; slide_number: false; navigation_arrows: false; timer_show_progress_bar: false; timer_speed: 3000; pause_on_hover: false;">
@@ -58,9 +60,9 @@
                     <img src="/resource/image/about-icon.png" />
                     <span>Nedir?</span>
                 </a>
-                <a href="/outsession/dagi/adimadim.jsf">
-                    <img src="/resource/image/aa-icon2.png" class="aa" />
-                    <span>Adım Adım</span>
+                <a href="/insession/dagi/team-list.jsf">
+                    <img src="/resource/image/team-icon.png" />
+                    <span>Takım Kur</span>
                 </a>
                 <a href="/outsession/dagi/location.jsf">
                     <img src="/resource/image/location-icon.png" />
@@ -81,15 +83,15 @@
         <script src="/resource/js/vendor/midway.min.js"></script>
         <script>
             $(document).foundation();
-            $('a.menu-toggle').on('click', function(e) {
+            $('a.menu-toggle').on('click', function (e) {
                 $('nav.cover').fadeToggle();
                 e.preventDefault();
             });
         </script>
         <script>
-            (function(i, s, o, g, r, a, m) {
+            (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
+                i[r] = i[r] || function () {
                     (i[r].q = i[r].q || []).push(arguments)
                 }, i[r].l = 1 * new Date();
                 a = s.createElement(o),

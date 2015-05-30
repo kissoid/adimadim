@@ -105,7 +105,15 @@ img.cover-logo {
 	z-index: 20001;
 	left: 50%;
 	top: 50%;
-	margin: -180px 0 0 -240px;
+	margin: -160px 0 0 -240px;
+}
+
+img.aa-logo {
+	position: absolute;
+	z-index: 20001;
+	left: 50%;
+	top: 5%;
+        margin: 40px 0 0 -50px;
 }
 
 a.menu-toggle {

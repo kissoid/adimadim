@@ -7,10 +7,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
     </h:head>
-    <h:body>
+    <h:body >
         <ui:composition template="${request.contextPath}/template/template.xhtml">
             <ui:define name="head">  
-
             </ui:define>
             <ui:define name="content">
 
@@ -25,19 +24,19 @@
                             <p>
                                 <p:commandButton value="Takım Oluştur" actionListener="#{teamBean.createNewTeam()}" style="width:200px; height:60px;" />
                             </p>
-                            <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok" >
+                            <p:dataTable var="team" value="#{teamBean.teamList}" emptyMessage="Takım yok" style="margin: 0 auto;width: 600px"  >
                                 <p:column style="width:20px;">
                                     <p:rowToggler/>
                                 </p:column>
                                 <p:column headerText="Takım Adı" style="text-align: left;">
-                                    <h:outputText value="#{team.teamName}" />
+                                    <h:outputText value="#{team.teamName}" style="font-size: 12px;" />
                                 </p:column>
                                 <p:column style="width:120px">
                                     <p:commandButton value="Düzenle" title="Düzenle" actionListener="#{teamBean.editSelectedTeam(team)}" rendered="#{accountBean.account.accountId == team.account.accountId}" />
                                 </p:column>
-                                        <p:column style="width:50px;">
-                                            <p:graphicImage value="/resource/image/#{(team.teamMemberList.size() == 7) ? 'ok.png':'subtraction.png'}" title="#{team.teamMemberList.size() == 7 ? 'Takım tamamlandı':'Takım eksik'}" />
-                                        </p:column>
+                                <p:column style="width:50px;">
+                                    <p:graphicImage value="/resource/image/#{(team.teamMemberList.size() == 7) ? 'ok.png':'subtraction.png'}" title="#{team.teamMemberList.size() == 7 ? 'Takım tamamlandı':'Takım eksik'}" />
+                                </p:column>
                                 <p:rowExpansion>
                                     <p:dataTable value="#{team.teamMemberList}" var="member" rowStyleClass="#{team.account.accountId == member.account.accountId ? 'colored' : null}">
                                         <p:column headerText="Ad" style="text-align: left; width: 150px;">
@@ -51,6 +50,29 @@
                             </p:dataTable>
                         </h:form>
                         <b>Not :</b> Takımı kuran kişi Takım Kaptanıdır. Değişiklikler sadece takımı kuran ilgili Takım Kaptanı tarafından yapılabilir.
+                        <h:form>
+                            <p:dialog width="700" height="400" visible="true" widgetVar="teamInfoDialog" style="text-align: left;">
+                                <p><b>Kısaca Takım Maratonu’nu ve kurallarını anlatalım: </b></p>
+
+                                <p>Takımlar, takım kaptanları tarafından kurulur.</p>
+
+                                <p>Bir takımın üyesi olabilmek için öncelikle herkesin bireysel kaydını tamamlamış ve göğüs numarası almış olması gerekir. Göğüs numaraları yarış sonrasında kayıt masasındaki barkod okuyucuya tanıtılmalıdır. (Numaralar kağıda basılmış bir şekilde ya da kayıttan hemen sonra gelecek mailde yer alan pdf dosyası eşliğinde cep telefonlarında bulunabilir.)</p>
+
+                                <p>Her takım 7 kişiden oluşmakta, şirket, üniversite, okul, STK, kulüp veya bağımsız grup kategorileri altında nitelendirilmektedir.</p>
+
+                                <p>Kayıtlar yarış başlamadan 15 dk öncesine kadar her türlü değişiklik ve düzeltmeye açıktır.</p>
+
+                                <p>Yarış sırasında takım üyeleri hep birlikte değil, bireysel olarak, Belgrad Ormanı Neşet Suyu Parkuru’ndaki 6 km’lik mesafeyi, maksimum 60 dk içinde tamamlamaya çalışırlar. Daha sonra 7x6 km = 42km; yani yaklaşık maraton mesafesi için toplam süreler hesaplanır ve 'Şirket Takımları'​,'​STK/Okul Takımları'​, '​Bağımsız Takımlar' kategorilerinde sıralamalar ilan edilir.</p>
+
+                                <p>Bireysel koşularda olduğu gibi, yarış sonunda takımlara da ​herhangi bir madalya ya da​ ödül verilmemektedir.</p>
+
+                                <p>Son anda üye sayısı nedeniyle bozulan takımlarda yer alan diğer kişiler bireysel olarak koşup, yarışabilirler. Zaten göğüs numarası almış oldukları için ekstra bir kayda ihtiyaçları olmayacaktır.</p>
+                                <f:facet name="footer">
+                                    <p:commandButton value="Anladım, Takım Kurmak İstiyorum" style="float:right;margin: 5px;" onclick="teamInfoDialog.hide();" />
+                                </f:facet>
+
+                            </p:dialog>
+                        </h:form>
                     </div>
                 </div>
                 <hr class="end-bar c5-background" />
@@ -71,7 +93,6 @@
                     ga('create', 'UA-51572429-1', 'aakosu.org');
                     ga('require', 'displayfeatures');
                     ga('send', 'pageview');
-
                 </script>
             </ui:define>
         </ui:composition>
