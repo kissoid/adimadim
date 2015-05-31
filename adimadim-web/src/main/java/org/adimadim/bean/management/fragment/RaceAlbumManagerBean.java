@@ -29,8 +29,8 @@ import org.adimadim.db.entity.RaceAlbum;
 import org.adimadim.db.entity.RaceAlbumPicture;
 import org.adimadim.service.exception.RaceAlbumException;
 import org.adimadim.service.RacePictureService;
-import org.adimadim.util.FacesMessageUtil;
-import org.adimadim.util.ImageProcessUtil;
+import org.adimadim.common.util.FacesMessageUtil;
+import org.adimadim.common.util.ImageProcessUtil;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 

@@ -13,7 +13,7 @@ import javax.inject.Named;
 import org.adimadim.db.entity.ContactMessage;
 import org.adimadim.service.exception.ContactMessageException;
 import org.adimadim.service.ContactMessageService;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

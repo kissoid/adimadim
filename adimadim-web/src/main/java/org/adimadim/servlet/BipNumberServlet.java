@@ -4,24 +4,19 @@
  */
 package org.adimadim.servlet;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.DocumentException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.adimadim.bean.AccountBean;
-import org.adimadim.db.entity.Account;
-import org.adimadim.util.BipNumberUtil;
-import org.adimadim.util.EmailUtil;
+import org.adimadim.common.util.BipNumberUtil;
 
 /**
  *
@@ -66,24 +61,13 @@ public class BipNumberServlet extends HttpServlet {
         }
 
         try {
-            sendBipNumber(accountBean.getAccount());
+            BipNumberUtil.sendBipNumber(accountBean.getAccount());
         } catch (Exception ex) {
             Logger.getLogger(BipNumberServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    private void sendBipNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException {
-        Integer bipNumber = account.getChestNumber();
-        String name = (account.getName() + " " + account.getSurname());
-        String receiver = account.getEmail();
-        String subject = "Gogus Numarasi";
-        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
-        String fileName = "GogusNo.pdf";
-        String fileFormat = "application/pdf";
-        ByteArrayOutputStream file = BipNumberUtil.createBipNumberDocument(bipNumber, name);
-        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

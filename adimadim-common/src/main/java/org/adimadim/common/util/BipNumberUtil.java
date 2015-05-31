@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.adimadim.util;
+package org.adimadim.common.util;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
@@ -22,14 +22,27 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import org.adimadim.db.entity.Account;
 
 /**
  *
  * @author Adem
  */
 public class BipNumberUtil {
-    
-    public static ByteArrayOutputStream createBipNumberDocument(Integer bipNumber, String name) throws DocumentException, BadElementException, IOException {
+
+    public static void sendBipNumber(Account account) throws Exception {
+        Integer chestNumber = account.getChestNumber();
+        String name = (account.getName() + " " + account.getSurname());
+        String receiver = account.getEmail();
+        String subject = "AdimAdim Kosu Gogus Numarasi";
+        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
+        String fileName = "GogusNo.pdf";
+        String fileFormat = "application/pdf";
+        ByteArrayOutputStream file = createBipNumberDocument(chestNumber, name);
+        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
+    }
+
+    public static ByteArrayOutputStream createBipNumberDocument(Integer bipNumber, String name) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Document document = new Document(/*PageSize.LETTER.rotate()*/);
         document.setPageSize(PageSize.A4);
@@ -58,7 +71,7 @@ public class BipNumberUtil {
     }
 
     private static PdfPCell createMakas() throws BadElementException, MalformedURLException, IOException {
-        Image makas = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/makas.png"));
+        Image makas = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/common/image/makas.png"));
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
         cell.setPaddingBottom(15);
@@ -106,7 +119,7 @@ public class BipNumberUtil {
     }
 
     private static PdfPCell createAdimAdimKosuLogo() throws BadElementException, MalformedURLException, IOException {
-        Image adimAdimKosuLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/adimadimkosu-logo.png"));
+        Image adimAdimKosuLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/common/image/adimadimkosu-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
@@ -121,7 +134,7 @@ public class BipNumberUtil {
     }
 
     private static PdfPCell createAdimAdimLogo() throws BadElementException, MalformedURLException, IOException {
-        Image adimAdimLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/adimadim-logo.png"));
+        Image adimAdimLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/common/image/adimadim-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);
@@ -135,7 +148,7 @@ public class BipNumberUtil {
     }
 
     private static PdfPCell createAsicsLogo() throws BadElementException, MalformedURLException, IOException {
-        Image nbLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/image/nb-logo.png"));
+        Image nbLogo = Image.getInstance(BipNumberUtil.class.getResource("/org/adimadim/common/image/nb-logo.png"));
 
         PdfPCell cell = new PdfPCell();
         cell.setBorder(Rectangle.NO_BORDER);

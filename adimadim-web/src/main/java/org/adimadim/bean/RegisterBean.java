@@ -21,17 +21,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.MessagingException;
 import org.adimadim.bean.temp.AccountUpdateBean;
 import org.adimadim.bean.validator.RegisterBeanValidator;
+import org.adimadim.common.util.ConvertionUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountAlbum;
 import org.adimadim.db.entity.AccountProperty;
 import org.adimadim.service.AccountService;
 import org.adimadim.service.exception.AccountException;
-import org.adimadim.util.ConvertionUtil;
-import org.adimadim.util.EmailUtil;
-import org.adimadim.util.FacesMessageUtil;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -126,10 +124,7 @@ public class RegisterBean implements Serializable {
             accountService.signUp(account);
             registerCompleted = true;
             //accountBean.setAccount(account);
-            sendActivationLink(account);
             FacesMessageUtil.createFacesMessage("Bilgi", "Kayıt işleminiz tamamlanmıştır", FacesMessage.SEVERITY_INFO);
-            FacesMessageUtil.createFacesMessage("Bilgi", "Aktivasyon linkiniz mail adresinize gönderilmiştir.", FacesMessage.SEVERITY_INFO);
-            FacesMessageUtil.createFacesMessage("Bilgi", "Lütfen spam klasörünü de kontrol etmeyi unutmayınız.", FacesMessage.SEVERITY_INFO);
             account = new Account();
             //sendChestNumber(account);
             //FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/BipNumberServlet");
@@ -153,15 +148,6 @@ public class RegisterBean implements Serializable {
         if (account.getAccountAlbumList() == null) {
             account.setAccountAlbumList(accountAlbumList);
         }
-    }
-
-    private void sendActivationLink(Account account) throws MessagingException {
-        String receiver = account.getEmail();
-        String subject = "Adimadim kosu aktivasyon linki";
-        String link = "http://www.aakosu.org/ActivationServlet?key=" + account.getSecretKey();
-        String content = "Kaydınızı aktive etmek için lütfen aşağıdaki linke tklayınız<br/>";
-        content += "<a href='" + link + "' >" + link + "</a>";
-        EmailUtil.sendMail(EmailUtil.SENDER_INFO, receiver, subject, content);
     }
 
     private List<AccountProperty> propertyMapToList() {

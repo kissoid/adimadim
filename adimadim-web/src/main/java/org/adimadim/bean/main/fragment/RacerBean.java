@@ -19,8 +19,8 @@ import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.RaceScore;
 import org.adimadim.service.RacerService;
 import org.adimadim.service.RacerReportService;
-import org.adimadim.util.ConvertionUtil;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.ConvertionUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 

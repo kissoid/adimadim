@@ -22,7 +22,7 @@ import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
 import org.adimadim.service.AccountService;
 import org.adimadim.service.exception.AccountException;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

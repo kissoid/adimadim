@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.adimadim</groupId>
+        <artifactId>adimadim</artifactId>
+        <version>1.0</version>
+    </parent>
+    <artifactId>adimadim-common</artifactId>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mortennobel</groupId>
+            <artifactId>java-image-scaling</artifactId>
+            <version>0.8.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.4.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>adimadim-model</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>

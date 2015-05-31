@@ -19,8 +19,8 @@ import lombok.EqualsAndHashCode;
 import org.adimadim.db.entity.Account;
 import org.adimadim.service.AccountService;
 import org.adimadim.service.exception.AccountException;
-import org.adimadim.util.EmailUtil;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.EmailUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

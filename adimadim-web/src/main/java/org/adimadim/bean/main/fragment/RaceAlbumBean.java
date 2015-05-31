@@ -15,7 +15,7 @@ import javax.inject.Named;
 import org.adimadim.db.entity.RaceAlbum;
 import org.adimadim.db.entity.RaceAlbumPicture;
 import org.adimadim.service.RacePictureService;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

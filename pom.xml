@@ -12,6 +12,7 @@
         <module>adimadim-model</module>
         <module>adimadim-web</module>
         <module>adimadim-ear</module>
+        <module>adimadim-common</module>
     </modules>
     <build>
         <resources>

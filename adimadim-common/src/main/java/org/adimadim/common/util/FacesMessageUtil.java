@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.adimadim.util;
+package org.adimadim.common.util;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

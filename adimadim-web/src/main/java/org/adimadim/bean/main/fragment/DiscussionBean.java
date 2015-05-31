@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.adimadim.db.entity.Announcement;
 import org.adimadim.service.AnnouncementService;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

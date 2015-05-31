@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.adimadim.util;
+package org.adimadim.common.util;
 
 import java.util.Date;
 import java.util.Properties;
@@ -30,7 +30,7 @@ public class EmailUtil {
 
     public static final String SENDER_INFO = "ADIMADIM KOSU <aakosu@adimadim.org>";
     
-    public static void sendMail(String sender, String receiver, String subject, String content) throws NoSuchProviderException, MessagingException {
+    public static void sendMail(String sender, String receiver, String subject, String content) throws Exception {
         Transport transport = null;
         try {
             Session mailSession = Session.getInstance(getMailSettings(), getMailAuthenticatior());

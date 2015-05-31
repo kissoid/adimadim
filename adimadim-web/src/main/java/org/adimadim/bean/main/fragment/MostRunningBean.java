@@ -15,8 +15,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.adimadim.db.dto.MostRunningDto;
 import org.adimadim.service.RacerReportService;
-import org.adimadim.util.ConvertionUtil;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.ConvertionUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

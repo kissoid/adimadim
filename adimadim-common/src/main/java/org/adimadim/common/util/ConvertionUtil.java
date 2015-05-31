@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.adimadim.util;
+package org.adimadim.common.util;
 
 import java.io.Serializable;
 import java.text.ParseException;

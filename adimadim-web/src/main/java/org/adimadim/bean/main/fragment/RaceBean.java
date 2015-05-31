@@ -19,7 +19,7 @@ import org.adimadim.db.entity.RaceScore;
 import org.adimadim.db.entity.Team;
 import org.adimadim.db.entity.TeamMember;
 import org.adimadim.service.RaceService;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *

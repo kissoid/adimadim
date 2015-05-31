@@ -4,10 +4,6 @@
  */
 package org.adimadim.bean.temp;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.DocumentException;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,18 +20,16 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import org.adimadim.bean.AccountBean;
+import org.adimadim.bean.validator.RegisterBeanValidator;
+import org.adimadim.common.util.BipNumberUtil;
+import org.adimadim.common.util.ConvertionUtil;
+import org.adimadim.common.util.FacesMessageUtil;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.AccountProperty;
-import org.adimadim.service.exception.AccountException;
 import org.adimadim.service.AccountService;
-import org.adimadim.util.ConvertionUtil;
-import org.adimadim.bean.validator.RegisterBeanValidator;
-import org.adimadim.util.BipNumberUtil;
-import org.adimadim.util.EmailUtil;
-import org.adimadim.util.FacesMessageUtil;
+import org.adimadim.service.exception.AccountException;
 
 /**
  *
@@ -105,27 +99,13 @@ public class AccountUpdateBean implements Serializable {
             }
             accountService.updateAccount(account);
             accountBean.setAccount(account);
-            sendChestNumber(account);
+            BipNumberUtil.sendBipNumber(account);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/insession/BipNumberServlet");
         } catch (AccountException ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage("Beklenmedik bir hata oluştu.", null, FacesMessage.SEVERITY_ERROR);
         }
-    }
-
-
-    
-    private void sendChestNumber(Account account) throws DocumentException, BadElementException, IOException, MessagingException{
-        Integer chestNumber = account.getChestNumber();
-        String name = (account.getName() + " " +account.getSurname());
-        String receiver = account.getEmail();
-        String subject = "AdimAdim Kosu Gogus Numarasi";
-        String content = "Gogus numaraniz PDF dosyasi olarak ektedir.";
-        String fileName = "GogusNo.pdf";
-        String fileFormat = "application/pdf";
-        ByteArrayOutputStream file = BipNumberUtil.createBipNumberDocument(chestNumber, name);
-        EmailUtil.sendMailWithAttachment(EmailUtil.SENDER_INFO, receiver, subject, content, fileName, fileFormat, file.toByteArray());
     }
     
     private List<AccountProperty> propertiesToList() {

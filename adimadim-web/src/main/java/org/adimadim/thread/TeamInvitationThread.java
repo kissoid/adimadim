@@ -5,12 +5,16 @@
  */
 package org.adimadim.thread;
 
+import com.ergo.insyst.common.util.DateUtil;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.adimadim.common.util.EmailUtil;
 import org.adimadim.db.entity.Account;
 import org.adimadim.db.entity.Team;
 import org.adimadim.db.entity.TeamMember;
-import org.adimadim.util.EmailUtil;
 
 /**
  *
@@ -20,16 +24,18 @@ public class TeamInvitationThread extends Thread {
 
     private Team team;
     private Account managerAccount;
+    private List<TeamMember> newMembers;
 
-    public TeamInvitationThread(Team team, Account managerAccount) {
+    public TeamInvitationThread(Team team, Account managerAccount, List<TeamMember> newMembers) {
         this.team = team;
         this.managerAccount = managerAccount;
+        this.newMembers = newMembers;
     }
 
     @Override
     public void run() {
 
-        for (TeamMember teamMember : team.getTeamMemberList()) {
+        for (TeamMember teamMember : newMembers) {
             try {
                 if (teamMember.getIsApproved()) {
                     continue;
@@ -51,17 +57,30 @@ public class TeamInvitationThread extends Thread {
 
     private String createMemberInfo(TeamMember teamMember) {
         StringBuilder content = new StringBuilder();
-        content.append("Sayın").append(" ").append(teamMember.getAccount().getName()).append(" ").append(teamMember.getAccount().getSurname()).append(",\n");
+        content.append("Sayın");
+        content.append(" ");
+        content.append(teamMember.getAccount().getName());
+        content.append(" ");
+        content.append(teamMember.getAccount().getSurname());
+        content.append(",\n");
         return content.toString();
     }
 
-    private String createManagerInvitation() {
+    private String createManagerInvitation() throws ParseException {
         String managerName = managerAccount.getName() + " " + managerAccount.getSurname();
-        String raceDate = team.getRace().getRaceDate().toString();
+        Date raceDate = team.getRace().getRaceDate();
         String raceName = team.getRace().getRaceName();
 
         StringBuilder templateContent = new StringBuilder();
-        templateContent.append(" ").append(managerName).append(" sizi ").append(raceDate).append(" tarihindeki AdımAdım ").append(raceName).append(" yarışına davet etti.\n");
+        templateContent.append(" ");
+        templateContent.append(managerName);
+        templateContent.append(" sizi, ");
+        templateContent.append(DateUtil.dateToString(raceDate));
+        templateContent.append(" tarihindeki AdımAdım'ın düzenlediği, ");
+        templateContent.append(raceName);
+        templateContent.append(" yarışında, ");
+        templateContent.append(team.getTeamName());
+        templateContent.append(" adlı takımın koşucuları arasına ekledi ve sizi bu takımda yarışmaya davet etti.\n");
         return templateContent.toString();
     }
 
