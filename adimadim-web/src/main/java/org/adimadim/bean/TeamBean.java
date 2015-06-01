@@ -114,7 +114,7 @@ public class TeamBean implements Serializable {
 
     public void addSelectedAccount(Account account) {
         try {
-            if (teamMemberList.getTarget().size() == 7) {
+            if (teamMemberList.getTarget().size() >= 7) {
                 FacesMessageUtil.createFacesMessage("Bilgi", "En fazla 7 kişi seçebilirsiniz", FacesMessage.SEVERITY_WARN);
                 return;
             }
@@ -242,10 +242,10 @@ public class TeamBean implements Serializable {
     }
 
     private Boolean findMemberInList(TeamMember teamMember, List<TeamMember> tempMemberList) {
+        if (teamMember.getAccount().getAccountId() == null) {
+            return false;
+        }
         for (TeamMember tempTeamMember : tempMemberList) {
-            if (teamMember.getAccount().getAccountId() == null) {
-                return false;
-            }
             if (tempTeamMember.getAccount().getAccountId() == null) {
                 return false;
             }

@@ -53,7 +53,7 @@ public class Team implements Serializable {
     @JoinColumn(name = "team_type_id", referencedColumnName = "team_type_id", nullable = false)
     @ManyToOne(optional = false)
     private TeamType teamType;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
     private List<TeamMember> teamMemberList;
 
     public Team() {
