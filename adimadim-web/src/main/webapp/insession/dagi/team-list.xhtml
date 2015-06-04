@@ -39,11 +39,14 @@
                                 </p:column>
                                 <p:rowExpansion>
                                     <p:dataTable value="#{team.teamMemberList}" var="member" rowStyleClass="#{team.account.accountId == member.account.accountId ? 'colored' : null}">
-                                        <p:column headerText="Ad" style="text-align: left; width: 150px;">
-                                            <h:outputText value="#{member.account.name}" />
+                                        <p:column headerText="Göğüs No" style="text-align: left; width: 100px;">
+                                            <h:outputText value="#{member.account.chestNumber}" />
                                         </p:column>
-                                        <p:column headerText="Soyad" style="text-align: left;">
-                                            <h:outputText value="#{member.account.surname}" />
+                                        <p:column headerText="İsim" style="text-align: left;">
+                                            <h:outputText value="#{member.account.name} #{member.account.surname}" />
+                                        </p:column>
+                                        <p:column style="text-align: left;width:100px;">
+                                            <h:outputText value="#{team.account.accountId == member.account.accountId ? 'Kaptan' : ''}" />
                                         </p:column>
                                     </p:dataTable>
                                 </p:rowExpansion>

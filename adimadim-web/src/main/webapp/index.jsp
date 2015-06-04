@@ -11,6 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Adım Adım Koşu</title>
+        <link rel="SHORTCUT ICON" href="/resource/image/favicon.ico" />
         <link rel="stylesheet" href="/resource/css/foundation.css" />
         <link rel="stylesheet" href="/resource/css/main.css" />
         <script src="/resource/js/vendor/modernizr.js"></script>
