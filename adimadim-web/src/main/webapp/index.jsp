@@ -49,21 +49,13 @@
 
         <nav class="cover">
             <div class="midway">
-                <a href="/outsession/dagi/next-run.jsf">
-                    <img src="/resource/image/run-icon.png" />
-                    <span>Yarışlar</span>
-                </a>
-                <a href="/insession/BipNumberServlet">
-                    <img src="/resource/image/barcode-icon.png" />
-                    <span>Göğüs No</span>
-                </a>
                 <a href="/outsession/dagi/about.jsf">
                     <img src="/resource/image/about-icon.png" />
                     <span>Nedir?</span>
                 </a>
-                <a href="/insession/dagi/team-list.jsf">
-                    <img src="/resource/image/team-icon.png" />
-                    <span>Takım Kur</span>
+                <a href="/outsession/dagi/next-run.jsf">
+                    <img src="/resource/image/run-icon.png" />
+                    <span>Yarışlar</span>
                 </a>
                 <a href="/outsession/dagi/location.jsf">
                     <img src="/resource/image/location-icon.png" />
@@ -72,6 +64,14 @@
                 <a href="/outsession/dagi/join.jsf">
                     <img src="/resource/image/join-icon.png" />
                     <span>Kayıt Ol</span>
+                </a>
+                <a href="/insession/dagi/team-list.jsf">
+                    <img src="/resource/image/team-icon.png" />
+                    <span>Takım Kur</span>
+                </a>
+                <a href="/insession/BipNumberServlet">
+                    <img src="/resource/image/barcode-icon.png" />
+                    <span>Göğüs No</span>
                 </a>
                 <a href="/outsession/dagi/faq.jsf">
                     <img src="/resource/image/faq-icon.png" />

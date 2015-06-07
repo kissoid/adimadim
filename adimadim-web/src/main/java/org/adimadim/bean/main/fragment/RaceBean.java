@@ -4,27 +4,38 @@
  */
 package org.adimadim.bean.main.fragment;
 
+import com.ergo.insyst.common.util.DateUtil;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.adimadim.common.util.FacesMessageUtil;
+import org.adimadim.db.dto.TeamScoreDto;
 import org.adimadim.db.entity.Race;
 import org.adimadim.db.entity.RaceScore;
 import org.adimadim.db.entity.Team;
 import org.adimadim.db.entity.TeamMember;
 import org.adimadim.service.RaceService;
-import org.adimadim.common.util.FacesMessageUtil;
 
 /**
  *
  * @author Adem
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @SessionScoped
 @Named(value = "raceBean")
 public class RaceBean implements Serializable {
@@ -39,7 +50,7 @@ public class RaceBean implements Serializable {
     private List<RaceScore> raceScoreMenList;
     private Team selectedTeam;
     private Team newTeam;
-    private List<Team> teamList;
+    private List<TeamScoreDto> teamScoreDtoList;
     private List<RaceScore> teamScoreList;
     private List<TeamMember> teamMemberList;
 
@@ -48,10 +59,10 @@ public class RaceBean implements Serializable {
 
     @PostConstruct
     private void init() {
+        teamScoreDtoList = new ArrayList<TeamScoreDto>();
         raceScoreWomenList = new ArrayList<RaceScore>();
         raceScoreMenList = new ArrayList<RaceScore>();
         retrieveAllRaces();
-        //retriveRaceScoreByRaceIdTemp();
     }
 
     public void retrieveAllRaces() {
@@ -61,7 +72,7 @@ public class RaceBean implements Serializable {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
     }
-    
+
     public void retriveSelectedRaceScores() {
         try {
             if (selectedRace == null) {
@@ -78,6 +89,7 @@ public class RaceBean implements Serializable {
                     raceScoreWomenList.add(score);
                 }
             }
+            retriveTeamsByRaceId();
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -88,9 +100,26 @@ public class RaceBean implements Serializable {
             if (selectedRace == null) {
                 throw new Exception("Lütfen bir yarış seçiniz.");
             }
-            teamList = raceService.retrieveTeamsByRaceId(selectedRace.getRaceId());
-            teamScoreList = new ArrayList<RaceScore>();
-            selectedTeam = null;
+            List<Team> teamList = raceService.retrieveTeamsByRaceId(selectedRace.getRaceId());
+            teamScoreDtoList.clear();
+            List<TeamScoreDto> deficientTeamList = new ArrayList<TeamScoreDto>();
+            for (Team team : teamList) {
+                TeamScoreDto teamScoreDto = new TeamScoreDto();
+                teamScoreDto.setTeamId(team.getTeamId());
+                teamScoreDto.setTeamName(team.getTeamName());
+                teamScoreDto.setCategory(team.getTeamType().getDescription());
+                List<RaceScore> tempRaceScoreList = raceService.findTeamResultList(team);
+                teamScoreDto.setRaceScoreList(tempRaceScoreList);
+                teamScoreDto = calculateTeamDuration(teamScoreDto);
+                if (teamScoreDto.getRaceScoreList().size() == 7) {
+                    teamScoreDtoList.add(teamScoreDto);
+                } else {
+                    deficientTeamList.add(teamScoreDto);
+                }
+            }
+            Collections.sort(teamScoreDtoList, new TeamComparator());
+            Collections.sort(deficientTeamList, new TeamComparator());
+            teamScoreDtoList.addAll(deficientTeamList);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -104,7 +133,6 @@ public class RaceBean implements Serializable {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
     }
-
 
     public void retriveTeamScoreByRaceIdAndTeamId() {
         try {
@@ -171,93 +199,50 @@ public class RaceBean implements Serializable {
         }
     }
 
-    public List<Race> getRaceList() {
-        return raceList;
+    public TeamScoreDto calculateTeamDuration(TeamScoreDto teamScoreDto) {
+        try {
+            long duration = 0;
+            for (RaceScore raceScore : teamScoreDto.getRaceScoreList()) {
+                String time = DateUtil.dateToString(raceScore.getDuration(), "hh:mm:ss");
+                String[] arr = time.split(":");
+                duration += Integer.parseInt(arr[2]);
+                duration += 60 * Integer.parseInt(arr[1]);
+                duration += 3600 * (Integer.parseInt(arr[0]) - 12);
+            }
+            long hh = duration / 3600;
+            duration %= 3600;
+            long mm = duration / 60;
+            duration %= 60;
+            long ss = duration;
+            teamScoreDto.setDuration(format(hh) + ":" + format(mm) + ":" + format(ss));
+            teamScoreDto.setDurationInTime(duration);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return teamScoreDto;
     }
 
-    public void setRaceList(List<Race> raceList) {
-        this.raceList = raceList;
+    private static String format(long s) {
+        if (s < 10) {
+            return "0" + s;
+        } else {
+            return "" + s;
+        }
     }
 
-    public Race getSelectedRace() {
-        return selectedRace;
+    public class TeamComparator implements Comparator<TeamScoreDto> {
+
+        @Override
+        public int compare(TeamScoreDto o1, TeamScoreDto o2) {
+            Date date1 = null;
+            Date date2 = null;
+            try {
+                date1 = DateUtil.stringToDatePattern(o1.getDuration(), "hh:mm:ss", new Locale("tr_TR"));
+                date2 = DateUtil.stringToDatePattern(o2.getDuration(), "hh:mm:ss", new Locale("tr_TR"));
+            } catch (ParseException parseException) {
+            }
+            return date1.compareTo(date2);
+        }
     }
 
-    public void setSelectedRace(Race selectedRace) {
-        this.selectedRace = selectedRace;
-    }
-
-    public List<RaceScore> getRaceScoreList() {
-        return raceScoreList;
-    }
-
-    public void setRaceScoreList(List<RaceScore> raceScoreList) {
-        this.raceScoreList = raceScoreList;
-    }
-
-    public Race getNewRace() {
-        return newRace;
-    }
-
-    public void setNewRace(Race newRace) {
-        this.newRace = newRace;
-    }
-
-    public List<Team> getTeamList() {
-        return teamList;
-    }
-
-    public void setTeamList(List<Team> teamList) {
-        this.teamList = teamList;
-    }
-
-    public List<RaceScore> getTeamScoreList() {
-        return teamScoreList;
-    }
-
-    public void setTeamScoreList(List<RaceScore> teamScoreList) {
-        this.teamScoreList = teamScoreList;
-    }
-
-    public Team getSelectedTeam() {
-        return selectedTeam;
-    }
-
-    public void setSelectedTeam(Team selectedTeam) {
-        this.selectedTeam = selectedTeam;
-    }
-
-    public Team getNewTeam() {
-        return newTeam;
-    }
-
-    public void setNewTeam(Team newTeam) {
-        this.newTeam = newTeam;
-    }
-
-    public List<TeamMember> getTeamMemberList() {
-        return teamMemberList;
-    }
-
-    public void setTeamMemberList(List<TeamMember> teamMemberList) {
-        this.teamMemberList = teamMemberList;
-    }
-
-    public List<RaceScore> getRaceScoreWomenList() {
-        return raceScoreWomenList;
-    }
-
-    public void setRaceScoreWomenList(List<RaceScore> raceScoreWomenList) {
-        this.raceScoreWomenList = raceScoreWomenList;
-    }
-
-    public List<RaceScore> getRaceScoreMenList() {
-        return raceScoreMenList;
-    }
-
-    public void setRaceScoreMenList(List<RaceScore> raceScoreMenList) {
-        this.raceScoreMenList = raceScoreMenList;
-    }
-    
-    
 }
