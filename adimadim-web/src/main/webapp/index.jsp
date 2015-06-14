@@ -11,6 +11,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Adım Adım Koşu</title>
+        <link rel="SHORTCUT ICON" href="/resource/image/favicon.ico" />
         <link rel="stylesheet" href="/resource/css/foundation.css" />
         <link rel="stylesheet" href="/resource/css/main.css" />
         <script src="/resource/js/vendor/modernizr.js"></script>
@@ -48,21 +49,13 @@
 
         <nav class="cover">
             <div class="midway">
-                <a href="/outsession/dagi/next-run.jsf">
-                    <img src="/resource/image/run-icon.png" />
-                    <span>Yarışlar</span>
-                </a>
-                <a href="/insession/BipNumberServlet">
-                    <img src="/resource/image/barcode-icon.png" />
-                    <span>Göğüs No</span>
-                </a>
                 <a href="/outsession/dagi/about.jsf">
                     <img src="/resource/image/about-icon.png" />
                     <span>Nedir?</span>
                 </a>
-                <a href="/insession/dagi/team-list.jsf">
-                    <img src="/resource/image/team-icon.png" />
-                    <span>Takım Kur</span>
+                <a href="/outsession/dagi/next-run.jsf">
+                    <img src="/resource/image/run-icon.png" />
+                    <span>Yarışlar</span>
                 </a>
                 <a href="/outsession/dagi/location.jsf">
                     <img src="/resource/image/location-icon.png" />
@@ -71,6 +64,14 @@
                 <a href="/outsession/dagi/join.jsf">
                     <img src="/resource/image/join-icon.png" />
                     <span>Kayıt Ol</span>
+                </a>
+                <a href="/insession/dagi/team-list.jsf">
+                    <img src="/resource/image/team-icon.png" />
+                    <span>Takım Kur</span>
+                </a>
+                <a href="/insession/BipNumberServlet">
+                    <img src="/resource/image/barcode-icon.png" />
+                    <span>Göğüs No</span>
                 </a>
                 <a href="/outsession/dagi/faq.jsf">
                     <img src="/resource/image/faq-icon.png" />

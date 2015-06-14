@@ -11,6 +11,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <title>Adım Adım Koşu</title>
             <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+            <link rel="SHORTCUT ICON" href="/resource/image/favicon.ico" />
             <link rel="stylesheet" href="#{request.contextPath}/resource/css/foundation.css" />
             <link rel="stylesheet" href="#{request.contextPath}/resource/css/foundation-datepicker.css" />
             <link rel="stylesheet" href="#{request.contextPath}/resource/css/main.css" />
@@ -61,12 +62,12 @@
                             <a href="#{request.contextPath}/index.jsp" class="logo">
                                 <img src="#{request.contextPath}/resource/image/aa-kosu-logo.png" alt="Adım Adım Koşu" />
                             </a>
-                            <a href="#{request.contextPath}/insession/BipNumberServlet" class="barcode">Göğüs No</a>
-                            <a href="#{request.contextPath}/outsession/dagi/next-run.jsf" class="next-run">Yarışlar</a>
                             <a href="#{request.contextPath}/outsession/dagi/about.jsf" class="about">Nedir?</a>
-                            <a href="#{request.contextPath}/insession/dagi/team-list.jsf" class="team">Takım Kur</a>
+                            <a href="#{request.contextPath}/outsession/dagi/next-run.jsf" class="next-run">Yarışlar</a>
                             <a href="#{request.contextPath}/outsession/dagi/location.jsf" class="location">Nerede?</a>
                             <a href="#{request.contextPath}/outsession/dagi/join.jsf" class="join">Kayıt Ol</a>
+                            <a href="#{request.contextPath}/insession/dagi/team-list.jsf" class="team">Takım Kur</a>
+                            <a href="#{request.contextPath}/insession/BipNumberServlet" class="barcode">Göğüs No</a>
                             <a href="#{request.contextPath}/outsession/dagi/faq.jsf" class="faq">Sorular</a>
                         </nav>        
                     </div>

@@ -4,6 +4,7 @@
  */
 package org.adimadim.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.persistence.LockModeType;
 import org.adimadim.db.entity.Race;
 import org.adimadim.db.entity.RaceScore;
 import org.adimadim.db.entity.Team;
+import org.adimadim.db.entity.TeamMember;
 import org.adimadim.facade.RaceFacade;
 import org.adimadim.facade.RaceScoreFacade;
 import org.adimadim.facade.TeamFacade;
@@ -51,7 +53,8 @@ public class RaceService {
     }
 
     public List<Race> retrieveAllActiveRaces() throws Exception {
-        return raceFacade.findListByNamedQuery("Race.findAllActiveOrderByIdDesc");
+        String jpql = "select r from Race r where r.active='E' order by r.raceId desc";
+        return raceFacade.findListByQuery(jpql);
     }
 
     public List<RaceScore> retrieveRaceScoreByRaceId(Integer raceId) throws Exception {
@@ -61,9 +64,10 @@ public class RaceService {
     }
 
     public List<Team> retrieveTeamsByRaceId(Integer raceId) throws Exception {
+        String jpql = "select t from Team t where t.race.raceId = :raceId";
         Map map = new HashMap();
         map.put("raceId", raceId);
-        return teamFacade.findListByNamedQuery("Team.findAllByRaceId", map);
+        return teamFacade.findListByQuery(jpql, map);
     }
 
     public List<RaceScore> retrieveRaceScoreByRaceIdAndTeamId(Integer raceId, Integer teamId) throws Exception {
@@ -121,6 +125,20 @@ public class RaceService {
         map.put("isTeamRace", Boolean.TRUE);
         map.put("date", new Date());
         return raceFacade.findByQuery(jpql, map);
+    }
+
+    public List<RaceScore> findTeamResultList(Team team) throws Exception {
+        List<Integer> accountIdList = new ArrayList<Integer>();
+        for (TeamMember teamMember : team.getTeamMemberList()) {
+            accountIdList.add(teamMember.getAccount().getAccountId());
+        }
+        String jpql = "select r from RaceScore r  ";
+        jpql += " where r.race.raceId = :raceId ";
+        jpql += " and r.account.accountId in :accountIdList ";
+        Map map = new HashMap();
+        map.put("raceId", team.getRace().getRaceId());
+        map.put("accountIdList", accountIdList);
+        return raceScoreFacade.findListByQuery(jpql, map);
     }
 
 }

@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
+ * Team.findAllByRaceId
  *
  * @author Mehmet Adem ŞENGÜL
  */
