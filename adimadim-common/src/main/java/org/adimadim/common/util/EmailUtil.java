@@ -110,7 +110,7 @@ public class EmailUtil {
         Authenticator authenticator = new Authenticator() {
             @Override
             public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("aakosu@adimadim.org", "Sbz5l30%");
+                return new PasswordAuthentication("aakosu@adimadim.org", "kosu!78");
             }
         };
         return authenticator;
