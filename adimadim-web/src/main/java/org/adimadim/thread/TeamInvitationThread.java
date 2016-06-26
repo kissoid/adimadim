@@ -78,9 +78,9 @@ public class TeamInvitationThread extends Thread {
         templateContent.append(DateUtil.dateToString(raceDate));
         templateContent.append(" tarihindeki AdımAdım'ın düzenlediği, ");
         templateContent.append(raceName);
-        templateContent.append(" yarışında, ");
+        templateContent.append(" koşuda, ");
         templateContent.append(team.getTeamName());
-        templateContent.append(" adlı takımın koşucuları arasına ekledi ve sizi bu takımda yarışmaya davet etti.\n");
+        templateContent.append(" adlı takımın koşucuları arasına ekledi ve sizi bu takımda koşmaya davet etti.\n");
         return templateContent.toString();
     }
 

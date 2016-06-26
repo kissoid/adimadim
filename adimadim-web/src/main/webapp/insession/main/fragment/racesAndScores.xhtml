@@ -12,18 +12,18 @@
                 <div style="width: 650px;">
                     <p:panelGrid style="border:none;">
                         <p:row>
-                            <p:column style="border:none;"><p:outputLabel value="Yarış : " style="width:80px;" /></p:column>
+                            <p:column style="border:none;"><p:outputLabel value="Koşu : " style="width:80px;" /></p:column>
                             <p:column style="border:none;">
                                 <p:selectOneMenu id="raceList" widgetVar="raceListWidget" value="#{raceBean.selectedRace}" converter="commonConverter" style="width:580px">
                                     <p:ajax listener="#{raceBean.retriveSelectedRaceScores()}" update=":mainForm" />
-                                    <f:selectItem itemLabel="Yarış Seçiniz..." itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Koşu Seçiniz..." itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{raceBean.raceList}" var="race" itemLabel="#{race.raceName}" itemValue="#{race}" />
                                 </p:selectOneMenu>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
                 </div>
-                <h:outputText value="Yarış Sonuçları" style="color:#336699; font-weight: bold;font-size: 16px;" />
+                <h:outputText value="Koşu Sonuçları" style="color:#336699; font-weight: bold;font-size: 16px;" />
                 <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 15px;"/>
                 <div style="width: 650px;">
                     <p:tabView>

@@ -55,7 +55,7 @@
                 </a>
                 <a href="/outsession/dagi/next-run.jsf">
                     <img src="/resource/image/run-icon.png" />
-                    <span>Yarışlar</span>
+                    <span>Koşular</span>
                 </a>
                 <a href="/outsession/dagi/location.jsf">
                     <img src="/resource/image/location-icon.png" />

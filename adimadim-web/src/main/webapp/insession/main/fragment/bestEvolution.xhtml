@@ -21,7 +21,7 @@
                         <p:commandButton value="Sorgula" id="bestEvolutionQueryButton" actionListener="#{bestEvolutionBean.retrieveBestEvolutionList}" update=":mainForm:bestEvolutionTable" />           
                     </p:toolbarGroup>
                 </p:toolbar> 
-                <p:dataTable id="bestEvolutionTable" var="evo" value="#{bestEvolutionBean.bestEvolutionList}" widgetVar="bestEvolutionTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" rowKey="#{evo.accountId}">  
+                <p:dataTable id="bestEvolutionTable" var="evo" value="#{bestEvolutionBean.bestEvolutionList}" widgetVar="bestEvolutionTableWidget" emptyMessage="Koşucu bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" rowKey="#{evo.accountId}">  
                     <f:facet name="header">  
                         <h:outputText value="En İyi Gelişim Listesi"/>  
                     </f:facet>  

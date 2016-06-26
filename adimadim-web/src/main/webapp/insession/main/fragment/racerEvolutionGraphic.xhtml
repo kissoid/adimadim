@@ -7,12 +7,12 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:fragment rendered="#{mainPageBean.activeFragment eq 'racerEvolutionGraphic' ? true: false }">
         <div style="margin-bottom: 30px;">
-            <h:outputText value="Yarışçı Gelişim Grafiği" style="color:#336699; font-weight: bold;font-size: 16px;" />
+            <h:outputText value="Koşucu Gelişim Grafiği" style="color:#336699; font-weight: bold;font-size: 16px;" />
             <hr style="color: #B8B8B8;margin-top: 15px; margin-bottom: 5px;"/>
             <div style="width: 650px;">
-                <p:dataTable id="racerTable" var="racer" value="#{racerEvolutionGraphicBean.racerList}" style="margin-bottom: 50px;" selectionMode="single" widgetVar="racerTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{racerEvolutionGraphicBean.selectedRacer}" rowKey="#{racer.accountId}">  
+                <p:dataTable id="racerTable" var="racer" value="#{racerEvolutionGraphicBean.racerList}" style="margin-bottom: 50px;" selectionMode="single" widgetVar="racerTableWidget" emptyMessage="Koşucu bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{racerEvolutionGraphicBean.selectedRacer}" rowKey="#{racer.accountId}">  
                     <f:facet name="header">  
-                        <h:outputText value="Yarışçılar"/>  
+                        <h:outputText value="Koşucular"/>  
                     </f:facet>  
                     <p:ajax event="rowSelect" listener="#{racerEvolutionGraphicBean.retrieveRacerStatistics}" onstart="racerEvolutionTableBlock.show();" oncomplete="racerEvolutionTableBlock.hide();" update=":mainForm:racerEvolutionScoreTable, :mainForm:racerEvlutionGraphic" />
                     <p:column id="racerIdColumn" filterStyle="width:50px;" filterBy="#{racer.accountId}" sortBy="#{racer.accountId}" headerText="Üye No" width="50" filterMatchMode="exact">  
@@ -38,12 +38,12 @@
 
                 <p:blockUI id="racerEvolutionTableBlock" block="raceScoreTable" widgetVar="racerEvolutionTableBlock" />
 
-                <p:dataTable id="racerEvolutionScoreTable" var="score" value="#{racerEvolutionGraphicBean.racerScoreList}" style="margin-bottom: 50px;" widgetVar="racerEvolutionScoreTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
+                <p:dataTable id="racerEvolutionScoreTable" var="score" value="#{racerEvolutionGraphicBean.racerScoreList}" style="margin-bottom: 50px;" widgetVar="racerEvolutionScoreTableWidget" emptyMessage="Koşucu bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
                     <f:facet name="header">  
-                        <h:outputText value="Yarışçı Sonuçları"/>  
+                        <h:outputText value="Koşucu Sonuçları"/>  
                     </f:facet>  
 
-                    <p:column id="racerEvlutionIdColumn" sortBy="#{score.race.raceId}" headerText="Yarış No" width="50" >  
+                    <p:column id="racerEvlutionIdColumn" sortBy="#{score.race.raceId}" headerText="Koşu No" width="50" >  
                         <h:outputText value="#{score.race.raceId}" style="float: right;"/>  
                     </p:column>  
 
@@ -74,7 +74,7 @@
                 <br/>
                 <h:panelGrid id="racerEvlutionGraphic" columns="1">  
                     <p:lineChart value="#{racerEvolutionGraphicBean.linearModel}" seriesColors="336699" legendPosition="e" animate="true"  
-                                 title="Yarışçı Gelişim Grafiği" xaxisAngle="45" xaxisLabel="Tarih" yaxisLabel="Dakika" minY="0" maxY="70" style="width:600px;" />  
+                                 title="Koşucu Gelişim Grafiği" xaxisAngle="45" xaxisLabel="Tarih" yaxisLabel="Dakika" minY="0" maxY="70" style="width:600px;" />  
                 </h:panelGrid> 
             </div>
         </div>

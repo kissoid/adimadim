@@ -29,9 +29,9 @@
                 <div style="width:600px;margin: 0 auto;">
                     <p:messages autoUpdate="true" />
                     <h:form id="mainForm">
-                        <p:dataTable id="accountTable" var="account" value="#{accountSelectBean.racerList}" widgetVar="accountTableWidget" emptyMessage="Yarışçı bulunamadı" rowKey="#{account.accountId}" >  
+                        <p:dataTable id="accountTable" var="account" value="#{accountSelectBean.racerList}" widgetVar="accountTableWidget" emptyMessage="Koşucu bulunamadı" rowKey="#{account.accountId}" >  
                             <f:facet name="header">  
-                                <h:outputText value="Yarışçılar"/>  
+                                <h:outputText value="Koşucular"/>  
                             </f:facet>  
 
                             <p:column id="accountIdColumn" filterStyle="width:50px;" filterBy="#{account.accountId}" sortBy="#{account.accountId}" headerText="Üye No" width="50" filterMatchMode="exact">  

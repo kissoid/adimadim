@@ -18,7 +18,7 @@
                     <img src="${request.contextPath}/resource/image/join-icon.png" class="page-icon" />
                     <div class="large-10 large-centered columns">
 
-                        <h4 class="page-header c6-text text-center">Adım Adım Koşu Yarışı Kayıt Formu</h4>
+                        <h4 class="page-header c6-text text-center">Adım Adım Koşusu Kayıt Formu</h4>
                         <h:form id="mainForm">
                             <div class="row">
                                 <p:growl autoUpdate="true" showDetail="true" />
@@ -141,23 +141,23 @@
                                                 <p:selectBooleanCheckbox value="#{registerBean.raceRulesAccepted}" style="border:none;padding: 0px; margin: 0px;" />
                                             </td>
                                             <td style="padding: 0px; margin: 0px;">
-                                                <p:commandLink styleClass="c6-link" value="Yarış Kuralları" onclick="detailDialogTr.show();"/>'nı kabul ediyorum. &mdash;
+                                                <p:commandLink styleClass="c6-link" value="Koşu Kuralları" onclick="detailDialogTr.show();"/>'nı kabul ediyorum. &mdash;
                                                 I accept the <p:commandLink styleClass="c6-link" value="Races Rules" onclick="detailDialogEn.show();" />
                                             </td>
                                         </tr>
                                     </table>
                                     <p:dialog id="detailModalTr"  width="1000" widgetVar="detailDialogTr">                        
-                                        <p class="lead c6-text">Adım Adım Koşu Yarış Kuralları</p>
-                                        <p>AA Koşu yarışları Adım Adım gönüllüleri tarafından organize edilen ücretsiz eğlence yarışlarıdır. Amacı Adım Adım yardımseverlik koşu grubunu tanıtmak, koşucuların yarış deneyimi kazanmasına ve performans artışına destek olmaktır. Birbirimizle değil, kendimizle yarışırız. Kazananlara herhangi bir ödül, madalya, sertifika verilmez. Zaman zaman belirlik kategorilerde düzenli katılımı ve performans artışını teşvik edecek ödüller verilebilir.</p>
+                                        <p class="lead c6-text">Adım Adım Koşusu Kuralları</p>
+                                        <p>AA Koşuları Adım Adım gönüllüleri tarafından organize edilen ücretsiz eğlence koşularıdır. Amacı Adım Adım yardımseverlik koşu grubunu tanıtmak, koşucuların koşu deneyimi kazanmasına ve performans artışına destek olmaktır. Koşanlara herhangi bir ödül, madalya, sertifika verilmez. Zaman zaman belirlik kategorilerde düzenli katılımı ve performans artışını teşvik edecek ödüller verilebilir.</p>
                                         <ul>
                                             <li>Göğüs numaraları kişiye aittir, başkasına devredilemez.</li>
                                             <li>Organizasyon tarafından tayin edilen barkodlu göğüs numarasını bitişte göstermeyen ve barkodlu sıra numarası ile birlikte teslim etmeyenlerin sonuçları tutulmaz.</li>
-                                            <li>Yarış parkurun dışına çıkmak veya kestirme yapanlar diskalifiye olurlar.</li>
-                                            <li>Başlangıç/start alanı ve yarış parkurunda bulunan diğer koşucu ve yürüyüşcüleri rahatsız edecek veya zarar verecek hareket ve davranışlarda bulunmak, çevreyi kirletmek organizasyonun ruhuna aykırıdır ve kesinlikle yasaktır.</li>
-                                            <li>Yarışı söz konusu yarış parkuru için organizasyon komitesi tarafından belirtilen yer ve saatte başlar. Belirtilen maksimum süre içinde bitiremeyenlerin sonuçları genel sonuçlarda yer almaz.</li>
-                                            <li>16 yaşından küçük olanlar velisi / öğretmeni eşliğinde yarışa katılabilirler.</li>
+                                            <li>Koşu parkurunun dışına çıkanlar veya kestirme yapanlar diskalifiye olurlar.</li>
+                                            <li>Başlangıç/start alanı ve koşu parkurunda bulunan diğer koşucu ve yürüyüşcüleri rahatsız edecek veya zarar verecek hareket ve davranışlarda bulunmak, çevreyi kirletmek organizasyonun ruhuna aykırıdır ve kesinlikle yasaktır.</li>
+                                            <li>Koşuyu söz konusu koşu parkuru için organizasyon komitesi tarafından belirtilen yer ve saatte başlar. Belirtilen maksimum süre içinde bitiremeyenlerin sonuçları genel sonuçlarda yer almaz.</li>
+                                            <li>16 yaşından küçük olanlar velisi / öğretmeni eşliğinde Koşuya katılabilirler.</li>
                                             <li>Kişisel eşyalar start alanında bırakılmaz, bırakılırsa kişinin sorumluluğundadır.</li>
-                                            <li>Bu yarışlarda ilk yardım hizmeti verilmediği bilinciyle hareket ediniz.</li>
+                                            <li>Bu koşularda ilk yardım hizmeti verilmediği bilinciyle hareket ediniz.</li>
                                         </ul>
                                     </p:dialog>
                                     <p:dialog id="detailModalEn"  width="1000" widgetVar="detailDialogEn">
@@ -187,7 +187,7 @@
                                     </table>
                                     <p:dialog id="riskDialogTr" width="1000" widgetVar="riskDialogTr">                        
                                         <p class="lead c6-text">Risk Kabul Beyannamesi</p>
-                                        <p>Katılımcı olarak, doğa sporlarında risklerin tamamen yok edilemeyeceğini, herhangi bir ilkyardım hizmetinin bulundurulmadığını, güvenliğinin maksimum olabilmesi için yarışma organizasyonunun aktardığı ve duyurduğu kurallara tamamen uymam gerektiğini kabul ediyorum. 2. Yarış halka açık alanlarda yapılacağı için katılımcı olarak genel toplum kurallarına uymakla yükümlü olduğumu kabul ediyorum. 3. Organizasyon kuralları dışında davranmak, parkur dışı araziye girmek, yarış sırasında 3. şahısların veya kurumların can ve mal güvenliğine zarar vermek yasaklanmıştır ve tamamen benim sorumluluğumdadır, kurallara uymamam halinde yarış organizasyon komitesi ve sponsorlar sorumlu olamaz. Yarış organizasyonunda, parkur içinde veya yakınında herhangi bir sağlık hizmeti, sağlık kuruluşu, doktor, ambulans, hastane bulunmadığını biliyorum. 4. Adım Adım Koşu yarışları arazi koşullarında yapılan fiziksel aktivitelerdir. Doktor tarafından fiziksel aktivite kısıtlaması getirilmiş kişilerin doktorlarına danışması önerilir. Aerobik efor harcamasında sakınca olan, sürekli gözetim altında olması gereken, sara rahatsızlığı olan kişilerin katılması kendi sağlıkları açısından sakıncalıdır. 3 aydan az hamile olan kadınların kontrollü ilerlemek şartı ile katılması mümkündür. 3 aydan fazla hamile olan kadınların katılması sakıncalıdır. Bu yarışa katılmam için tıbbi bakımdan hiçbir engelim, rahatsızlığım (kalp, solunum yetmezliği, astım, kas eklem rahatsızlıkları vs.) olmadığını, bu koşu için fiziki olarak yeterli olduğumu beyan ederim. 5. İmzaladığım bu belge ile ben, kendi adıma ve varislerim, yöneticilerim, şahsi ve hukuki temsilcilerim adına; Adım Adım Koşu yarışları sırasında, yarış öncesi ve sonrası aktiviteler esnasında başıma gelebilecek herhangi bir sakatlık, kayıp veya hasar durumunda organizatörlerin, organizasyonda görevli kişilerin, sponsorların, organizasyon temsilcilerinin sorumlu tutulmayacağını, her türlü sorumluluğun şahsıma ait olduğunu; Yarışma Katılım Koşulları’nı okuyup kabul ettiğimi; bu yarışa katılmam için tıbbi bakımdan hiçbir engelim olmadığını, bu koşu için fiziki olarak yeterli olduğumu, Kabul ve Beyan ederim.<br/>
+                                        <p>Katılımcı olarak, doğa sporlarında risklerin tamamen yok edilemeyeceğini, herhangi bir ilkyardım hizmetinin bulundurulmadığını, güvenliğinin maksimum olabilmesi için koşu organizasyonunun aktardığı ve duyurduğu kurallara tamamen uymam gerektiğini kabul ediyorum. 2. Koşu halka açık alanlarda yapılacağı için katılımcı olarak genel toplum kurallarına uymakla yükümlü olduğumu kabul ediyorum. 3. Organizasyon kuralları dışında davranmak, parkur dışı araziye girmek, koşu sırasında 3. şahısların veya kurumların can ve mal güvenliğine zarar vermek yasaklanmıştır ve tamamen benim sorumluluğumdadır, kurallara uymamam halinde koşu organizasyon komitesi ve sponsorlar sorumlu olamaz. Koşu organizasyonunda, parkur içinde veya yakınında herhangi bir sağlık hizmeti, sağlık kuruluşu, doktor, ambulans, hastane bulunmadığını biliyorum. 4. Adım Adım Koşuları arazi koşullarında yapılan fiziksel aktivitelerdir. Doktor tarafından fiziksel aktivite kısıtlaması getirilmiş kişilerin doktorlarına danışması önerilir. Aerobik efor harcamasında sakınca olan, sürekli gözetim altında olması gereken, sara rahatsızlığı olan kişilerin katılması kendi sağlıkları açısından sakıncalıdır. 3 aydan az hamile olan kadınların kontrollü ilerlemek şartı ile katılması mümkündür. 3 aydan fazla hamile olan kadınların katılması sakıncalıdır. Bu koşuya katılmam için tıbbi bakımdan hiçbir engelim, rahatsızlığım (kalp, solunum yetmezliği, astım, kas eklem rahatsızlıkları vs.) olmadığını, bu koşu için fiziki olarak yeterli olduğumu beyan ederim. 5. İmzaladığım bu belge ile ben, kendi adıma ve varislerim, yöneticilerim, şahsi ve hukuki temsilcilerim adına; Adım Adım Koşuları sırasında, koşu öncesi ve sonrası aktiviteler esnasında başıma gelebilecek herhangi bir sakatlık, kayıp veya hasar durumunda organizatörlerin, organizasyonda görevli kişilerin, sponsorların, organizasyon temsilcilerinin sorumlu tutulmayacağını, her türlü sorumluluğun şahsıma ait olduğunu; Koşu Katılım Koşulları’nı okuyup kabul ettiğimi; bu koşuya katılmam için tıbbi bakımdan hiçbir engelim olmadığını, bu koşu için fiziki olarak yeterli olduğumu, Kabul ve Beyan ederim.<br/>
                                             (Kayıt sırasında 18 yaşından küçük olanların, yasal velisi bu formu imzalaması gerekmektedir)</p>
                                     </p:dialog>
                                     <p:dialog id="riskDialogEn" width="1000" widgetVar="riskDialogEn">                          
@@ -226,8 +226,8 @@
                                 Merhaba <h:outputText value="#{registerBean.account.name}" /><h:outputText value=" " /><h:outputText value="#{registerBean.account.surname}" />,
                                 <br/><br/>
                                 Girdiğiniz e-mail adresinizi kontrol ettiğimizde, daha önceden adım adım koşuya kayıt yaptırdığınızı gördük.
-                                <br/>Yarış sistemimizi daha iyi bir hale getirmek için bu siteyi ve kayıt sistemini oluşturduk.
-                                <br/>Lütfen daha önceki yarış bilgilerinize ulaşabilmek ve istediğiniz zaman kendi göğüs numaranızı
+                                <br/>Koşu sistemimizi daha iyi bir hale getirmek için bu siteyi ve kayıt sistemini oluşturduk.
+                                <br/>Lütfen daha önceki koşu bilgilerinize ulaşabilmek ve istediğiniz zaman kendi göğüs numaranızı
                                 <br/>sistemde otomatik olarak oluşturabilmek için, sadece bu mail adresini kullanarak bilgilerinizi tamamlayınız ve kendinize şifre oluşturunuz.
                                 <br/><br/>Teşekkürler
                             </p:dialog>

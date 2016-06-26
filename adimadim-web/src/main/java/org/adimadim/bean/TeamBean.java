@@ -69,7 +69,7 @@ public class TeamBean implements Serializable {
             teamMemberList = new DualListModel<Account>(new ArrayList<Account>(), new ArrayList<Account>());
             selectedRace = raceService.findNextTeamRace();
             if (selectedRace == null) {
-                FacesMessageUtil.createFacesMessage("Uyarı", "Ayarlanmış bir takım yarışı yok.", FacesMessage.SEVERITY_ERROR);
+                FacesMessageUtil.createFacesMessage("Uyarı", "Ayarlanmış bir takım koşusu yok.", FacesMessage.SEVERITY_ERROR);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("/");
                 return;
             }
@@ -157,7 +157,7 @@ public class TeamBean implements Serializable {
             selectedTeam = createEmptyTeam();
             Team tempTeam = teamService.findTeamCreator(selectedRace.getRaceId(), accountBean.getAccount().getAccountId());
             if (tempTeam != null) {
-                FacesMessageUtil.createFacesMessage("Bilgi", "Bir kişi aynı yarışta sadece bir takım kurabilir.", FacesMessage.SEVERITY_WARN);
+                FacesMessageUtil.createFacesMessage("Bilgi", "Bir kişi aynı koşuda sadece bir takım kurabilir.", FacesMessage.SEVERITY_WARN);
                 return;
             }
             prepareTeamCreateSectionAndGo();

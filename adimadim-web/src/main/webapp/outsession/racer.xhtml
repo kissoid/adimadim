@@ -33,9 +33,9 @@
                         </p:toolbarGroup>
                     </p:toolbar> 
 
-                    <p:dataTable id="racerTable" var="racer" value="#{racerBean.racerList}" widgetVar="racerTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{racerBean.selectedRacer}" rowKey="#{racer.accountId}">  
+                    <p:dataTable id="racerTable" var="racer" value="#{racerBean.racerList}" widgetVar="racerTableWidget" emptyMessage="Koşucu bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{racerBean.selectedRacer}" rowKey="#{racer.accountId}">  
                         <f:facet name="header">  
-                            <h:outputText value="Yarışçılar"/>  
+                            <h:outputText value="Koşucular"/>  
                         </f:facet>  
 
                         <p:column selectionMode="single" style="width:20px;" />  

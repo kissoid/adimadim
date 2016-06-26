@@ -76,7 +76,7 @@ public class RaceBean implements Serializable {
     public void retriveSelectedRaceScores() {
         try {
             if (selectedRace == null) {
-                throw new Exception("Lütfen bir yarış seçiniz.");
+                throw new Exception("Lütfen bir koşu seçiniz.");
             }
             raceScoreList = raceService.retrieveRaceScoreByRaceId(selectedRace.getRaceId());
             raceScoreWomenList.clear();
@@ -98,7 +98,7 @@ public class RaceBean implements Serializable {
     private void retriveTeamsByRaceId() {
         try {
             if (selectedRace == null) {
-                throw new Exception("Lütfen bir yarış seçiniz.");
+                throw new Exception("Lütfen bir koşu seçiniz.");
             }
             List<Team> teamList = raceService.retrieveTeamsByRaceId(selectedRace.getRaceId());
             teamScoreDtoList.clear();
@@ -137,7 +137,7 @@ public class RaceBean implements Serializable {
     public void retriveTeamScoreByRaceIdAndTeamId() {
         try {
             if (selectedRace == null) {
-                throw new Exception("Lütfen bir yarış seçiniz.");
+                throw new Exception("Lütfen bir koşu seçiniz.");
             }
             if (selectedTeam == null) {
                 throw new Exception("Lütfen bir takım seçiniz.");
@@ -151,7 +151,7 @@ public class RaceBean implements Serializable {
     public void retriveTeamMembersByRaceIdAndTeamId() {
         try {
             if (selectedRace == null) {
-                throw new Exception("Lütfen bir yarış seçiniz.");
+                throw new Exception("Lütfen bir koşu seçiniz.");
             }
             if (selectedTeam == null) {
                 throw new Exception("Lütfen bir takım seçiniz.");
@@ -167,7 +167,7 @@ public class RaceBean implements Serializable {
             raceService.createRace(newRace);
             retrieveAllRaces();
             newRace = new Race();
-            FacesMessageUtil.createFacesMessage("Yarış oluşturuldu.", null, FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Koşu oluşturuldu.", null, FacesMessage.SEVERITY_INFO);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -176,11 +176,11 @@ public class RaceBean implements Serializable {
     public void updateRace() {
         try {
             if (selectedRace == null) {
-                throw new Exception("Lütfen güncellemek istediğiniz yarışı seçiniz.");
+                throw new Exception("Lütfen güncellemek istediğiniz koşuyu seçiniz.");
             }
             raceService.updateRace(selectedRace);
             retrieveAllRaces();
-            FacesMessageUtil.createFacesMessage("Yarış güncellendi.", null, FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Koşu güncellendi.", null, FacesMessage.SEVERITY_INFO);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }
@@ -189,11 +189,11 @@ public class RaceBean implements Serializable {
     public void deleteRace() {
         try {
             if (selectedRace == null) {
-                throw new Exception("Lütfen silmek istediğiniz yarışı seçiniz.");
+                throw new Exception("Lütfen silmek istediğiniz koşuyu seçiniz.");
             }
             raceService.deleteRace(selectedRace);
             retrieveAllRaces();
-            FacesMessageUtil.createFacesMessage("Yarış silindi.", null, FacesMessage.SEVERITY_INFO);
+            FacesMessageUtil.createFacesMessage("Koşu silindi.", null, FacesMessage.SEVERITY_INFO);
         } catch (Exception ex) {
             FacesMessageUtil.createFacesMessage(ex.getMessage(), null, FacesMessage.SEVERITY_ERROR);
         }

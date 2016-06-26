@@ -13,12 +13,12 @@
                                  title="Performans Grafiği" xaxisAngle="45" xaxisLabel="Tarih" yaxisLabel="Dakika" minY="0" maxY="70" style="width:600px;" />  
                 </p:tab>
                 <p:tab title="Liste Olarak" titleStyle="display:none;">
-                    <p:dataTable id="adimadimRaceScoreTable" var="score" value="#{profilePageBean.adimadimRaceScoreList}"  widgetVar="adimadimRaceScoreTableWidget" emptyMessage="Yarış bulunamadı" rows="8" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
+                    <p:dataTable id="adimadimRaceScoreTable" var="score" value="#{profilePageBean.adimadimRaceScoreList}"  widgetVar="adimadimRaceScoreTableWidget" emptyMessage="Koşu bulunamadı" rows="8" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false">  
                         <f:facet name="header">  
                             <h:outputText value="Adımadım Koşuları"/>  
                         </f:facet>  
 
-                        <p:column id="raceIdColumn" filterBy="#{score.race.raceId}" sortBy="#{score.race.raceId}" headerText="Yarış No" filterStyle="width:50px;" width="50" filterMatchMode="exact">  
+                        <p:column id="raceIdColumn" filterBy="#{score.race.raceId}" sortBy="#{score.race.raceId}" headerText="Koşu No" filterStyle="width:50px;" width="50" filterMatchMode="exact">  
                             <h:outputText value="#{score.race.raceId}" style="float: right;"/>  
                         </p:column>  
 

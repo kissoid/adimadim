@@ -26,7 +26,7 @@
             </ui:define>
             <ui:define name="content">
                 <h:form id="mainForm">
-                    <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" widgetVar="raceScoreTableWidget" emptyMessage="Yarışçı bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" style="margin-top: 20px;">  
+                    <p:dataTable id="raceScoreTable" var="score" value="#{raceBean.raceScoreList}" widgetVar="raceScoreTableWidget" emptyMessage="Koşucu bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" style="margin-top: 20px;">  
                         <f:facet name="header">  
                             <h:outputText value="#{raceBean.selectedRace.raceName} sonuçları"/>  
                         </f:facet>  

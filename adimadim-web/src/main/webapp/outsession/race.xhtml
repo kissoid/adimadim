@@ -33,21 +33,21 @@
                         <p:commandButton id="teams" value="Takımları Göster" actionListener="#{raceBean.retrieveTeamsAndGoToTeamPage}" />                         
                         </p:toolbarGroup>
                     </p:toolbar> 
-                    <p:dataTable id="raceTable" var="race" value="#{raceBean.raceList}" widgetVar="raceTableWidget" emptyMessage="Yarış bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceBean.selectedRace}" rowKey="#{race.raceId}">  
+                    <p:dataTable id="raceTable" var="race" value="#{raceBean.raceList}" widgetVar="raceTableWidget" emptyMessage="Koşu bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceBean.selectedRace}" rowKey="#{race.raceId}">  
                         <f:facet name="header">  
-                            <h:outputText value="Yarış Listesi"/>   
+                            <h:outputText value="Koşu Listesi"/>   
                         </f:facet>  
                         <p:column selectionMode="single" style="width:20px;" />  
 
-                        <p:column id="raceIdColumn" filterBy="#{race.raceId}" sortBy="#{race.raceId}" headerText="Yarış No" width="50" filterStyle="width:50px;" filterMatchMode="exact">  
+                        <p:column id="raceIdColumn" filterBy="#{race.raceId}" sortBy="#{race.raceId}" headerText="Koşu No" width="50" filterStyle="width:50px;" filterMatchMode="exact">  
                             <h:outputText value="#{race.raceId}" style="float: right;"/>  
                         </p:column>  
 
-                        <p:column id="raceNameColumn" filterStyle="width:440px;" filterBy="#{race.raceName}" sortBy="#{race.raceName}" headerText="Yarış Adı" width="440" filterMatchMode="contains">  
+                        <p:column id="raceNameColumn" filterStyle="width:440px;" filterBy="#{race.raceName}" sortBy="#{race.raceName}" headerText="Koşu Adı" width="440" filterMatchMode="contains">  
                             <h:outputText value="#{race.raceName}" />  
                         </p:column>  
 
-                        <p:column id="raceDateColumn" sortBy="#{race.raceDate}" headerText="Yarış Tarihi" >  
+                        <p:column id="raceDateColumn" sortBy="#{race.raceDate}" headerText="Koşu Tarihi" >  
                             <h:outputText value="#{race.raceDate}" >  
                                 <f:convertDateTime pattern="dd.MM.yyyy" locale="tr_TR" type="date" dateStyle="short" timeZone="Turkey" />
                             </h:outputText>

@@ -14,7 +14,7 @@
                 <p:dataTable id="raceAlbumListTable" var="raceAlbum" value="#{raceAlbumManagerBean.raceAlbumList}" widgetVar="raceAlbumListTableWidget" emptyMessage="Albüm bulunamadı" rows="10" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" selection="#{raceAlbumManagerBean.selectedAlbum}" rowKey="#{raceAlbum.albumId}" selectionMode="single" style="margin-bottom: 50px;">  
                     <p:ajax event="rowSelect" listener="#{raceAlbumManagerBean.retrieveSelectedRaceAlbumPictures}" update=":mainForm:albumPictureList"  />
                     <f:facet name="header">  
-                        <h:outputText value="Yarış Albüm Listesi"/>   
+                        <h:outputText value="Koşu Albüm Listesi"/>   
                     </f:facet>  
                     <p:column id="raceNameColumn" sortBy="#{raceAlbum.albumName}" headerText="Albüm Adı" width="500" >  
                         <h:outputText value="#{raceAlbum.albumName}" />  
