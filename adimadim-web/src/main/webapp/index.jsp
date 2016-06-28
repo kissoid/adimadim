@@ -15,6 +15,28 @@
         <link rel="stylesheet" href="/resource/css/foundation.css" />
         <link rel="stylesheet" href="/resource/css/main.css" />
         <script src="/resource/js/vendor/modernizr.js"></script>
+        <style type="text/css">
+#overlay {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000000;
+}
+
+#overlay div {
+     width:500px;
+     height: 500px;
+     margin: 170px auto;
+     background-color: #fff;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+}
+        </style>
     </head>
     <body class="antialiased no-bg">
         <hr class="gradient-bar" />
@@ -79,6 +101,11 @@
                 </a>    
             </div>
         </nav>
+<div id="overlay">
+     <div>
+         <p><img src="/resource/image/kosu-iptal.png" /></p>
+     </div>
+</div>
         <script src="/resource/js/vendor/jquery.js"></script>
         <script src="/resource/js/foundation.min.js"></script>
         <script src="/resource/js/vendor/midway.min.js"></script>
@@ -88,6 +115,10 @@
                 $('nav.cover').fadeToggle();
                 e.preventDefault();
             });
+
+	el = document.getElementById("overlay");
+	el.style.visibility = (el.style.visibility === "visible") ? "hidden" : "visible";
+
         </script>
         <script>
             (function (i, s, o, g, r, a, m) {
