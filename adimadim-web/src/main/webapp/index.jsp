@@ -116,8 +116,8 @@
                 e.preventDefault();
             });
 
-	el = document.getElementById("overlay");
-	el.style.visibility = (el.style.visibility === "visible") ? "hidden" : "visible";
+	/*el = document.getElementById("overlay");
+	el.style.visibility = (el.style.visibility === "visible") ? "hidden" : "visible";*/
 
         </script>
         <script>
