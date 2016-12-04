@@ -54,7 +54,7 @@
 
                                 <p:column id="racerDurationColumn" headerText="Süre">  
                                     <h:outputText value="#{score.duration}">
-                                        <f:convertDateTime pattern="HH:mm:ss" locale="tr_TR" type="time" dateStyle="short" timeZone="Turkey" />
+                                        <f:convertDateTime pattern="HH:mm:ss" type="time" dateStyle="short" timeZone="GMT-8" />
                                     </h:outputText>
                                 </p:column>    
                             </p:dataTable>  
